@@ -19,10 +19,7 @@ ON connections(status);
 
 -- Created in V6 after addressee_id is renamed to recipient_id
 
--- Chat
-CREATE INDEX IF NOT EXISTS idx_chat_unread
-ON messages(chat_room_id, read_at)
-WHERE read_at IS NULL;
+-- Created in V10 after messages table exists
 
 -- Group Messages
 CREATE INDEX IF NOT EXISTS idx_group_msgs_not_deleted
