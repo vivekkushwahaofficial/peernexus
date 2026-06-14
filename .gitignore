@@ -1,0 +1,21 @@
+# Environment
+.env
+.env.local
+.env.production
+.env.development
+
+# Backend
+peernexus-backend/target/
+peernexus-backend/schema.sql
+
+# Frontend
+peernexus-frontend/node_modules/
+peernexus-frontend/dist/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Logs
+*.log

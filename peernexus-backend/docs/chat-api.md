@@ -1,0 +1,305 @@
+# Private Chat Module API
+
+Real-time one-to-one chat powered by **Spring WebSocket + STOMP + SockJS**.
+All messages are persisted in MySQL; Cloudinary URLs are used for IMAGE / FILE content.
+
+---
+
+## Constraints
+
+| Rule | Detail |
+|------|--------|
+| **Accepted connections only** | Both users must share an `ACCEPTED` `Connection` before chatting |
+| **Authentication** | REST endpoints: `Authorization: Bearer <JWT>`<br>STOMP: `Authorization: Bearer <JWT>` or `token: <JWT>` in STOMP headers |
+| **Binary storage** | No binary blobs in MySQL — upload files with the Cloudinary API first, then send the URL |
+
+---
+
+## WebSocket Connection
+
+```
+ws://localhost:8080/ws          (native WebSocket)
+http://localhost:8080/ws        (SockJS fallback)
+```
+
+**Connect with JWT**  
+Pass the JWT in the STOMP `CONNECT` frame headers:
+
+```json
+CONNECT
+Authorization: Bearer <jwt-token>
+
+```
+
+Or using the SockJS query-string convention:
+```
+http://localhost:8080/ws?token=<jwt-token>
+```
+
+---
+
+## STOMP Subscriptions (client → server)
+
+| Destination | Description |
+|-------------|-------------|
+| `/user/queue/messages` | Private message delivery |
+| `/user/queue/typing` | Typing indicator events |
+| `/user/queue/read-receipt` | Read receipt notifications |
+| `/topic/status/{userId}` | Online/offline presence for a specific user |
+
+---
+
+## STOMP Send Destinations (client → server)
+
+### Send a Message
+
+```
+SEND /app/chat.send
+content-type: application/json
+
+{
+  "chatRoomId": 42,
+  "content": "Hello!",
+  "type": "TEXT",
+  "fileName": null
+}
+```
+
+**MessageType values:**
+- `TEXT` — `content` is a plain-text body
+- `IMAGE` — `content` is a Cloudinary HTTPS URL of the image
+- `FILE` — `content` is a Cloudinary HTTPS URL; `fileName` is the original filename
+
+**Effect:** Message is persisted and delivered to `/user/queue/messages` for both the sender and recipient.
+
+---
+
+### Typing Indicator
+
+```
+SEND /app/chat.typing
+content-type: application/json
+
+{
+  "chatRoomId": 42,
+  "senderId": 7,
+  "typing": true
+}
+```
+
+Set `typing: false` when the user stops typing.
+
+**Effect:** Forwarded to recipient's `/user/queue/typing`.
+
+---
+
+### Mark Messages as Read (STOMP)
+
+```
+SEND /app/chat.read
+content-type: application/json
+
+{
+  "chatRoomId": 42,
+  "readerId": 9,
+  "readAt": null
+}
+```
+
+**Effect:** Marks all unread messages in the room as read, then pushes a `ReadReceiptEvent` to the original sender's `/user/queue/read-receipt`.
+
+---
+
+## STOMP Event Payloads
+
+### MessageResponse (delivered to `/user/queue/messages`)
+
+```json
+{
+  "id": 1001,
+  "chatRoomId": 42,
+  "senderId": 7,
+  "senderName": "Alice",
+  "content": "Hello!",
+  "type": "TEXT",
+  "fileName": null,
+  "readAt": null,
+  "sentAt": "2025-06-05T07:00:00Z",
+  "deleted": false
+}
+```
+
+### TypingEvent (delivered to `/user/queue/typing`)
+
+```json
+{
+  "chatRoomId": 42,
+  "senderId": 7,
+  "typing": true
+}
+```
+
+### ReadReceiptEvent (delivered to `/user/queue/read-receipt`)
+
+```json
+{
+  "chatRoomId": 42,
+  "readerId": 9,
+  "readAt": "2025-06-05T07:01:00Z"
+}
+```
+
+### OnlineStatusEvent (delivered to `/topic/status/{userId}`)
+
+```json
+{
+  "userId": 7,
+  "online": true
+}
+```
+
+---
+
+## REST Endpoints
+
+All REST endpoints require `Authorization: Bearer <JWT>`.
+
+### GET /api/chat/rooms
+
+Returns all chat rooms the caller participates in, ordered by most-recent activity.
+
+**Response** `200 OK`
+```json
+{
+  "success": true,
+  "message": "Chat rooms retrieved",
+  "data": [
+    {
+      "id": 42,
+      "otherUserId": 9,
+      "otherUserName": "Bob",
+      "otherUserPicture": "https://res.cloudinary.com/.../profile.jpg",
+      "otherUserOnline": true,
+      "lastMessageContent": "See you tomorrow!",
+      "lastMessageType": "TEXT",
+      "lastMessageAt": "2025-06-05T06:55:00Z",
+      "lastMessageSenderId": 9,
+      "unreadCount": 2
+    }
+  ]
+}
+```
+
+---
+
+### POST /api/chat/rooms/{otherUserId}/or-create
+
+Gets the existing room with `otherUserId` or creates one.
+Both users must have an `ACCEPTED` connection.
+
+**Response** `200 OK`
+```json
+{
+  "success": true,
+  "message": "Chat room ready",
+  "data": 42
+}
+```
+
+---
+
+### GET /api/chat/rooms/{roomId}/messages?page=0&size=30
+
+Paginated message history (newest first).
+The caller must be a participant.
+
+**Response** `200 OK`
+```json
+{
+  "success": true,
+  "message": "Message history",
+  "data": {
+    "content": [ /* array of MessageResponse */ ],
+    "totalElements": 125,
+    "totalPages": 5,
+    "size": 30,
+    "number": 0
+  }
+}
+```
+
+---
+
+### POST /api/chat/rooms/{roomId}/read
+
+Marks all unread messages in the room as read (REST fallback; prefer STOMP for real-time receipts).
+
+**Response** `200 OK`
+```json
+{
+  "success": true,
+  "message": "3 message(s) marked as read",
+  "data": 3
+}
+```
+
+---
+
+## Error Responses
+
+| HTTP Status | Cause |
+|-------------|-------|
+| `401` | Missing or invalid JWT |
+| `403` | No ACCEPTED connection with the other user |
+| `404` | Chat room or user not found |
+
+---
+
+## Database Schema (auto-generated by Hibernate)
+
+```sql
+CREATE TABLE chat_rooms (
+  id                     BIGINT AUTO_INCREMENT PRIMARY KEY,
+  user1_id               BIGINT NOT NULL,
+  user2_id               BIGINT NOT NULL,
+  last_message_content   VARCHAR(500),
+  last_message_at        DATETIME(6),
+  last_message_sender_id BIGINT,
+  created_at             DATETIME(6) NOT NULL,
+  UNIQUE KEY uk_chat_room_participants (user1_id, user2_id),
+  FOREIGN KEY (user1_id) REFERENCES users(id),
+  FOREIGN KEY (user2_id) REFERENCES users(id),
+  FOREIGN KEY (last_message_sender_id) REFERENCES users(id)
+);
+
+CREATE TABLE messages (
+  id           BIGINT AUTO_INCREMENT PRIMARY KEY,
+  chat_room_id BIGINT NOT NULL,
+  sender_id    BIGINT NOT NULL,
+  content      VARCHAR(2000) NOT NULL,
+  type         VARCHAR(10) NOT NULL,  -- TEXT | IMAGE | FILE
+  file_name    VARCHAR(255),
+  read_at      DATETIME(6),
+  sent_at      DATETIME(6) NOT NULL,
+  deleted      BOOLEAN NOT NULL DEFAULT FALSE,
+  FOREIGN KEY (chat_room_id) REFERENCES chat_rooms(id),
+  FOREIGN KEY (sender_id)    REFERENCES users(id)
+);
+```
+
+---
+
+## Sending an IMAGE or FILE message — Full Flow
+
+1. **Upload** the file via `POST /api/upload/chat-media/{chatRoomId}` (Cloudinary API)  
+   → receive `{ secureUrl, publicId }`
+2. **Send STOMP frame** to `/app/chat.send` with:
+   ```json
+   {
+     "chatRoomId": 42,
+     "content": "https://res.cloudinary.com/.../chat-media/chat-42.png",
+     "type": "IMAGE",
+     "fileName": null
+   }
+   ```
+3. The message is persisted in MySQL with the URL as `content`.
