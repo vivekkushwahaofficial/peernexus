@@ -64,18 +64,18 @@ public class AuthServiceImpl implements AuthService {
         if (userRepository.existsByEmail(request.email())) {
             throw new BadRequestException("Email already in use");
         }
-        // Enforce verified=false and enabled=false on registration
+        // Enforce verified=true and enabled=true on registration for development
         User user = User.builder()
                 .name(request.name())
                 .email(request.email().toLowerCase())
                 .password(passwordEncoder.encode(request.password()))
                 .role(Role.STUDENT)
-                .verified(false)
-                .enabled(false)
+                .verified(true)
+                .enabled(true)
                 .build();
         User saved = userRepository.save(user);
 
-        // Generate email verification token
+        // Generate email verification token (generate, but don't send for development)
         String tokenVal = UUID.randomUUID().toString();
         EmailVerificationToken verificationToken = EmailVerificationToken.builder()
                 .user(saved)
@@ -84,7 +84,8 @@ public class AuthServiceImpl implements AuthService {
                 .build();
         emailVerificationTokenRepository.save(verificationToken);
 
-        // Send verification email
+        // TODO: Re-enable email verification after SMTP configuration
+        /*
         String verificationUrl = backendBaseUrl + "/api/auth/verify?token=" + tokenVal;
         emailService.sendSimpleEmail(
                 saved.getEmail(),
@@ -95,6 +96,7 @@ public class AuthServiceImpl implements AuthService {
                 "This link will expire in 24 hours.\n\n" +
                 "The PeerNexus Team"
         );
+        */
 
         UserResponse response = userMapper.toResponse(saved);
         return AuthResponse.builder()
