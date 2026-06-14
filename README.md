@@ -1,133 +1,33 @@
 # PeerNexus
 
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.x-brightgreen.svg?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
-[![React](https://img.shields.io/badge/React-18.x-blue.svg?logo=react&logoColor=white)](https://react.dev/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.14-brightgreen.svg?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![React](https://img.shields.io/badge/React-18.3.1-blue.svg?logo=react&logoColor=white)](https://react.dev/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16.x-blue.svg?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Docker](https://img.shields.io/badge/Docker-Compatible-blue.svg?logo=docker&logoColor=white)](https://www.docker.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-PeerNexus is a production-grade, secure, and highly scalable SaaS collaborative learning platform. It serves as a modern student community network that bridges peer-to-peer knowledge sharing with real-time communication. PeerNexus combines a forum-style **Doubt Solving Engine**, a gamified **Reputation System**, instant **Private Messaging** (with WhatsApp-grade checkmarks, editing, deleting, pinning, and reactions), and structured **Study Groups** into a unified workspace.
+PeerNexus is a production-grade, secure, and highly scalable collaborative student learning platform. It serves as a modern student community network that bridges peer-to-peer knowledge sharing with real-time communication. PeerNexus combines a forum-style **Doubt Solving Engine**, a gamified **Reputation System**, instant **Private Messaging** (with real-time checkmarks, message editing, deleting, pinning, and reactions), and structured **Study Groups** into a unified collaborative workspace.
 
-Designed with a focus on web security, clean architecture, and extreme database performance, the platform is fully containerized and deployable via Docker.
-
----
-
-## Live Demo
-
-*   **Frontend Client:** `https://peernexus.example.com` *(Placeholder)*
-*   **Backend API Service:** `https://api.peernexus.example.com` *(Placeholder)*
-*   **Interactive API Documentation:** `https://api.peernexus.example.com/swagger-ui.html` *(Placeholder)*
-
----
-
-## Screenshots
-
-*Screenshots representing high-fidelity responsive user interfaces:*
-
-<table>
-  <tr>
-    <td width="50%"><strong>Home Feed</strong><br/><sub>Placeholder: /docs/screenshots/home-feed.png</sub></td>
-    <td width="50%"><strong>Ask Doubt Form</strong><br/><sub>Placeholder: /docs/screenshots/ask-doubt.png</sub></td>
-  </tr>
-  <tr>
-    <td width="50%"><strong>Doubt Detail & Answers</strong><br/><sub>Placeholder: /docs/screenshots/doubt-detail.png</sub></td>
-    <td width="50%"><strong>Real-Time Chat & Presence</strong><br/><sub>Placeholder: /docs/screenshots/chat.png</sub></td>
-  </tr>
-  <tr>
-    <td width="50%"><strong>Study Groups & Forums</strong><br/><sub>Placeholder: /docs/screenshots/groups.png</sub></td>
-    <td width="50%"><strong>Gamified Leaderboard</strong><br/><sub>Placeholder: /docs/screenshots/leaderboard.png</sub></td>
-  </tr>
-  <tr>
-    <td width="50%"><strong>User Profile & Stats</strong><br/><sub>Placeholder: /docs/screenshots/profile.png</sub></td>
-    <td width="50%"><strong>Admin Moderation Dashboard</strong><br/><sub>Placeholder: /docs/screenshots/admin-dashboard.png</sub></td>
-  </tr>
-</table>
-
----
-
-## Problem Statement
-
-Traditional educational forums are often fragmented, static, and unengaging:
-1.  **Fragmented Workspaces:** Students must juggle separate platforms for discussion boards (Piazza), instant messaging (WhatsApp/Discord), and collaborative documents.
-2.  **Lack of Incentive:** Peer-to-peer mentorship is hard to sustain without a structured system that recognizes and rewards high-quality contributions.
-3.  **Low Responsiveness:** Static forums lack the real-time feedback loops (typing indicators, presence indicators, instant read receipts) that drive student engagement.
-
-**PeerNexus** solves these problems by providing a unified collaborative hub. It integrates secure verification, real-time STOMP messaging, and a gamified reputation ledger to incentivize students to help each other resolve academic doubts, build connections, and create structured study forums.
-
----
-
-## Features
-
-### Authentication
-*   **Secure JWT Authentication:** Double-token system (short-lived access tokens, long-lived secure refresh tokens hashed via SHA-256 in the database).
-*   **Email Verification:** Registration flow requiring verified academic emails before accessing resources.
-*   **Self-Service Password Reset:** Secure, token-based verification codes sent via SMTP to verify identity.
-
-### Doubt Solving Platform
-*   **Rich Markdown Feed:** Create and view academic questions categorized by subjects and tagged for search.
-*   **Answer Engine:** Multiple answers supported per doubt with threaded comments.
-*   **Resolution Flagging:** Authors can mark specific answers as the accepted resolution.
-
-### Reputation System
-*   **Upvote/Downvote Ledger:** Transaction-backed upvoting system for doubts and answers.
-*   **Dynamic Reputation Calculation:** Automatic calculation based on contributions (e.g., +15 reputation for an accepted answer, +10 for an upvote).
-*   **Leaderboards:** Rolling rankings showcasing top academic contributors.
-
-### Real-Time Chat
-*   **Presence Tracking:** Persistent indicators showing connected users ("Active now" or "Last seen X mins ago").
-*   **WhatsApp Checkmarks:** Visual delivery status transition: `SENT` (single grey) $\rightarrow$ `DELIVERED` (double grey) $\rightarrow$ `READ` (double blue).
-*   **Inline Editing & Deleting:** Edit messages within a 15-minute window or delete them for everyone within 1 hour.
-*   **Message Reactions:** Interactive reaction drawer support with real-time updates.
-*   **Message Pinning:** Pin important messages to a collapsable room banner that smooth-scrolls to the source message.
-
-### Group Chat
-*   **Dedicated Group Forums:** Interactive real-time channels linked to student study groups.
-*   **Member Catalogs:** View active participants and verify authorization levels.
-
-### Study Groups
-*   **Discovery Forum:** Create and browse study groups by subject categories.
-*   **Access Control:** Owner moderation controls for member invites and ban requests.
-
-### Connections Network
-*   **Peer Invitations:** Send, accept, or ignore connection requests.
-*   **Security Barrier:** Direct private messaging is restricted to accepted connections to prevent spam.
-
-### Notifications
-*   **Real-time & Stored Alerts:** Get notified when your answer is upvoted, accepted, or when connection requests are received.
-
-### Admin Moderation
-*   **Reporting Workflow:** Flag inappropriate doubts, answers, or comments.
-*   **Audit Logging:** Tracks administrative actions (banning users, removing content) for accountability.
-
-### File Uploads
-*   **Cloudinary Secure Storage:** Supports image/file attachments validated by size, mime-type, and UUID-based collision prevention.
-
-### Security
-*   **IDOR Protection:** Ownership validation checks on all mutations (editing, deleting, pinning).
-*   **STOMP Connection Handshake Checks:** Anonymous WebSocket handshakes are strictly rejected.
-
-### Performance
-*   **N+1 Query Resolution:** Eager join-fetching and custom projection queries.
-*   **Hibernate Batching:** Configured `default_batch_fetch_size=20` to reduce database queries.
+Designed with a focus on web security, clean architecture, and database query optimization, the platform is fully containerized and deployable via Docker.
 
 ---
 
 ## Architecture Overview
 
-PeerNexus follows a clean, decoupled client-server architecture with state-of-the-art communication pathways:
+PeerNexus follows a decoupled client-server architecture with secure real-time communication pathways:
 
-```
+```text
                   +----------------------------------+
                   |           User Browser           |
                   +----------------------------------+
                                |        ^
-                   HTTPS REST  |        |  STOMP WebSockets
-                               v        v
+                    HTTPS REST  |        |  STOMP WebSockets
+                               /        /
                   +----------------------------------+
                   |    Nginx Reverse Proxy / CORS    |
                   +----------------------------------+
                                |        ^
-                               v        |
+                               /        |
                   +----------------------------------+
                   |  Spring Boot 3 Backend Service   |
                   +----------------------------------+
@@ -141,555 +41,578 @@ PeerNexus follows a clean, decoupled client-server architecture with state-of-th
 +----------+             +------------+             +---------------+
 ```
 
-### WebSocket STOMP Flow
-1.  **Connection:** Client opens connection via SockJS to `/ws`. Handshake interceptor extracts JWT, validates signatures, and maps the authenticated user principal.
-2.  **Messaging:** Client publishes to `/app/chat.send`. The backend persists the message, resolves the recipient's session, and routes the message to the recipient's private destination `/user/{recipient}/queue/messages`.
-3.  **Presence:** WebSocket connect/disconnect events trigger `WebSocketEventListener.java`. The listener updates database status flags and broadcasts status updates to public topic `/topic/status/{userId}`.
-
-### Cloudinary Upload Flow
-1.  Client uploads a file to `/api/upload` via `multipart/form-data`.
-2.  The backend validates file size (10MB limit) and mime-types.
-3.  The backend streams the byte array to Cloudinary using a unique UUID public-id prefix.
-4.  Cloudinary returns the secure HTTPS URL, which is returned to the client and embedded into the chat payload.
-
-### Authentication Flow
-1.  Client submits credentials to `/api/auth/login`.
-2.  The backend generates a secure short-lived Access JWT (15-min expiration) and a long-lived Refresh Token (30-day expiration).
-3.  The Refresh Token is stored securely as a SHA-256 hash in the PostgreSQL database.
-4.  On access token expiration, the client posts the plaintext Refresh Token to `/api/auth/refresh`, which validates, hashes, matches the DB entry, and issues a new access token.
+### Communication Flows
+1. **WebSocket STOMP Channel:** Clients open connections via SockJS to the `/ws` handshake endpoint. The interceptor extracts the JWT token, validates signatures, and maps the authenticated user principal. Message packets are routed downstream to user-private queues (`/user/queue/chat`) or public group topics (`/topic/group.{groupId}`).
+2. **Cloudinary Upload Stream:** Media attachments are sent as `multipart/form-data` to backend endpoints, validated for size/type, and streamed directly to Cloudinary using UUID-prefixed file signatures, returning secure HTTPS URLs.
+3. **Double-Token Authentication:** Security uses short-lived JWT Access Tokens (15-minute expiration) and database-stored SHA-256 hashed Refresh Tokens (30-day expiration) to manage user sessions securely.
 
 ---
 
 ## Technology Stack
 
-### Backend
-| Technology | Version | Purpose |
-| :--- | :--- | :--- |
-| Spring Boot | 3.3.x | Core application framework |
-| Spring Security | 6.x | Security, JWT filtering, and Method security |
-| Spring Data JPA | 3.x | Object-relational mapping (Hibernate) |
-| Flyway | 10.x | Database schema migrations |
-| Java | 21 | Modern runtime features (virtual threads ready) |
-
-### Frontend
-| Technology | Version | Purpose |
-| :--- | :--- | :--- |
-| React | 18.3 | User interface library |
-| React Query | 5.x | Declarative data fetching and caching |
-| React Router | 6.x | Single Page App declarative routing |
-| Tailwind CSS | 3.x | Utility-first styling framework |
-| Axios | 1.7 | HTTP Client with interceptors |
-
-### Database & Storage
-| Technology | Version | Purpose |
-| :--- | :--- | :--- |
-| PostgreSQL | 16.x | Primary relational database |
-| H2 Database | 2.2 | In-memory database for automated testing |
-| Cloudinary | REST SDK | Secure image/document cloud storage |
-
-### Infrastructure & DevOps
-| Technology | Version | Purpose |
-| :--- | :--- | :--- |
-| Docker | 26.x | Containerization and scaling |
-| Docker Compose | 2.x | Multi-container environment orchestration |
-| Spring Actuator | 3.x | Production health monitoring and diagnostics |
+| Component | Technology | Version | Purpose |
+| :--- | :--- | :--- | :--- |
+| **Frontend** | React | 18.3.1 | User interface rendering |
+| | Vite | 5.4.0 | Build tool and dev server |
+| | React Router Dom | 6.26.1 | Declarative routing & layout management |
+| | Tailwind CSS | 3.4.9 | Utility-first responsive styling |
+| | TanStack Query | 5.51.0 | Server state caching and refetching |
+| | Axios | 1.7.3 | HTTP client with security interceptors |
+| | STOMP JS & SockJS | 7.3.0 / 1.6.1 | WebSocket protocol orchestration |
+| **Backend** | Spring Boot | 3.5.14 | Core server application framework |
+| | Spring Security | 6.x | Authorization & authentication filter chain |
+| | JWT (JJWT) | 0.12.5 | Cryptographic user tokens |
+| | MapStruct | 1.5.5.Final | Type-safe entity-to-DTO mappings |
+| | Hibernate / JPA | 6.x / 3.x | Object-relational database mapping |
+| | Spring Mail | 3.x | Transactional email integration |
+| **Database** | PostgreSQL | 16.x (Alpine) | Persistent transactional storage |
+| | Flyway | 10.x | Database schema migrations (V1 to V13) |
+| | H2 Database | 2.2.x | In-memory database for testing suite |
+| **DevOps** | Docker | 26.x | Containerization and deployment packaging |
+| | Docker Compose | 3.9 | Multi-container environment orchestration |
 
 ---
 
-## Project Structure
+## Features
 
-```
+### Authentication & Authorization
+* **Secure JWT Session Control:** Stateless session management via short-lived JWT access tokens and long-lived refresh tokens.
+* **Email Verification Token Flow:** Registration requires validation of a single-use verification token sent via SMTP.
+* **Token-based Password Recovery:** Secure password resets using ephemeral verification codes.
+* **Role-Based Access Controls (RBAC):** Strict endpoint protection for `STUDENT`, `VERIFIED_STUDENT`, `MODERATOR`, and `ADMIN` users.
+
+### User Profile Management
+* **Presence Tracking:** Live status indicators ("Active now", "Last seen X mins ago") managed via WebSocket listeners.
+* **Detailed Academic Portfolios:** Customizable bio, skills, interests, and reputation tiers.
+* **Profile Picture pipeline:** Direct uploads to Cloudinary with secure deletion logic.
+
+### Doubt Solving Engine
+* **Rich Markdown Editor & Feed:** Ask doubts with subject categorization, custom tagging, and image attachments.
+* **Answer & Discussion Engine:** Threaded replies to doubts with upvote/downvote capabilities.
+* **Accept Resolution Flag:** Doubt authors can accept an answer, highlighting it and locking resolution credits.
+
+### Gamification & Reputation
+* **Reputation Ledger:** Immutable transaction logs tracking point edits (+15 for accepted answer, +10 for received upvotes).
+* **Reputation Tiers:** Rank badges starting at `BEGINNER` through `CONTRIBUTOR`, `MENTOR`, `EXPERT`, up to `LEGEND`.
+* **Global Leaderboards:** Real-time ranks of the top contributors in the community.
+
+### Real-Time Connections & Chat
+* **Peer Verification Layer:** Chat messaging is disabled until users establish an `ACCEPTED` connection request.
+* **WhatsApp-Grade Message Status:** Instant message status transitions (`SENT` -> `DELIVERED` -> `READ`).
+* **Message Management:** Edit messages inline (within 15 minutes) or delete them for everyone (within 1 hour).
+* **Reactions & Pinning:** Real-time message reactions and banner pinning with scroll-to-source click handling.
+* **Local Deletion:** Users can hide messages from their workspace using "Delete for me".
+
+### Study Groups
+* **Discovery Board:** Categorized discovery search for public and private study groups.
+* **Request & Approve Moderation:** Join requests for private groups reviewed by group owners/admins.
+* **Interactive Chat Channels:** Dedicated WebSocket channels restricted to group members.
+
+### Moderation & Audit System
+* **Abuse Reporting:** Users can flag doubts, answers, messages, or groups for moderation review.
+* **Moderator Penalty Suite:** Warn, suspend (temporary login blocks), or permanently ban users.
+* **System Audit Trail:** Permanent audit logs capturing all admin actions for logging integrity.
+
+---
+
+## Folder Structure
+
+```text
 peernexus/
-├── docker-compose.yml              # Container orchestration configuration
-├── .env.example                    # Template for required secrets
+├── docker-compose.yml              # Multi-container orchestration config
+├── .env.example                    # Template for required environment variables
+├── README.md                       # Comprehensive project documentation
+├── verify_group_enter_*.webp       # Media asset for visual validation
 ├── peernexus-backend/              # Spring Boot Backend Codebase
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/com/peernexus/peernexus/
-│   │   │   │   ├── auth/           # Login, Token generation, Registration
-│   │   │   │   ├── chat/           # REST endpoints, STOMP handlers, Presence
-│   │   │   │   ├── cloudinary/     # Cloud media integrations
-│   │   │   │   ├── common/         # Global Exceptions, Standard API wrappers
-│   │   │   │   ├── config/         # Security configs, CORS, WS handshake
-│   │   │   │   ├── connection/     # Invitation engine
-│   │   │   │   ├── doubt/          # Forum core, Tag aggregation
-│   │   │   │   ├── group/          # Study group forums and member catalog
-│   │   │   │   ├── notification/   # Real-time alert broadcasts
-│   │   │   │   ├── reputation/     # Reputation transactions and ledger
-│   │   │   │   └── user/           # User profiles
-│   │   │   └── resources/
-│   │   │       ├── db/migration/   # Flyway SQL migrations (V1 to V13)
-│   │   │       └── application.properties
-│   └── pom.xml                     # Maven dependencies config
-└── peernexus-frontend/             # React SPA Codebase
-    ├── src/
-    │   ├── components/             # Reusable UI widgets
-    │   │   ├── chat/               # Bubble, Sidebar, PinnedDropdown
-    │   │   ├── common/             # Spinner, Button, Avatar
-    │   │   └── layout/             # Navbar, MainLayout wrapper
-    │   ├── hooks/                  # Custom hooks (useWebSocket, useChat)
-    │   ├── pages/                  # Top-level views (Login, Home, Leaderboard)
-    │   ├── services/               # REST API layers (apiClient, chatService)
-    │   └── websocket/              # WebSocket sockets config
-    ├── tailwind.config.js
-    └── vite.config.js
+│   ├── Dockerfile                  # Multi-stage JVM runtime build instructions
+│   ├── pom.xml                     # Maven dependency mapping
+│   ├── schema.sql                  # Auto-generated SQL schema dump
+│   ├── docs/                       # Modules API documentation
+│   └── src/
+│       ├── main/
+│       │   ├── java/com/peernexus/peernexus/
+│       │   │   ├── admin/           # Moderation, reports, dashboard and audit logging
+│       │   │   ├── answer/          # Doubt replies and vote tracking
+│       │   │   ├── auth/            # JWT validation, signup, reset tokens
+│       │   │   ├── chat/            # Private chat room REST and STOMP handlers
+│       │   │   ├── cloudinary/     # Cloudinary media upload/delete endpoints
+│       │   │   ├── common/          # Global exceptions, standard response wrappers
+│       │   │   ├── config/          # CORS, Spring Security, WebSockets mapping
+│       │   │   ├── connection/      # Peer invitations network layer
+│       │   │   ├── doubt/           # Forum doubt feed, tag aggregation
+│       │   │   ├── group/           # Study group metadata, admin, and catalogs
+│       │   │   ├── groupchat/       # Study group real-time messaging
+│       │   │   ├── notification/   # In-app alert triggers and storage
+│       │   │   ├── reputation/     # Point transaction engine and leaderboard
+│       │   │   └── user/            # User profile services
+│       │   └── resources/
+│       │       ├── db/migration/   # Flyway versioned SQL scripts V1-V13
+│       │       └── application.properties
+│       └── test/                    # In-memory integration tests
+└── peernexus-frontend/             # React Frontend Codebase
+    ├── Dockerfile                  # Multi-stage Vite static Nginx build
+    ├── package.json                # NPM dependency management
+    ├── tailwind.config.js          # Styling configurations
+    ├── vite.config.js              # Vite configurations
+    └── src/
+        ├── components/             # Reusable UI widgets and layout views
+        ├── context/                # React state providers (Auth, WS)
+        ├── hooks/                  # Custom hooks (WS handlers, UI helpers)
+        ├── pages/                  # Views (DoubtFeed, Admin, ChatPage, etc.)
+        ├── router/                 # Secure layout routing mapping
+        ├── services/               # REST client modules (Axios setup)
+        └── websocket/              # WebSocket configuration settings
 ```
 
 ---
 
-## Database Design
+## Database Schema
 
-PeerNexus maps academic and collaboration workflows onto a highly indexed PostgreSQL schema. Flyway ensures migrations (V1 to V13) apply cleanly.
+PeerNexus utilizes an optimized relational PostgreSQL database. Below are details of the database entities and relationships.
 
-```
-                    +---------------+          +---------------+
-                    |     Users     |          |  Connections  |
-                    +---------------+          +---------------+
-                    | PK  id        |<-------->| FK  sender_id |
-                    |     email     |          | FK  recip_id  |
-                    |     reputation|          +---------------+
-                    +---------------+
-                      ^           ^
-                      |           |
-                      v           v
-               +------------+   +------------+
-               |   Doubts   |   | Chat Rooms |
-               +------------+   +------------+
-               | PK  id     |   | PK  id     |
-               | FK  user_id|   | FK  user1  |
-               +------------+   | FK  user2  |
-                 ^              +------------+
-                 |                ^
-                 v                |
-               +------------+     v
-               |  Answers   |   +------------+
-               +------------+   |  Messages  |
-               +------------+   +------------+
-               | PK  id     |   | PK  id     |
-               | FK  doubt_id|  | FK  room_id|
-               | FK  user_id|   | FK  send_id|
-               +------------+   +------------+
-```
+### Relational Schema Tables
 
-### Schema Explanations:
-1.  **Users:** Holds user profile metadata, credentials, activation status (`enabled`, `verified`), and presence data (`online`, `last_seen`).
-2.  **Doubts:** Academic questions containing tags, categories, title, body, and upvote/downvote scores.
-3.  **Answers:** Solutions linked to a specific doubt, including an `accepted` flag.
-4.  **Votes:** Polymorphic upvote/downvote tracker mapping a user's vote on doubts or answers.
-5.  **Groups:** Collaboration study groups containing subject metadata and association mapping to group members.
-6.  **Messages:** Individual chat transactions inside a room containing attachment metadata and delivery statuses (`status`).
-7.  **Notifications:** Alert ledger records storing notification type, target, and read states.
-8.  **Connections:** Edge list table mapping accepted connection invitations between users.
-9.  **Reports:** Content flags storing reported items and review states.
-10. **Audit Logs:** Tracks administrative moderations (deletions, bans).
-11. **Reputation Transactions:** Immutable audit trail logging point changes (+15, -2, etc.) for accountability.
+#### `users`
+| Field | Type | Constraint | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | `bigint` | Primary Key | Generated automatically |
+| `email` | `varchar(255)` | Unique, Not Null | University user email address |
+| `name` | `varchar(255)` | Not Null | User profile display name |
+| `password` | `varchar(255)` | Not Null | BCrypt hashed password string |
+| `role` | `varchar(255)` | Not Null | Role: `STUDENT`, `VERIFIED_STUDENT`, `MODERATOR`, `ADMIN` |
+| `reputation_points`| `integer` | Default `0` | Sum of earned reputation credits |
+| `reputation_level` | `varchar(20)` | Not Null | Tier: `BEGINNER`, `CONTRIBUTOR`, `MENTOR`, `EXPERT`, `LEGEND` |
+| `bio` | `varchar(500)` | Nullable | User-provided profile bio details |
+| `skills` | `varchar(500)` | Nullable | User tags mapping academic skills |
+| `interests` | `varchar(500)` | Nullable | Academic areas of interest |
+| `enabled` | `boolean` | Default `true` | Status flag mapping moderation blocks |
+| `verified` | `boolean` | Default `false` | True if verified via email token |
+| `created_at` | `timestamp` | Not Null | Record creation timestamp |
+| `updated_at` | `timestamp` | Not Null | Last record update timestamp |
 
----
+#### `doubts`
+| Field | Type | Constraint | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | `bigint` | Primary Key | Generated automatically |
+| `title` | `varchar(150)` | Not Null | Title of academic doubt |
+| `content` | `varchar(5000)`| Not Null | Markdown content of question |
+| `status` | `varchar(20)` | Not Null | Status: `OPEN`, `ANSWERED`, `CLOSED` |
+| `author_id` | `bigint` | Foreign Key | Linked to `users.id` |
+| `category_id` | `bigint` | Foreign Key | Linked to `categories.id` |
 
-## API Modules
+#### `answers`
+| Field | Type | Constraint | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | `bigint` | Primary Key | Generated automatically |
+| `content` | `varchar(5000)`| Not Null | Text response markdown content |
+| `accepted` | `boolean` | Not Null | Marked as accepted solution |
+| `accepted_at` | `timestamp` | Nullable | Accepted timestamp |
+| `author_id` | `bigint` | Foreign Key | Linked to `users.id` |
+| `doubt_id` | `bigint` | Foreign Key | Linked to `doubts.id` |
 
-### Auth Module (`/api/auth`)
-*   `POST /register` – Register a new user.
-*   `POST /login` – Authenticate user, returns short-lived access token and refresh cookie.
-*   `POST /refresh` – Exchange refresh token for a new access token.
-*   `POST /verify` – Validate registration token.
-*   `POST /forgot-password` – Issue password reset verification code.
-*   `POST /reset-password` – Process password change via token.
+#### `study_groups`
+| Field | Type | Constraint | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | `bigint` | Primary Key | Generated automatically |
+| `name` | `varchar(100)` | Not Null | Name of the group |
+| `topic` | `varchar(100)` | Nullable | Focus subject or topic |
+| `description` | `varchar(1000)`| Nullable | Details regarding group goals |
+| `image_url` | `varchar(500)` | Nullable | Group cover photo CDN address |
+| `is_private` | `boolean` | Not Null | Restricted entry flag |
+| `member_count` | `integer` | Default `1` | Denormalized count of group members |
 
-### Doubt Module (`/api/doubts`)
-*   `GET /` – Paginated list of doubts filtered by category or tags.
-*   `POST /` – Create new doubt (HTML/Markdown content).
-*   `GET /{id}` – Retrieve detail for doubt.
-*   `DELETE /{id}` – Delete doubt (restricted to owner or moderator).
-*   `POST /{id}/vote` – Cast upvote/downvote.
+#### `messages`
+| Field | Type | Constraint | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | `bigint` | Primary Key | Generated automatically |
+| `chat_room_id` | `bigint` | Foreign Key | Linked to `chat_rooms.id` |
+| `sender_id` | `bigint` | Foreign Key | Linked to `users.id` |
+| `type` | `varchar(10)` | Not Null | Message Type: `TEXT`, `IMAGE`, `FILE` |
+| `content` | `varchar(2000)`| Not Null | Message payload content |
+| `file_name` | `varchar(255)` | Nullable | Filename for image/file uploads |
+| `read_at` | `timestamp` | Nullable | Message read receipt timestamp |
+| `deleted` | `boolean` | Default `false` | Status mapping "Delete for everyone" |
+| `sent_at` | `timestamp` | Not Null | Dispatch timestamp |
 
-### Answer Module (`/api/doubts/{doubtId}/answers`)
-*   `POST /` – Submit an answer.
-*   `POST /{id}/accept` – Accept answer as resolution (restricted to doubt owner).
-*   `POST /{id}/vote` – Upvote/downvote answer.
-
-### Chat Module (`/api/chat`)
-*   `GET /rooms` – List all private rooms for current user with unread counts.
-*   `POST /rooms/{otherUserId}/or-create` – Start conversation room.
-*   `GET /rooms/{roomId}/messages` – Paginated message history (newest first).
-*   `POST /rooms/{roomId}/read` – Mark room messages as read.
-*   `GET /search` – Filter and search message text.
-*   `GET /rooms/{roomId}/pinned` – Retrieve pinned messages in a room.
-*   `POST /messages/{messageId}/pin` – Toggle pin status of a message.
-*   `POST /messages/{messageId}/delete-for-me` – Delete a message locally.
-
-### Group Module (`/api/groups`)
-*   `GET /` – List study groups.
-*   `POST /` – Create a study group.
-*   `GET /{id}/members` – View group catalog list.
+### Key Entity Relationships
+* **One-to-Many:**
+  * `User` -> `Doubts` (A user can ask multiple doubts)
+  * `User` -> `Answers` (A user can write multiple answers)
+  * `Doubt` -> `Answers` (A doubt can have multiple answers)
+  * `StudyGroup` -> `GroupMembers` (A group contains multiple member listings)
+  * `ChatRoom` -> `Messages` (A private room contains multiple messages)
+* **Many-to-Many:**
+  * `Doubt` <-> `Tag` (Mapped via join table `doubt_tags` tracking tag classification)
+* **One-to-One:**
+  * `User` <-> `RefreshToken` (Unique session refresh reference mapping)
+  * `User` <-> `EmailVerificationToken` (Ephemeral sign-up verification token)
 
 ---
 
-## Security Features
+## API Endpoints
 
-*   **JWT Handshake Interceptor:** Extracts and validates signatures for all WebSocket connections, matching user credentials before enabling STOMP subscriptions.
-*   **Plaintext Token Protection:** Refresh tokens are hashed via SHA-256 before database storage. Plaintext keys are decoupled from JPA entities upon transaction commit via `entityManager.detach` to block Hibernate dirty-checking overrides.
-*   **Role-Based Access Controls (RBAC):** Restricts dangerous API endpoints `/api/admin/**` to users possessing the `ROLE_ADMIN` authority.
-*   **Input Validation:** Strict validators enforce string lengths (e.g. 2000-character chat messages) and valid file sizes/types.
-*   **CORS Configuration:** Fine-grained resource sharing setup allowing request origins only from verified system-configured environments.
-
----
-
-## Real-Time Communication
-
-PeerNexus features an optimized WebSocket architecture utilizing STOMP over SockJS:
-
-```
-Sender Client                 Spring Boot Broker             Recipient Client
-     |                               |                              |
-     |--- SEND /app/chat.send ------>|                              |
-     |    (Payload + Access JWT)     |                              |
-     |                               |--- PUSH /queue/messages ---->|
-     |                               |    (Persisted Msg with ID)   |
-     |<-- PUSH /queue/messages ------|                              |
-     |    (Confirmation to Sender)   |                              |
-     |                               |                              |
-```
-
-*   **Typing Indicators:** Broadcasts typing states over WebSocket topic `/user/queue/typing`.
-*   **Presence Tracking:** Automatically triggers `markOnline`/`markOffline` on WebSocket session lifecycle hooks and publishes to `/topic/status/{userId}`.
-*   **Read Receipts:** Marks all unread items as `READ` via `/app/chat.read` and sends a confirmation payload back to the sender.
-
----
-
-## Performance Optimizations
-
-*   **N+1 Query Prevention:** Chat room list endpoints dynamically resolve unread counts using an optimized `@Query` executing a single `group by` aggregation query, avoiding loop-nested sub-queries.
-*   **Hibernate Batching:** Configured `spring.jpa.properties.hibernate.default_batch_fetch_size=20` to fetch lazy collections (such as doubt images and tags) in batch batches rather than executing individual queries.
-*   **Entity Mappings Eager Fetching:** Utilizes `JOIN FETCH` on message retrievals to load the message sender profile in the primary join query.
-*   **Database Indexing:** Created composite database indexes on (`chat_room_id, sent_at DESC`) and (`user_id, message_id`) for search and query speedups.
-
----
-
-## Production Readiness Report
-
-| Indicator | Rating | Justification |
+### Authentication (`/api/auth`)
+| Method | Endpoint | Description |
 | :--- | :--- | :--- |
-| **Security** | 9.5 / 10 | Encrypted token storage, strong password hashing, WebSocket validation, input sanitization, and CORS filtering. |
-| **Scalability** | 8.5 / 10 | Decoupled client-server architecture. Supports horizontal scaling using Docker. Can be integrated with Redis for WebSocket clustering. |
-| **Maintainability** | 9.0 / 10 | Clean packaging structure, layered architecture, Flyway migration files, and comprehensive entity structure mapping. |
-| **Deployment** | 9.0 / 10 | Fully dockerized builds featuring multi-stage production builds and automatic environment imports. |
-| **Monitoring** | 8.0 / 10 | Health and diagnostic endpoints exposed via Spring Actuator. |
-| **Testing** | 8.5 / 10 | Automated test suite utilizing clean H2 database mappings to execute entity validation and controller auth checks. |
-| **Overall Score** | **8.75 / 10** | A robust, highly secure, and performance-optimized SaaS application ready for production deployment. |
+| **POST** | `/api/auth/register` | Register new user profile |
+| **POST** | `/api/auth/login` | Authenticate user & issue tokens |
+| **POST** | `/api/auth/refresh` | Exchange refresh token for fresh access JWT |
+| **POST** | `/api/auth/logout` | Revoke refresh token and invalidate session |
+| **GET** | `/api/auth/verify` | Validate registration email token |
+| **POST** | `/api/auth/resend-verification` | Re-dispatch signup verification token |
+| **POST** | `/api/auth/forgot-password` | Generate reset token and email it |
+| **POST** | `/api/auth/reset-password` | Finalize password reset using token |
+
+### User Directory (`/api/users`)
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| **GET** | `/api/users/me` | Fetch active user profile and authorities |
+| **GET** | `/api/users/{id}` | Fetch public profile metadata of a student |
+| **PUT** | `/api/users/me` | Update current user details (bio, skills, etc.) |
+| **POST** | `/api/users/me/profile-picture` | Stream and assign profile photo |
+
+### Connection Networking (`/api/connections`)
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| **POST** | `/api/connections/request` | Dispatch connection request to another user |
+| **POST** | `/api/connections/{id}/accept` | Accept incoming connection request |
+| **POST** | `/api/connections/{id}/reject` | Reject incoming connection request |
+| **POST** | `/api/connections/{id}/cancel` | Cancel outgoing connection request |
+| **DELETE**| `/api/connections/{id}` | Terminate established peer connection |
+| **GET** | `/api/connections` | List active peer connections (paginated) |
+| **GET** | `/api/connections/requests/incoming` | List pending inbound request edges |
+| **GET** | `/api/connections/requests/outgoing` | List pending outbound request edges |
+| **GET** | `/api/connections/mutual/{userId}` | List mutual connection nodes |
+
+### Doubt Forum (`/api/doubts`)
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| **POST** | `/api/doubts` | Create a new doubt entry |
+| **PUT** | `/api/doubts/{id}` | Modify doubt details (owner/moderator only) |
+| **DELETE**| `/api/doubts/{id}` | Delete doubt post (owner/moderator only) |
+| **GET** | `/api/doubts/{id}` | Retrieve doubt and tag nodes |
+| **GET** | `/api/doubts` | List doubts feed (paginated) |
+| **GET** | `/api/doubts/search` | Full-text query on doubt title and content |
+| **GET** | `/api/doubts/category/{categoryId}` | Filter doubts feed by specific category |
+| **POST** | `/api/doubts/{id}/images` | Upload and attach images to doubt |
+
+### Answers (`/api/answers`)
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| **POST** | `/api/answers` | Submit answer text for a doubt |
+| **PUT** | `/api/answers/{id}` | Modify answer text (owner only) |
+| **DELETE**| `/api/answers/{id}` | Delete answer (owner/moderator only) |
+| **GET** | `/api/answers/{id}` | Fetch specific answer record |
+| **GET** | `/api/answers/doubt/{doubtId}` | List answers for doubt (paginated) |
+| **POST** | `/api/answers/{id}/accept` | Accept answer as solution (doubt author only) |
+| **POST** | `/api/answers/{id}/vote` | Cast upvote/downvote for answer |
+
+### Private Chats Inbox (`/api/chat`)
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| **GET** | `/api/chat/rooms` | Retrieve chat rooms inbox feed with counts |
+| **POST** | `/api/chat/rooms/{otherUserId}/or-create` | Open chat room with user |
+| **GET** | `/api/chat/rooms/{roomId}/messages` | Paginated message logs history |
+| **POST** | `/api/chat/rooms/{roomId}/read` | Mark all unread messages as read |
+| **GET** | `/api/chat/search` | Search message texts inside chat rooms |
+| **GET** | `/api/chat/rooms/{roomId}/pinned` | Retrieve pinned messages banner data |
+| **POST** | `/api/chat/messages/{messageId}/pin` | Pin/unpin a message in the room |
+| **POST** | `/api/chat/messages/{messageId}/delete-for-me` | Delete message locally |
+
+### Study Groups (`/api/groups`)
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| **POST** | `/api/groups` | Create new study group |
+| **GET** | `/api/groups` | List study groups |
+| **GET** | `/api/groups/search` | Search study groups by name or topic |
+| **GET** | `/api/groups/me` | List groups caller is member of |
+| **GET** | `/api/groups/{id}` | Retrieve group metadata |
+| **PUT** | `/api/groups/{id}` | Update group details |
+| **DELETE**| `/api/groups/{id}` | Delete group (owner only) |
+| **POST** | `/api/groups/{id}/image` | Upload group cover picture |
+| **POST** | `/api/groups/{id}/join` | Join a public group |
+| **DELETE**| `/api/groups/{id}/leave` | Leave a group |
+| **GET** | `/api/groups/{id}/members` | Fetch group members directory |
+| **DELETE**| `/api/groups/{id}/members/{memberId}`| Kick member (owner/admin only) |
+| **PUT** | `/api/groups/{id}/members/{memberId}/promote`| Promote member to admin (owner only) |
+| **PUT** | `/api/groups/{id}/members/{memberId}/transfer`| Transfer ownership (owner only) |
+| **POST** | `/api/groups/{id}/join-requests` | Send join request to private group |
+| **GET** | `/api/groups/{id}/join-requests` | List pending join requests (owner/admin only) |
+| **PUT** | `/api/groups/{id}/join-requests/{requestId}/approve`| Approve request |
+| **PUT** | `/api/groups/{id}/join-requests/{requestId}/reject` | Reject request |
+| **GET** | `/api/groups/join-requests/me` | Fetch active user's join requests |
+
+### Reputation System (`/api/reputation`)
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| **GET** | `/api/reputation/me` | Fetch current user reputation scores |
+| **GET** | `/api/reputation/me/history` | List user reputation credit logs |
+| **GET** | `/api/reputation/leaderboard` | Get paginated contributor rank ledger |
+
+### Notifications (`/api/notifications`)
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| **GET** | `/api/notifications` | Fetch user notifications history |
+| **POST** | `/api/notifications/{id}/read` | Mark alert notification as read |
+| **POST** | `/api/notifications/read-all` | Mark all user alert notifications as read |
+
+### Cloudinary CDN Media Control (`/api/upload` & `/api/media`)
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| **POST** | `/api/upload/profile-picture/{userId}` | Upload profile photo (avatar) |
+| **POST** | `/api/upload/doubt-image/{doubtId}` | Upload image attachment for doubt |
+| **POST** | `/api/upload/chat-media/{chatRoomId}` | Upload file/image in chat message |
+| **POST** | `/api/upload/group-image/{groupId}` | Upload group cover banner |
+| **DELETE**| `/api/media` | Remove media asset (owner verify check) |
+| **DELETE**| `/api/media/force` | Force remove media asset (mod/admin only) |
+
+### Admin Moderation Control (`/api/admin`)
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| **GET** | `/api/admin/dashboard` | Fetch platform-wide counts & stats (ADMIN only) |
+| **POST** | `/api/admin/reports` | Submit abuse report on content |
+| **GET** | `/api/admin/reports` | List submitted abuse reports (mod/admin only) |
+| **GET** | `/api/admin/reports/{reportId}` | Retrieve details of a report (mod/admin only) |
+| **PUT** | `/api/admin/reports/{reportId}/review`| Review report and add notes (mod/admin only) |
+| **POST** | `/api/admin/moderation/actions`| Apply Warning, Suspend, Ban, or Delete Action (mod/admin) |
+| **GET** | `/api/admin/moderation/actions`| List applied moderation actions (mod/admin only) |
+| **GET** | `/api/admin/moderation/actions/user/{userId}`| Fetch penalty history of a user (mod/admin) |
+| **GET** | `/api/admin/audit-log` | Get all admin action records (ADMIN only) |
+| **GET** | `/api/admin/audit-log/actor/{actorId}`| Fetch action logs of specific admin (ADMIN only) |
+
+### WebSocket STOMP Actions (Prefix: `/app`)
+| Destination | Handler / Event | Payload | Purpose |
+| :--- | :--- | :--- | :--- |
+| `/app/chat.send` | Private Message | Message payload JSON | Sends direct message to chat room user |
+| `/app/chat.typing` | Typing indicator | `{ roomId: Long, typing: Boolean }`| Broadcasts user typing activity |
+| `/app/chat.read` | Read receipt | `{ roomId: Long, lastReadMessageId: Long }`| Marks unread messages as read |
+| `/app/chat.reaction`| Reaction drawer | `{ messageId: Long, emoji: String }`| Adds reaction (like/love) to message |
+| `/app/chat.edit` | Edit message | `{ messageId: Long, newContent: String }`| Modifies sent message content |
+| `/app/chat.delete-for-everyone`| Delete message | `{ messageId: Long }` | Deletes message for all users |
+| `/app/group.send` | Group Message | GroupMessage payload JSON | Sends message to study group channel |
+| `/app/group.typing`| Group typing | `{ groupId: Long, typing: Boolean }`| Stretches typing state to group members |
+| `/app/group.read` | Group read | `{ groupId: Long, lastReadMessageId: Long }`| Updates read receipts in group |
+
+---
+
+## Database Design Relationships
+
+```text
+               +-----------------------------+
+               |            users            |
+               +-----------------------------+
+               | PK  id                      |
+               |     email                   |
+               +-----------------------------+
+                 ^    ^      ^    ^      ^
+                 |    |      |    |      |
+        +--------+    |      |    |      +--------+
+        |             |      |    |               |
+        v             |      |    v               v
+  +-----------+       |      |  +-----------+   +-------------+
+  |  doubts   |       |      |  |connections|   |group_members|
+  +-----------+       |      |  +-----------+   +-------------+
+  | PK  id    |       |      |  | PK  id    |   | PK  id      |
+  | FK  author|<------+      |  | FK  reques|   | FK  group_id|
+  +-----------+              |  | FK  recip |   | FK  user_id |
+    ^                        |  +-----------+   +-------------+
+    |                        |                    ^
+    v                        v                    |
+  +-----------+            +------------+         v
+  |  answers  |            | chat_rooms |       +-------------+
+  +-----------+            +------------+       |study_groups |
+  | PK  id    |            | PK  id     |       +-------------+
+  | FK  doubt |            | FK  user1  |       | PK  id      |
+  | FK  author|<-----------| FK  user2  |       +-------------+
+  +-----------+            +------------+
+                             ^
+                             |
+                             v
+                           +------------+
+                           |  messages  |
+                           +------------+
+                           | PK  id     |
+                           | FK  room_id|
+                           | FK  sender |
+                           +------------+
+```
+
+* **One-to-One Map:** `users` table joins 1:1 on `refresh_tokens` (`user_id` unique FK), `email_verification_token` and `password_reset_token`.
+* **Many-to-One Map:** `doubts` join on `categories` (category classifications) and `users` (author link).
+* **Many-to-Many Map:** `doubts` join on `tags` via `doubt_tags` tracking subject classifications.
+* **One-to-Many cascade:** A `chat_room` links to multiple `messages` objects. `study_group` links to `group_members` entries.
+
+---
+
+## Setup & Local Installation
+
+### Prerequisites
+1. **Java SDK 21:** Modern enterprise runtime environment features enabled.
+2. **Maven 3.9+:** Backend build dependency management.
+3. **Node.js 18+ & npm:** Frontend local workspace environment.
+4. **PostgreSQL 16:** Relational database server.
+5. **Cloudinary Account:** For cloud storage configuration credentials.
+
+### Backend Setup
+1. Navigate to the backend directory:
+   ```bash
+   cd peernexus-backend
+   ```
+2. Copy the configuration template `.env.example` to `.env` and fill in your database, email server, and Cloudinary credentials:
+   ```bash
+   cp .env.example .env
+   ```
+3. Build the application using the Maven wrapper:
+   ```bash
+   ./mvnw clean install
+   ```
+4. Run the Spring Boot application server:
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+
+### Frontend Setup
+1. Navigate to the frontend directory:
+   ```bash
+   cd ../peernexus-frontend
+   ```
+2. Copy the development environment properties:
+   ```bash
+   cp .env.example .env.local
+   ```
+3. Install package dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the Vite hot-reloading development server:
+   ```bash
+   npm run dev
+   ```
+   The frontend should now be running at `http://localhost:5173`.
+
+### Full-Stack Docker Container Compose Setup
+If you want to run the entire infrastructure locally inside Docker:
+1. Ensure your `.env` file at the project root is fully configured.
+2. Run the Docker compose stack build daemon:
+   ```bash
+   docker compose up --build
+   ```
+   This command starts the database, Spring Boot backend, and React/Nginx frontend. The app will be available at `http://localhost:3000`.
 
 ---
 
 ## Environment Variables
 
-| Variable Name | Default Value | Purpose |
+| Variable | Default / Format | Description |
 | :--- | :--- | :--- |
-| `DB_URL` | `jdbc:postgresql://localhost:5432/peernexus` | Database connection string |
-| `DB_USERNAME` | `postgres` | Database login username |
-| `DB_PASSWORD` | *(Required)* | Database login password |
-| `JWT_SECRET` | *(Required)* | 256-bit base64 signing secret |
+| `DB_URL` | `jdbc:postgresql://postgres:5432/peernexus` | Relational JDBC DB URL |
+| `DB_USERNAME` | `postgres` | Database admin connection name |
+| `DB_PASSWORD` | *(Required)* | Database connection password |
+| `JWT_SECRET` | *(Required Base64 Key)* | 256-bit signature security key |
+| `APP_CORS_ALLOWED_ORIGINS`| `http://localhost:3000,http://localhost:5173` | White-listed origins for CORS configuration |
+| `APP_BACKEND_BASE_URL` | `http://localhost:8080` | External endpoint mapping address |
+| `VITE_API_BASE_URL` | `http://localhost:8080` | Frontend target API url |
+| `SPRING_PROFILES_ACTIVE` | `dev` | Profile config controls: `dev` / `prod` |
+| `MAIL_HOST` | `smtp.gmail.com` | Host address for transaction emails |
+| `MAIL_PORT` | `587` | Transaction mail port mapping |
+| `MAIL_USERNAME` | *(Required SMTP Mail)* | Credentials for transactional emails |
+| `MAIL_PASSWORD` | *(Required SMTP Password)* | App password for email client |
 | `CLOUDINARY_CLOUD_NAME` | *(Required)* | Cloudinary cloud identifier |
-| `CLOUDINARY_API_KEY` | *(Required)* | Cloudinary client key |
-| `CLOUDINARY_API_SECRET` | *(Required)* | Cloudinary secure secret key |
-| `MAIL_HOST` | `smtp.example.com` | SMTP host address |
-| `MAIL_PORT` | `587` | SMTP communication port |
-| `MAIL_USERNAME` | *(Required)* | SMTP mail user login |
-| `MAIL_PASSWORD` | *(Required)* | SMTP mail password |
-| `APP_CORS_ALLOWED_ORIGINS`| `http://localhost:5173` | Approved client request origins |
+| `CLOUDINARY_API_KEY` | *(Required)* | Cloudinary authorization key |
+| `CLOUDINARY_API_SECRET` | *(Required)* | Cloudinary cryptographic secret |
 
 ---
 
-## Docker Setup
+## Security Features
 
-PeerNexus provides a ready-to-run container environment inside `docker-compose.yml`:
-
-### Containers Architecture:
-1.  **`postgres`:** Database service mapped onto a persistent named volume `postgres_data`. Features a local healthcheck using `pg_isready`.
-2.  **`backend`:** Builds the Spring Boot jar in a multi-stage Alpine Maven build, executing inside a JRE container with a curl-based actuator health check.
-3.  **`frontend`:** Multi-stage Vite static build served via Nginx, routing requests downstream to the backend container.
-
-### Boot Command:
-To launch the entire platform, run:
-```bash
-docker compose up --build
-```
+* **JWT Double Token Lifecycle:** Implements stateless session checks with short-lived JWT access tokens and database-stored SHA-256 hashed refresh tokens.
+* **Hibernate Entity Detachment:** Plaintext tokens are detached from the persistence layer (`entityManager.detach`) upon database transaction commit to block Hibernate dirty-checks from leaking raw keys.
+* **Insecure Direct Object Reference (IDOR) Shield:** Validates database resource ownership at the service layer before resolving mutations (e.g. edit, delete, pin).
+* **Robust Input Sanitization:** Rejects Window executables (blocking byte-signature MZ headers) and validates attachment mime-types (allowing only PDF, DOCX, PPTX, and standard image formats).
+* **WS Connection Guards:** Custom WebSocket Channel Interceptors evaluate JWT signatures on initial handshake (`CONNECT` frames) to reject anonymous subscriptions.
+* **CORS and CSRF Locks:** Restricts CORS origins to configured environments and disables session-based state vulnerabilities.
 
 ---
 
-## Local Development Setup
+## Production Deployment Guide
 
-### Database
-1.  Install PostgreSQL 16+ locally.
-2.  Create a database named `peernexus`.
+### Backend & Database (Railway, Render, AWS)
+1. Provision a managed PostgreSQL instance and set environment variables.
+2. Link the repository, setting the root directory to `peernexus-backend`.
+3. Configure the start environment using the Maven wrapper:
+   ```bash
+   ./mvnw clean package -DskipTests
+   ```
+4. Set execution start command:
+   ```bash
+   java -jar target/peernexus-0.0.1-SNAPSHOT.jar
+   ```
 
-### Backend
-1.  Navigate to `/peernexus-backend`.
-2.  Copy `.env.example` to `.env` and fill in your credentials (including your custom generated JWT secret key).
-3.  Build and run using Maven:
-    ```bash
-    ./mvnw spring-boot:run
-    ```
-
-### Frontend
-1.  Navigate to `/peernexus-frontend`.
-2.  Install packages:
-    ```bash
-    npm install
-    ```
-3.  Launch the development server:
-    ```bash
-    npm run dev
-    ```
+### Frontend Static Build (Vercel, Netlify, Cloudflare)
+1. Add the site workspace referencing `peernexus-frontend`.
+2. Configure build environment options:
+   * **Build Command:** `npm run build`
+   * **Output Directory:** `dist`
+3. Add the `VITE_API_BASE_URL` environment variable pointing to the deployed backend address.
 
 ---
 
-## Deployment Guide
+## Screenshots
 
-### Railway & Render
-1.  Create a PostgreSQL database addon on your hosting panel.
-2.  Bind your Git repository and set the root directory to `peernexus-backend`.
-3.  Populate the required environment variables (such as `DB_URL`, `DB_PASSWORD`, `JWT_SECRET`, and Cloudinary keys) in the platform's Environment settings.
-4.  Configure the build command to use maven wrapper: `./mvnw clean package -DskipTests`.
+### Login Page
+Vibrant and secure login screen implementing JWT credentials validation.
+![Login Page](screenshots/login.png)
 
-### AWS ECS / Docker Host
-1.  Clone this repository onto your host VM.
-2.  Create your production `.env` file at the root.
-3.  Run the docker compose daemon:
-    ```bash
-    docker compose -f docker-compose.yml up -d
-    ```
+### Main Dashboard & Doubt Feed
+The central workspace where users interact with doubt posts, category filters, and subject tag clouds.
+![Doubt Feed](screenshots/dashboard.png)
 
 ---
 
-## Testing
+## Resume Worthiness Analysis
 
-Backend test assertions are structured in [PeernexusApplicationTests.java](file:///c:/Users/dell/OneDrive/Desktop/Infosys Springboard/peernexus/peernexus-backend/src/test/java/com/peernexus/peernexus/PeernexusApplicationTests.java) using an in-memory H2 database.
+### Resume Rating: 9.0 / 10
+PeerNexus represents a highly relevant project showing depth in clean architecture, database design, and real-time messaging optimization.
 
-To execute tests, run:
-```bash
-# Within the peernexus-backend directory
-./mvnw clean test
-```
+### Recruiter Impression
+Recruiters will be impressed by the focus on performance optimization (N+1 query resolutions, database indexing, Hibernate collection batching) and security practices (JWT token management, signature verification, and IDOR protection) rather than basic CRUD logic.
 
----
+### Skills Demonstrated
+* **Java Backend Engineering:** Spring Boot, Spring Security (RBAC), JPA / Hibernate, Flyway.
+* **Modern Frontend Architecture:** React, Tailwind CSS, TanStack Query, Axios, STOMP.
+* **Real-time Event Management:** STOMP WebSockets, presence listeners, typing events.
+* **Production Operations:** Docker, Multi-stage builds, Nginx routing.
 
-## Future Enhancements (Roadmap)
-
-### Version 1.1 (Next Release)
-*   **Rich Text Editor Integration:** Swap simple textarea inputs for editor components (such as TipTap or Slate) in Doubt forums.
-*   **Draft Auto-Saving:** Persist un-submitted drafts in local storage.
-
-### Version 2.0 (Mid-term)
-*   **Virtual Study Rooms:** Integrate open-source video feeds (such as Jitsi Meet or WebRTC) inside study groups.
-*   **PDF Search Engine:** Index text inside uploaded PDF attachments using ElasticSearch.
-
-### Version 3.0 (Long-term)
-*   **AI Answer Assistants:** Incorporate local LLM pipeline services to automatically suggest answers and suggest doubt categories.
-*   **Enterprise Multi-Tenancy:** Allow schools and universities to register segregated workspaces.
+### Suggested Improvements
+1. **Redis Integration:** Offload WebSocket session states to a Redis Pub/Sub cluster to support horizontal scaling of application instances.
+2. **Elasticsearch Indexing:** Replace basic database queries with a dedicated search index for doubt posts and attachments.
 
 ---
 
-## Resume Highlights
+## Future Roadmap
 
-*   **SaaS Transformational Architecture:** Architected a high-performance, containerized collaborative network combining real-time STOMP messaging forums and doubt resolution engines.
-*   **Advanced WebSocket Presence Engineering:** Built a robust WebSocket delivery lifecycle engine supporting presence states ("Active now" or "Last seen X mins ago"), typing events, and message status updates (SENT $\rightarrow$ DELIVERED $\rightarrow$ READ).
-*   **Performance Engineering & Optimization:** Resolved database fetch bottlenecks (N+1 issues) by applying Flyway indexing, custom JPA projections, and Hibernate collection batching, reducing dashboard queries to exactly 2 roundtrips.
-*   **Secure Authentication Architecture:** Designed a secure JWT/Refresh Token lifecycle hashing tokens via SHA-256 and utilizing Hibernate detachment to block dirty-check overrides.
-*   **Secure File Attachments Pipeline:** Constructed a media streaming workflow validating file sizes and types, preventing public asset namespace collisions via UUID prefixes.
+* **Phase 1: Rich Text Editor Integration:** Swap simple textarea fields for rich text editors (TipTap or Slate) in the forum editor.
+* **Phase 2: Video Study Rooms:** Integrate open-source WebRTC frameworks (Jitsi Meet) to support live virtual study rooms in groups.
+* **Phase 3: AI-powered Answer Assistant:** Incorporate local LLM pipeline services to automatically suggest answers and categories.
 
 ---
 
-## Interview Q&A
+## Contributing
 
-<details>
-<summary><strong>Recruiter & General Interview Questions (20 Q&As)</strong></summary>
-
-1.  **Q: What is PeerNexus and what value does it bring?**  
-    *A:* PeerNexus is a collaborative student community network designed to bridge peer mentorship with instant real-time chats, study forums, and gamified reputation incentives.
-2.  **Q: What parts of the system did you work on?**  
-    *A:* I worked as a Full-Stack Engineer, designing the PostgreSQL schemas, building Spring Boot REST APIs, implementing WebSocket handlers, and building the React user interfaces.
-3.  **Q: How is security handled on the platform?**  
-    *A:* Authentication is enforced via JWT access tokens. Refresh tokens are hashed using SHA-256 before storage in PostgreSQL. Access to sensitive resources is secured using Spring Security role-based validation.
-4.  **Q: What database did you choose and why?**  
-    *A:* PostgreSQL was chosen for its excellent JSON parsing capabilities, indexing tools, stability, and compatibility with ACID transactions.
-5.  **Q: How does the application scale?**  
-    *A:* The application is fully dockerized and stateless, allowing the backend containers to scale horizontally behind a reverse proxy like Nginx.
-6.  **Q: How are attachments stored?**  
-    *A:* Attachments are streamed securely to Cloudinary, separating large static binaries from our transactional database.
-7.  **Q: Explain how the reputation system works.**  
-    *A:* Actions like upvoting or having your answer accepted create reputation transactions, dynamically updating the user's score to drive engagement on leaderboards.
-8.  **Q: What did you use for database migrations?**  
-    *A:* Flyway manages our database schema migrations sequentially from V1 to V13.
-9.  **Q: How does private messaging work?**  
-    *A:* Private messaging is built on WebSocket channels, allowing users to send text, images, and files with real-time checkmark delivery updates.
-10. **Q: Is there any rate limiting or spoofing protection?**  
-    *A:* Yes. WebSocket handshakes check authenticated user principals, and method checks prevent IDOR (Insecure Direct Object Reference) spoofing.
-11. **Q: How does the connection request flow work?**  
-    *A:* Direct chat room generation is blocked unless both users have accepted connection requests in our ledger.
-12. **Q: How are errors handled on the frontend?**  
-    *A:* We use React Query error callbacks and central boundary handlers to display friendly alerts to the user.
-13. **Q: What is the build and deployment process?**  
-    *A:* We use multi-stage Docker builds to compile frontend Vite assets into Nginx servers and compile backend Spring Boot jars into slim JRE images.
-14. **Q: How do you prevent chat spam?**  
-    *A:* Chat inputs only enable transmission once connection constraints are resolved, and message sizes are restricted to 2000 characters.
-15. **Q: How did you test the application?**  
-    *A:* I wrote unit and integration tests using Spring Boot Test, mocking databases with in-memory H2 environments.
-16. **Q: What is the purpose of Spring Actuator?**  
-    *A:* It exposes health checks (`/actuator/health`) which are monitored by Docker's health check daemon to verify container health.
-17. **Q: How did you handle CORS issues?**  
-    *A:* I configured a custom CORS filter mapping in Spring Security to allow requests only from verified domain origins.
-18. **Q: How do you verify emails?**  
-    *A:* On registration, an email containing a secure token is dispatched via SMTP. The user must verify this token before their account status becomes `enabled`.
-19. **Q: Why use React Query instead of standard useEffect?**  
-    *A:* React Query manages caching, automatic refetching, pagination, and state deduplication out-of-the-box, saving manual state syncing.
-20. **Q: What was the most challenging part of this project?**  
-    *A:* Orchestrating real-time WebSocket communication channels with transactional database state syncs (sent, delivered, read receipts) without introducing lockups or N+1 queries.
-</details>
-
-<details>
-<summary><strong>Spring Boot & Backend Questions (20 Q&As)</strong></summary>
-
-1.  **Q: How is the security context initialized inside WebSocket messaging handlers?**  
-    *A:* WebSocket STOMP handlers run in separate threads where Spring Security's thread-local context is absent. We copy the authenticated session principal from headers to `SecurityContextHolder` dynamically inside each controller call.
-2.  **Q: Explain how you prevented the Hibernate dirty-checking bug on Refresh Tokens.**  
-    *A:* Hibernate automatically updates database columns if it detects mutations on loaded entities. To prevent it from overwriting secure SHA-256 refresh hashes with plaintext keys, we call `entityManager.detach(tokenEntity)` to evict the entity from the persistence context.
-3.  **Q: How does the unread messages count query avoid N+1 query loop patterns?**  
-    *A:* Instead of querying unread counts for each room inside a loop, we call a single aggregate query using `group by` in `MessageRepository`:
-    ```sql
-    select m.chatRoom.id as roomId, count(m) as cnt from Message m ... group by m.chatRoom.id
-    ```
-4.  **Q: How is the Hibernate `@BatchSize` annotation used?**  
-    *A:* We apply `@BatchSize(size = 20)` on the reactions collection inside the `Message` entity. When Hibernate loads lazy reactions, it fetches them in batches of 20 instead of executing 20 separate SQL calls.
-5.  **Q: What is the difference between `@ManyToOne(fetch = FetchType.LAZY)` and `EAGER`?**  
-    *A:* `LAZY` delays database loading of associated entities until they are accessed, reducing memory consumption. We use `LAZY` for rooms and users, and use `JOIN FETCH` queries when eager loading is explicitly needed.
-6.  **Q: Explain the Spring Boot `@Transactional` annotation.**  
-    *A:* It wraps methods in database transactions, automatically executing commit on success and rollback on exceptions.
-7.  **Q: How does `WebSocketEventListener` manage online presence?**  
-    *A:* It listens for `SessionConnectedEvent` and `SessionDisconnectEvent` to toggle user presence flags (`online = true/false`) and broadcast status changes.
-8.  **Q: How is global exception handling structured?**  
-    *A:* We use a `@RestControllerAdvice` class containing `@ExceptionHandler` methods to intercept exceptions and return a standard `ApiResponse` JSON wrapper.
-9.  **Q: How does Spring Security authenticate STOMP connections during handshake?**  
-    *A:* A custom Channel Interceptor intercepts incoming `CONNECT` command frames, extracts the authorization header token, validates it, and sets the principal.
-10. **Q: What is the role of Flyway in database setup?**  
-    *A:* It runs versioned SQL scripts sequentially to guarantee database schemas are identical across all developer machines and staging servers.
-11. **Q: How did you configure Spring Boot to support environment variables locally?**  
-    *A:* By configuring `spring.config.import=optional:file:.env[.properties]` in `application.properties`, the application automatically loads variables from local `.env` files if present.
-12. **Q: How does the application prevent duplicate Cloudinary uploads?**  
-    *A:* Upload filenames are generated using UUID prefixes, ensuring each asset uploaded has a unique path in Cloudinary.
-13. **Q: What does the `@PrePersist` annotation accomplish?**  
-    *A:* It runs code before Hibernate inserts the record. We use it to set `sentAt` timestamps on messages.
-14. **Q: Explain how the password reset verification token is validated.**  
-    *A:* The service checks if the token exists, matches the user, has not expired, and has not been used, before resetting the password.
-15. **Q: What is the benefit of using Java Records for DTOs?**  
-    *A:* Records are immutable, automatically generating constructors, getters, `equals()`, and `toString()`, reducing boilerplate.
-16. **Q: How is role verification implemented on Rest Controllers?**  
-    *A:* By applying `@PreAuthorize("hasRole('ADMIN')")` at the controller class or method level.
-17. **Q: How does `markRoomAsRead` notify the sender?**  
-    *A:* It updates statuses to `READ` in the database and dispatches a `ReadReceiptEvent` to the original sender's private destination `/queue/read-receipt`.
-18. **Q: What is the difference between `@Query` and JPA Query Methods?**  
-    *A:* Query Methods derive queries from method names (e.g. `findByEmail`), while `@Query` lets you write custom JPQL or native SQL queries.
-19. **Q: Explain the connection pool configuration used.**  
-    *A:* We configure HikariCP parameters (`maximum-pool-size=20`, `connection-timeout=20000`) to manage database connections efficiently.
-20. **Q: How do you run background cleanup tasks?**  
-    *A:* By enabling `@EnableScheduling` and placing `@Scheduled` annotations on cleanup methods (e.g., clearing expired tokens).
-</details>
-
-<details>
-<summary><strong>React & Frontend Questions (20 Q&As)</strong></summary>
-
-1.  **Q: How does the frontend handle real-time messaging using STOMP?**  
-    *A:* We initialize a SockJS client and wrap it in a STOMP client using `@stomp/stompjs`. It establishes a connection and subscribes to user-private queues (e.g., `/user/queue/messages`).
-2.  **Q: Why use `useQueryClient` to invalidate queries?**  
-    *A:* When a mutation occurs (like sending a message), invalidating the query cache forces React Query to refetch the data, ensuring the UI stays in sync.
-3.  **Q: How is debouncing implemented in the message search bar?**  
-    *A:* A `useEffect` watches the search query state. If the query changes, it sets a timeout to fire the API call after 400ms. If the query changes again before 400ms, the previous timeout is cleared.
-4.  **Q: Explain how the chat interface smooth-scrolls to pinned messages.**  
-    *A:* Clicking a pinned message calls `document.getElementById('msg-' + id)?.scrollIntoView({ behavior: 'smooth', block: 'center' })` and triggers a brief CSS highlight animation.
-5.  **Q: What is the purpose of Axios interceptors in PeerNexus?**  
-    *A:* An interceptor intercepts outgoing requests to inject the JWT access token into the `Authorization` header. Another interceptor checks for 401 errors to trigger the token refresh flow.
-6.  **Q: How does the application display online presence status dynamically?**  
-    *A:* The client subscribes to the partner's status topic `/topic/status/{partnerId}`. When a status update arrives, we call `queryClient.setQueryData` to update the user's presence state instantly.
-7.  **Q: Explain the file upload preview indicator implementation.**  
-    *A:* When a file is chosen, `uploading` state is toggled to true, rendering a progress indicator and blocking the text box until the upload completes.
-8.  **Q: How does the lightbox viewer work?**  
-    *A:* Clicking an image attachment sets `lightboxOpen = true` and shows a fixed-position full-screen container with high z-index overlay.
-9.  **Q: What is the purpose of `useSearchParams` in `ChatPage.jsx`?**  
-    *A:* It synchronizes the active chat room ID with the browser's URL query string (`?room=123`), enabling deep linking and back-button support.
-10. **Q: How do you restrict private chat requests?**  
-    *A:* We verify that the user's connections catalog contains the recipient with status `ACCEPTED` before enabling chat creation.
-11. **Q: Explain how the typing indicators are throttled.**  
-    *A:* Typing indicators use a flag (`isTypingRef`) to ensure the start event `onTyping(true)` is only sent once, and sets a 2-second timeout to reset the flag.
-12. **Q: What is a React Portals component and do we use it?**  
-    *A:* Portals render children outside their DOM hierarchy (e.g., for modals). We use absolute layouts with high z-index overlays to achieve modal views.
-13. **Q: How does the connections hook (`useChatRooms`) cache data?**  
-    *A:* React Query caches the query data under the key `["chatRooms"]`. Subsequent mounts load the data from cache before executing refetch operations.
-14. **Q: How do you handle responsive layouts for mobile and desktop chat sidebar?**  
-    *A:* Using Tailwind's screen size prefixes (e.g. `w-full md:w-80`). The sidebar fills the screen on mobile, and adapts to a column on larger displays.
-15. **Q: How do you trigger user logouts?**  
-    *A:* The logout action clears local storage tokens, calls the backend `/logout` endpoint, and redirects the user to the Login page.
-16. **Q: Explain how reactions count is aggregated in the client.**  
-    *A:* The message reactions array is processed using a JS `reduce` operation to count occurrences of each emoji, rendering them as pills under the message.
-17. **Q: Why does the typing indicator animate smoothly?**  
-    *A:* Using Tailwind's `animate-bounce` utility with staggered animation delays (`delay-0`, `delay-75`, `delay-150`).
-18. **Q: How do you prevent layout shift when loading images?**  
-    *A:* Image elements are styled with `max-h-[200px] object-cover` constraints to reserve vertical space.
-19. **Q: Explain how client routing is secured.**  
-    *A:* The `ProtectedRoute` wrapper checks the authentication context state. If unauthenticated, it redirects the user to the `/login` route.
-20. **Q: What is glassmorphism and where is it applied?**  
-    *A:* It is a design style using translucent backgrounds and blur filters. We apply it on our floating pinned messages dropdown using `bg-white/90 backdrop-blur-sm`.
-</details>
-
-<details>
-<summary><strong>System Design & Architecture Questions (20 Q&As)</strong></summary>
-
-1.  **Q: Design a real-time presence system for 100,000 active users.**  
-    *A:* Store presence states in a fast, in-memory key-value store (like Redis). WebSocket connection listeners update Redis on connect/disconnect. Broadcast updates to active users via pub/sub channels.
-2.  **Q: How would you prevent message loss if a client suddenly disconnects?**  
-    *A:* Implement delivery confirmations. When sending, a message has status `SENT`. The recipient issues an acknowledgment event back to the server, which then updates the status to `DELIVERED`.
-3.  **Q: How would you scale the WebSocket servers horizontally?**  
-    *A:* Deploy multiple WebSocket server nodes behind a load balancer. Configure a message broker (like RabbitMQ) as a shared pub/sub backend to sync messages across different server nodes.
-4.  **Q: How would you optimize database search performance for millions of doubts?**  
-    *A:* Implement full-text indexing in PostgreSQL. For larger datasets, sync doubts database tables to a dedicated search cluster (like Elasticsearch).
-5.  **Q: Design a secure password reset flow.**  
-    *A:* Generate a cryptographically secure, short-lived token. Hash the token and store it in the database with an expiration timestamp. Send the raw token via email. The user submits the token with a new password to verify and update their account.
-6.  **Q: How would you protect the REST APIs from Denial-of-Service (DoS) attacks?**  
-    *A:* Deploy a rate-limiting gateway (like Spring Cloud Gateway or Nginx) using token-bucket algorithms.
-7.  **Q: Design a CDN upload pipeline for media attachments.**  
-    *A:* The client requests a secure upload signature from the backend. The client then uploads the media directly to the CDN (like Cloudinary), bypassing the backend server to save bandwidth.
-8.  **Q: How would you design a notifications service supporting both real-time and offline states?**  
-    *A:* Store notifications in a relational database. When a notification is generated, save it to the database, and if the user is online, broadcast it via their open WebSocket connection.
-9.  **Q: How would you handle database connections during sudden traffic spikes?**  
-    *A:* Configure a connection pool (like HikariCP) and set appropriate pool sizes. Implement query timeouts and configure read replicas to offload read traffic.
-10. **Q: What are the trade-offs of storing audit logs in the main database versus a separate system?**  
-    *A:* Storing logs in the main database is simple and supports transaction consistency. Using a separate system (like Elasticsearch or Logstash) keeps the main database thin and prevents log operations from impacting application performance.
-11. **Q: How would you design a message editing history audit trail?**  
-    *A:* Create an immutable `message_edits` table. Every edit records the previous content and timestamp, linking back to the original message ID.
-12. **Q: Design a connection invitation system.**  
-    *A:* Create a `connections` table storing `sender_id`, `recipient_id`, and `status` (PENDING, ACCEPTED, BLOCKED). Direct messages are blocked unless an `ACCEPTED` record exists for the two users.
-13. **Q: How do you handle database schema migrations in a blue-green deployment?**  
-    *A:* Ensure migrations are backward-compatible. Add columns instead of renaming them, and defer column deletions until the old version is fully decommissioned.
-14. **Q: Design a rolling leaderboard system.**  
-    *A:* Calculate scores based on upvotes and accepted answers. Cache the rankings in Redis Sorted Sets to query leaderboards quickly.
-15. **Q: What is the benefit of a multi-stage Docker build?**  
-    *A:* It separates the build environment (containing Maven, compilers) from the runtime environment, resulting in smaller, more secure container images.
-16. **Q: How would you prevent IDOR (Insecure Direct Object Reference) vulnerabilities?**  
-    *A:* Validate that the authenticated user principal owns the resource before executing any update or delete operations in the service layer.
-17. **Q: Design a system to count unread messages.**  
-    *A:* Maintain unread counts per room in the database. Alternatively, query the unread counts dynamically using indexes on (`chat_room_id`, `read_at`).
-18. **Q: How would you handle large file uploads without exhausting server memory?**  
-    *A:* Configure multipart file uploads to stream directly to disk rather than loading the entire file into memory.
-19. **Q: Design a gamified badge award system.**  
-    *A:* Define thresholds for reputation. Run an asynchronous worker to check reputation scores and award badges when milestones are reached.
-20. **Q: How would you design a group chat invite system?**  
-    *A:* Create a group membership table tracking users, roles, and invitation status. Restrict message publishing to members who have an `ACCEPTED` status.
-</details>
+1. Fork the repository.
+2. Create your Feature Branch: `git checkout -b feature/NewFeature`
+3. Commit your changes: `git commit -m 'Add NewFeature'`
+4. Push to the branch: `git push origin feature/NewFeature`
+5. Open a Pull Request.
 
 ---
 
-## Key Achievements
+## License
 
-*   **Real-time communication system:** Built a real-time messaging pipeline using WebSocket and STOMP, supporting presence, reactions, edits, and deletions.
-*   **Production-grade authentication:** Implemented a secure access/refresh token lifecycle with SHA-256 hashed database storage.
-*   **Modular architecture:** Decoupled codebase with clean package structures and conditional environment configuration.
-*   **Containerized deployment:** Multi-stage production Docker setups with automated container health checks.
-*   **Scalable database design:** Relational PostgreSQL schema with composite indexes and Flyway migration controls.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## Authors
+
+* **Vivek Kushwaha** - *Lead Engineer / Architect* - [GitHub Profile](https://github.com/vivekkushwahaofficial)
