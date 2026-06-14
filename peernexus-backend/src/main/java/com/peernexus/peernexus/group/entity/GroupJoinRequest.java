@@ -69,7 +69,7 @@ public class GroupJoinRequest {
 
     /** The OWNER or ADMIN who approved / rejected the request; null while pending. */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reviewed_by_id")
+    @JoinColumn(name = "reviewed_by")
     private User reviewedBy;
 
     /** Timestamp the decision was made; null while pending. */
