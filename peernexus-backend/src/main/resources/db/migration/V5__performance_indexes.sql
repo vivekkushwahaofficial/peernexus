@@ -26,9 +26,7 @@ CREATE INDEX IF NOT EXISTS idx_group_msgs_not_deleted
 ON group_messages(group_id, sent_at DESC)
 WHERE deleted = FALSE;
 
--- Reputation
-CREATE INDEX IF NOT EXISTS idx_rep_events_user_date
-ON reputation_transactions(user_id, created_at DESC);
+-- Created in V8 after reputation_transactions table exists
 
 -- Users
 CREATE INDEX IF NOT EXISTS idx_users_email
