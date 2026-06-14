@@ -8,12 +8,14 @@ import React, {
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "../hooks/useAuth.js";
 import { createStompClient } from "../websocket/stompClient.js";
+import { useToast } from "../hooks/useToast.js";
 
 export const WebSocketContext = createContext(null);
 
 export function WebSocketProvider({ children }) {
   const { accessToken, isAuthenticated } = useAuth();
   const queryClient = useQueryClient();
+  const toast = useToast();
   const [connected, setConnected] = useState(false);
   const stompClientRef = useRef(null);
   const subscriptionsRef = useRef({});
@@ -40,6 +42,29 @@ export function WebSocketProvider({ children }) {
             queryClient.invalidateQueries({ queryKey: ["notifications"] });
           } catch (err) {
             console.error("[STOMP] Failed to parse notification:", err);
+          }
+        });
+
+        // ── Subscribe to personal chat messages globally ─────────────────
+        client.subscribe("/user/queue/messages", (message) => {
+          try {
+            const newMsg = JSON.parse(message.body);
+            console.debug("[STOMP] Global chat message received:", newMsg);
+
+            // Invalidate the chatRooms cache so unread counts update in background
+            queryClient.invalidateQueries({ queryKey: ["chatRooms"] });
+
+            const path = window.location.pathname;
+            const searchParams = new URLSearchParams(window.location.search);
+            const activeRoomIdFromUrl = searchParams.get("room");
+            const isChatPage = path === "/chat" || path.startsWith("/chat");
+
+            // Only show a toast notification if the user is not actively viewing this room
+            if (!isChatPage || (activeRoomIdFromUrl && parseInt(activeRoomIdFromUrl, 10) !== newMsg.chatRoomId)) {
+              toast.info(`New message from ${newMsg.senderName || "someone"}: "${newMsg.content}"`);
+            }
+          } catch (err) {
+            console.error("[STOMP] Failed to parse global chat message:", err);
           }
         });
 
