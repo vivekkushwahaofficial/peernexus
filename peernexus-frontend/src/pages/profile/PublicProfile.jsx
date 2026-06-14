@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { userService } from "../../services/userService.js";
@@ -17,6 +17,7 @@ import Avatar from "../../components/common/Avatar.jsx";
 import Badge, { RoleBadge } from "../../components/common/Badge.jsx";
 import Spinner from "../../components/common/Spinner.jsx";
 import Button from "../../components/common/Button.jsx";
+import ConfirmDialog from "../../components/common/ConfirmDialog.jsx";
 
 export function PublicProfile() {
   const { id } = useParams();
@@ -47,13 +48,12 @@ export function PublicProfile() {
   const incomingRequest = incomingPage?.content?.find((req) => req.requester?.id === userId);
   const outgoingRequest = outgoingPage?.content?.find((req) => req.recipient?.id === userId);
 
+  const [disconnectDialogOpen, setDisconnectDialogOpen] = useState(false);
+
   const handleConnect = async () => {
     try {
       if (isConnected) {
-        if (window.confirm("Are you sure you want to disconnect from this student?")) {
-          await removeConn.mutateAsync(connectionRecord.id);
-          toast.success("Disconnected successfully");
-        }
+        setDisconnectDialogOpen(true);
       } else if (incomingRequest) {
         await acceptReq.mutateAsync(incomingRequest.id);
         toast.success("Connection request accepted!");
@@ -66,6 +66,16 @@ export function PublicProfile() {
       }
     } catch (err) {
       toast.error("Failed to update connection status");
+    }
+  };
+
+  const handleConfirmDisconnect = async () => {
+    try {
+      await removeConn.mutateAsync(connectionRecord.id);
+      toast.success("Disconnected successfully");
+      setDisconnectDialogOpen(false);
+    } catch (err) {
+      toast.error("Failed to disconnect");
     }
   };
 
@@ -215,6 +225,15 @@ export function PublicProfile() {
           )}
         </div>
       </div>
+
+      <ConfirmDialog
+        isOpen={disconnectDialogOpen}
+        onClose={() => setDisconnectDialogOpen(false)}
+        onConfirm={handleConfirmDisconnect}
+        title="Disconnect Student"
+        message="Are you sure you want to disconnect from this student?"
+        loading={removeConn.isPending}
+      />
     </div>
   );
 }

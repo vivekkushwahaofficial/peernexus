@@ -16,6 +16,7 @@ import Spinner from "../../components/common/Spinner.jsx";
 import Pagination from "../../components/common/Pagination.jsx";
 import EmptyState from "../../components/common/EmptyState.jsx";
 import Button from "../../components/common/Button.jsx";
+import ConfirmDialog from "../../components/common/ConfirmDialog.jsx";
 
 import { useAuth } from "../../hooks/useAuth.js";
 
@@ -69,14 +70,20 @@ export function Connections() {
     }
   };
 
-  const handleDisconnect = async (id) => {
-    if (window.confirm("Are you sure you want to disconnect?")) {
-      try {
-        await removeConn.mutateAsync(id);
-        toast.success("Connection removed");
-      } catch (err) {
-        toast.error("Failed to remove connection");
-      }
+  const [disconnectId, setDisconnectId] = useState(null);
+
+  const handleDisconnect = (id) => {
+    setDisconnectId(id);
+  };
+
+  const handleConfirmDisconnect = async () => {
+    if (!disconnectId) return;
+    try {
+      await removeConn.mutateAsync(disconnectId);
+      toast.success("Connection removed");
+      setDisconnectId(null);
+    } catch (err) {
+      toast.error("Failed to remove connection");
     }
   };
 
@@ -188,6 +195,15 @@ export function Connections() {
           <Pagination pageData={activePageData} onPageChange={handlePageChange} />
         </div>
       )}
+
+      <ConfirmDialog
+        isOpen={disconnectId !== null}
+        onClose={() => setDisconnectId(null)}
+        onConfirm={handleConfirmDisconnect}
+        title="Disconnect Student"
+        message="Are you sure you want to disconnect from this student?"
+        loading={removeConn.isPending}
+      />
     </div>
   );
 }

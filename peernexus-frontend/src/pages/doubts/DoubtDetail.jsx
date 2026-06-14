@@ -84,14 +84,20 @@ export function DoubtDetail() {
     }
   };
 
-  const handleDeleteAnswer = async (answerId) => {
-    if (window.confirm("Are you sure you want to delete this answer?")) {
-      try {
-        await deleteAnswerMutation.mutateAsync(answerId);
-        toast.success("Answer deleted successfully");
-      } catch (err) {
-        toast.error("Failed to delete answer");
-      }
+  const [deleteAnswerId, setDeleteAnswerId] = useState(null);
+
+  const handleDeleteAnswer = (answerId) => {
+    setDeleteAnswerId(answerId);
+  };
+
+  const handleConfirmDeleteAnswer = async () => {
+    if (!deleteAnswerId) return;
+    try {
+      await deleteAnswerMutation.mutateAsync(deleteAnswerId);
+      toast.success("Answer deleted successfully");
+      setDeleteAnswerId(null);
+    } catch (err) {
+      toast.error("Failed to delete answer");
     }
   };
 
@@ -308,6 +314,16 @@ export function DoubtDetail() {
         title="Delete Doubt"
         message="Are you sure you want to permanently delete this doubt and all of its associated answers?"
         loading={deleteDoubtMutation.isPending}
+      />
+
+      {/* Delete Answer Dialog */}
+      <ConfirmDialog
+        isOpen={deleteAnswerId !== null}
+        onClose={() => setDeleteAnswerId(null)}
+        onConfirm={handleConfirmDeleteAnswer}
+        title="Delete Answer"
+        message="Are you sure you want to delete this answer? This action cannot be undone."
+        loading={deleteAnswerMutation.isPending}
       />
 
       {/* Report Modal */}
