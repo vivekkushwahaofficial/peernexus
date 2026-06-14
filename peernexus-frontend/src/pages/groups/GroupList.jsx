@@ -7,6 +7,7 @@ import { DoubtCardSkeleton } from "../../components/common/Skeleton.jsx";
 import Pagination from "../../components/common/Pagination.jsx";
 import EmptyState from "../../components/common/EmptyState.jsx";
 import Button from "../../components/common/Button.jsx";
+import JoinRequestModal from "../../components/groups/JoinRequestModal.jsx";
 
 export function GroupList() {
   const toast = useToast();
@@ -15,6 +16,8 @@ export function GroupList() {
   const [searchQuery, setSearchQuery] = useState("");
   const [submittedQuery, setSubmittedQuery] = useState("");
   const [page, setPage] = useState(0);
+  const [requestModalOpen, setRequestModalOpen] = useState(false);
+  const [selectedGroup, setSelectedGroup] = useState(null); // { id, name }
 
   const params = { page, size: 12 };
 
@@ -31,16 +34,26 @@ export function GroupList() {
   const handleJoinGroup = async (groupId, isPrivate) => {
     try {
       if (isPrivate) {
-        const message = window.prompt("Enter an optional message for your request to join:");
-        if (message === null) return; // cancelled prompt
-        await joinRequestMutation.mutateAsync({ message });
-        toast.success("Join request submitted to group admins!");
+        const group = groups.find((g) => g.id === groupId);
+        setSelectedGroup({ id: groupId, name: group?.name });
+        setRequestModalOpen(true);
       } else {
         await joinGroupMutation.mutateAsync(groupId);
         toast.success("Successfully joined the study group!");
       }
     } catch (err) {
       toast.error(err?.response?.data?.message || "Failed to join group");
+    }
+  };
+
+  const handleRequestSubmit = async (message) => {
+    if (!selectedGroup) return;
+    try {
+      await joinRequestMutation.mutateAsync({ id: selectedGroup.id, body: { message } });
+      toast.success("Join request submitted to group admins!");
+      setRequestModalOpen(false);
+    } catch (err) {
+      toast.error(err?.response?.data?.message || "Failed to submit request");
     }
   };
 
@@ -171,6 +184,14 @@ export function GroupList() {
           <Pagination pageData={activePageData} onPageChange={(p) => setPage(p)} />
         </div>
       )}
+
+      <JoinRequestModal
+        isOpen={requestModalOpen}
+        onClose={() => setRequestModalOpen(false)}
+        onSubmit={handleRequestSubmit}
+        loading={joinRequestMutation.isPending}
+        groupName={selectedGroup?.name}
+      />
     </div>
   );
 }

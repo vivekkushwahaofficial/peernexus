@@ -32,6 +32,7 @@ import MessageBubble from "../../components/chat/MessageBubble.jsx";
 import ChatInput from "../../components/chat/ChatInput.jsx";
 import ConfirmDialog from "../../components/common/ConfirmDialog.jsx";
 import { useQueryClient } from "@tanstack/react-query";
+import JoinRequestModal from "../../components/groups/JoinRequestModal.jsx";
 
 export function GroupDetail() {
   const { id } = useParams();
@@ -47,6 +48,7 @@ export function GroupDetail() {
   const [typingUsers, setTypingUsers] = useState({}); // e.g. { userId: name }
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
+  const [requestModalOpen, setRequestModalOpen] = useState(false);
   const chatScrollRef = useRef(null);
 
   // Queries
@@ -59,7 +61,7 @@ export function GroupDetail() {
 
   const { data: membersPage, isLoading: membersLoading } = useGroupMembers(groupId, { size: 100 }, { enabled: isMember });
   const { data: requestsPage } = usePendingJoinRequests(groupId, { size: 100 }, { enabled: isMember && showManageTab });
-  const { data: chatHistory = [] } = useGroupChatHistory(groupId, {}, { enabled: isMember });
+  const { data: chatHistory } = useGroupChatHistory(groupId, {}, { enabled: isMember });
 
   // Mutations
   const joinGroupMutation = useJoinGroup();
@@ -75,12 +77,12 @@ export function GroupDetail() {
 
   // Sync REST chat history to local state
   useEffect(() => {
-    if (chatHistory && isMember) {
-      setMessages(chatHistory.content || []);
+    if (chatHistory?.content && isMember) {
+      setMessages(chatHistory.content);
       // Mark read REST
       markReadMutation.mutate(groupId);
     }
-  }, [chatHistory, isMember, groupId]);
+  }, [chatHistory?.content, isMember, groupId]);
 
   // Scroll to bottom of chat feed
   useEffect(() => {
@@ -158,16 +160,23 @@ export function GroupDetail() {
   const handleJoinGroup = async () => {
     try {
       if (group?.isPrivate) {
-        const message = window.prompt("Enter an optional application message:");
-        if (message === null) return;
-        await requestJoinMutation.mutateAsync({ message });
-        toast.success("Join request submitted!");
+        setRequestModalOpen(true);
       } else {
         await joinGroupMutation.mutateAsync(groupId);
         toast.success("Joined group successfully!");
       }
     } catch (err) {
       toast.error(err?.response?.data?.message || "Failed to join group");
+    }
+  };
+
+  const handleRequestSubmit = async (message) => {
+    try {
+      await requestJoinMutation.mutateAsync({ message });
+      toast.success("Join request submitted!");
+      setRequestModalOpen(false);
+    } catch (err) {
+      toast.error(err?.response?.data?.message || "Failed to submit request");
     }
   };
 
@@ -452,6 +461,14 @@ export function GroupDetail() {
         title="Leave Study Group"
         message="Are you sure you want to leave this study group?"
         loading={leaveGroupMutation.isPending}
+      />
+
+      <JoinRequestModal
+        isOpen={requestModalOpen}
+        onClose={() => setRequestModalOpen(false)}
+        onSubmit={handleRequestSubmit}
+        loading={requestJoinMutation.isPending}
+        groupName={group?.name}
       />
     </div>
   );

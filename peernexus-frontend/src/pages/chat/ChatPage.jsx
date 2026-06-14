@@ -25,8 +25,6 @@ export function ChatPage() {
   // Queries
   const { data: rooms = [], isLoading: roomsLoading } = useChatRooms();
   const { data: historyData, isLoading: historyLoading } = useChatHistory(activeRoomId);
-  const history = historyData?.content || [];
-
   const markReadMutation = useMarkChatAsRead();
 
   // Sync state if URL search param changes
@@ -41,10 +39,12 @@ export function ChatPage() {
 
   // When room is selected, load history to local state
   useEffect(() => {
-    if (history) {
-      setMessages(history);
+    if (historyData?.content) {
+      setMessages(historyData.content);
+    } else {
+      setMessages([]);
     }
-  }, [history]);
+  }, [historyData?.content]);
 
   // Load pinned messages when room changes
   useEffect(() => {

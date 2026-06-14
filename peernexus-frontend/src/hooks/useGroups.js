@@ -144,9 +144,14 @@ export function useTransferOwnership(groupId) {
 export function useRequestToJoinGroup(groupId) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (body) => groupService.requestToJoin(groupId, body),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["group", groupId] });
+    mutationFn: (variables) => {
+      const finalId = variables?.id || groupId;
+      const finalBody = variables?.body !== undefined ? variables.body : variables;
+      return groupService.requestToJoin(finalId, finalBody);
+    },
+    onSuccess: (data, variables) => {
+      const finalId = variables?.id || groupId;
+      queryClient.invalidateQueries({ queryKey: ["group", finalId] });
       queryClient.invalidateQueries({ queryKey: ["myJoinRequests"] });
     },
   });
