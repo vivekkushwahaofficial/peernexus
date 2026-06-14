@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 		"spring.jpa.database-platform=org.hibernate.dialect.H2Dialect",
 		"spring.jpa.hibernate.ddl-auto=update",
 		"spring.flyway.enabled=false",
-		"JWT_SECRET=TEST_JWT_SECRET_FOR_UNIT_TESTS",
+		"JWT_SECRET=TEST_JWT_SECRET_FOR_UNIT_TESTS_THAT_IS_LONG_ENOUGH_32_BYTES",
 		"DB_PASSWORD=TEST_DB_PASSWORD",
 		"CLOUDINARY_API_SECRET=development-secret"
 })

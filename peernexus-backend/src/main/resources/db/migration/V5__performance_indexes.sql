@@ -17,8 +17,7 @@ WHERE accepted = TRUE;
 CREATE INDEX IF NOT EXISTS idx_connections_status
 ON connections(status);
 
-CREATE INDEX IF NOT EXISTS idx_connections_recipient
-ON connections(recipient_id, status);
+-- Created in V6 after addressee_id is renamed to recipient_id
 
 -- Chat
 CREATE INDEX IF NOT EXISTS idx_chat_unread
