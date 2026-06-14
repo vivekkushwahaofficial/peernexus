@@ -101,11 +101,11 @@ export function useLeaveGroup() {
   });
 }
 
-export function useGroupMembers(groupId, params) {
+export function useGroupMembers(groupId, params = {}, options = {}) {
   return useQuery({
     queryKey: ["groupMembers", groupId, params],
     queryFn: () => groupService.getMembers(groupId, params),
-    enabled: Boolean(groupId),
+    enabled: Boolean(groupId) && (options.enabled ?? true),
   });
 }
 
@@ -152,11 +152,11 @@ export function useRequestToJoinGroup(groupId) {
   });
 }
 
-export function usePendingJoinRequests(groupId, params) {
+export function usePendingJoinRequests(groupId, params = {}, options = {}) {
   return useQuery({
     queryKey: ["pendingJoinRequests", groupId, params],
     queryFn: () => groupService.getPendingRequests(groupId, params),
-    enabled: Boolean(groupId),
+    enabled: Boolean(groupId) && (options.enabled ?? true),
   });
 }
 

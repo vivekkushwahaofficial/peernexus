@@ -51,9 +51,15 @@ export function GroupDetail() {
 
   // Queries
   const { data: group, isLoading: groupLoading, error: groupError } = useGroup(groupId);
-  const { data: membersPage, isLoading: membersLoading } = useGroupMembers(groupId, { size: 100 });
-  const { data: requestsPage } = usePendingJoinRequests(groupId, { size: 100 });
-  const { data: chatHistory = [] } = useGroupChatHistory(groupId);
+
+  const isMember = group?.myRole !== null && group?.myRole !== undefined;
+  const isOwner = group?.myRole === "OWNER";
+  const isAdmin = group?.myRole === "ADMIN";
+  const showManageTab = isOwner || isAdmin;
+
+  const { data: membersPage, isLoading: membersLoading } = useGroupMembers(groupId, { size: 100 }, { enabled: isMember });
+  const { data: requestsPage } = usePendingJoinRequests(groupId, { size: 100 }, { enabled: isMember && showManageTab });
+  const { data: chatHistory = [] } = useGroupChatHistory(groupId, {}, { enabled: isMember });
 
   // Mutations
   const joinGroupMutation = useJoinGroup();
@@ -67,15 +73,10 @@ export function GroupDetail() {
   const rejectReqMutation = useRejectJoinRequest(groupId);
   const markReadMutation = useMarkGroupAsRead();
 
-  const isMember = group?.myRole !== null && group?.myRole !== undefined;
-  const isOwner = group?.myRole === "OWNER";
-  const isAdmin = group?.myRole === "ADMIN";
-  const showManageTab = isOwner || isAdmin;
-
   // Sync REST chat history to local state
   useEffect(() => {
     if (chatHistory && isMember) {
-      setMessages(chatHistory);
+      setMessages(chatHistory.content || []);
       // Mark read REST
       markReadMutation.mutate(groupId);
     }

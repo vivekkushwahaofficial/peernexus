@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.peernexus.peernexus.exception.ForbiddenException;
 import com.peernexus.peernexus.exception.ResourceNotFoundException;
 import com.peernexus.peernexus.exception.UnauthorizedException;
 import com.peernexus.peernexus.group.entity.GroupMember;
@@ -198,7 +199,7 @@ public class GroupChatServiceImpl implements GroupChatService {
     private void requireMember(Long groupId, Long userId) {
         boolean isMember = groupMemberRepository.existsByGroupIdAndUserId(groupId, userId);
         if (!isMember) {
-            throw new UnauthorizedException(
+            throw new ForbiddenException(
                     "You must be a member of this group to perform this action");
         }
     }

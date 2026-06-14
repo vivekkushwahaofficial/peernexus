@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.peernexus.peernexus.exception.BadRequestException;
+import com.peernexus.peernexus.exception.ForbiddenException;
 import com.peernexus.peernexus.exception.ResourceNotFoundException;
 import com.peernexus.peernexus.exception.UnauthorizedException;
 import com.peernexus.peernexus.group.dto.CreateGroupRequest;
@@ -263,9 +264,9 @@ public class GroupServiceImpl implements GroupService {
         }
         // ADMIN cannot remove another ADMIN — only OWNER can
         GroupMember actorMembership = memberRepository.findByGroupIdAndUserId(groupId, actor.getId())
-                .orElseThrow(() -> new UnauthorizedException("Not a member of this group"));
+                .orElseThrow(() -> new ForbiddenException("Not a member of this group"));
         if (actorMembership.getRole() == GroupRole.ADMIN && target.getRole() == GroupRole.ADMIN) {
-            throw new UnauthorizedException("Only the OWNER can remove an ADMIN");
+            throw new ForbiddenException("Only the OWNER can remove an ADMIN");
         }
 
         memberRepository.delete(target);
@@ -502,21 +503,21 @@ public class GroupServiceImpl implements GroupService {
     // Private helpers – authorization
     // =========================================================================
 
-    /** Throws {@link UnauthorizedException} if the user is not OWNER or ADMIN. */
+    /** Throws {@link ForbiddenException} if the user is not OWNER or ADMIN. */
     private void requireOwnerOrAdmin(StudyGroup group, User user) {
         GroupMember membership = memberRepository.findByGroupIdAndUserId(group.getId(), user.getId())
-                .orElseThrow(() -> new UnauthorizedException("You are not a member of this group"));
+                .orElseThrow(() -> new ForbiddenException("You are not a member of this group"));
         if (membership.getRole() == GroupRole.MEMBER) {
-            throw new UnauthorizedException("Only OWNER or ADMIN can perform this action");
+            throw new ForbiddenException("Only OWNER or ADMIN can perform this action");
         }
     }
 
-    /** Throws {@link UnauthorizedException} if the user is not the OWNER. */
+    /** Throws {@link ForbiddenException} if the user is not the OWNER. */
     private void requireOwner(StudyGroup group, User user) {
         GroupMember membership = memberRepository.findByGroupIdAndUserId(group.getId(), user.getId())
-                .orElseThrow(() -> new UnauthorizedException("You are not a member of this group"));
+                .orElseThrow(() -> new ForbiddenException("You are not a member of this group"));
         if (membership.getRole() != GroupRole.OWNER) {
-            throw new UnauthorizedException("Only the OWNER can perform this action");
+            throw new ForbiddenException("Only the OWNER can perform this action");
         }
     }
 

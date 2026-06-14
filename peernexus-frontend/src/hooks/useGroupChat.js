@@ -1,11 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { groupChatService } from "../services/groupChatService.js";
 
-export function useGroupChatHistory(groupId, params) {
+export function useGroupChatHistory(groupId, params = {}, options = {}) {
   return useQuery({
     queryKey: ["groupChatHistory", groupId, params],
     queryFn: () => groupChatService.getHistory(groupId, params),
-    enabled: Boolean(groupId),
+    enabled: Boolean(groupId) && (options.enabled ?? true),
   });
 }
 
