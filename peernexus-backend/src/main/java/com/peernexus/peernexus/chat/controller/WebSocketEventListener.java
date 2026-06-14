@@ -6,6 +6,7 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import com.peernexus.peernexus.chat.dto.OnlineStatusEvent;
 import com.peernexus.peernexus.chat.service.ChatService;
@@ -92,6 +93,12 @@ public class WebSocketEventListener {
      * SockJS /info pre-flight requests).
      */
     private Long resolveUserId(StompHeaderAccessor accessor) {
+        if (accessor.getUser() instanceof UsernamePasswordAuthenticationToken authToken) {
+            Object details = authToken.getPrincipal();
+            if (details instanceof UserDetailsImpl userDetails) {
+                return userDetails.getId();
+            }
+        }
         if (accessor.getUser() instanceof UserDetailsImpl details) {
             return details.getId();
         }
