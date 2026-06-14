@@ -111,3 +111,11 @@ ALTER TABLE doubts DROP COLUMN IF EXISTS image_url;
 -- Alter column sizes
 ALTER TABLE doubts ALTER COLUMN title TYPE VARCHAR(150);
 ALTER TABLE doubts ALTER COLUMN content TYPE VARCHAR(5000);
+
+
+CREATE INDEX IF NOT EXISTS idx_connections_recipient
+ON connections(recipient_id, status);
+
+CREATE INDEX IF NOT EXISTS idx_users_enabled
+ON users(enabled)
+WHERE enabled = TRUE;

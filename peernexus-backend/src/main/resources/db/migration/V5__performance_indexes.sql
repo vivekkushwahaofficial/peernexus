@@ -32,6 +32,4 @@ WHERE deleted = FALSE;
 CREATE INDEX IF NOT EXISTS idx_users_email
 ON users(email);
 
-CREATE INDEX IF NOT EXISTS idx_users_enabled
-ON users(enabled)
-WHERE enabled = TRUE;
+-- Created in V6 after enabled column is added
