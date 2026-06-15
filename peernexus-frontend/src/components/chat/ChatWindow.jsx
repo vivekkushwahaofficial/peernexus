@@ -17,6 +17,7 @@ export function ChatWindow({
   onDeleteForMe,
   onDeleteForEveryone,
   onPinToggle,
+  onBack,
 }) {
   const scrollRef = useRef(null);
   const [showPinnedDropdown, setShowPinnedDropdown] = useState(false);
@@ -83,6 +84,17 @@ export function ChatWindow({
     <div className="flex-1 flex flex-col h-[calc(100vh-140px)] rounded-2xl border border-ink/8 bg-slate-50 overflow-hidden relative">
       {/* Header */}
       <div className="bg-white border-b border-ink/8 p-4 flex items-center gap-3 shrink-0 shadow-sm z-10">
+        {onBack && (
+          <button
+            onClick={onBack}
+            className="md:hidden p-1.5 rounded-xl text-ink/40 hover:bg-slate-100 hover:text-ink transition focus:outline-none shrink-0"
+            aria-label="Back to conversations list"
+          >
+            <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+        )}
         <Avatar src={partner?.avatarUrl} name={partner?.name} status={partner?.online ? "online" : "offline"} size="md" />
         <div className="flex flex-col">
           <span className="text-xs font-bold text-ink">{partner?.name}</span>

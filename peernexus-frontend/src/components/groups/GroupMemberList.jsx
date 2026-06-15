@@ -50,16 +50,16 @@ export function GroupMemberList({
             isOwner && !isTargetMe;
 
           return (
-            <div key={m.memberId} className="flex items-center justify-between p-3 rounded-2xl border border-ink/5 bg-white hover:bg-slate-50 transition">
-              <div className="flex items-center gap-3">
+            <div key={m.memberId} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-2xl border border-ink/5 bg-white hover:bg-slate-50 transition">
+              <div className="flex items-center gap-3 min-w-0">
                 <Avatar src={m.userProfilePicture} name={m.userName} size="sm" />
-                <div className="flex flex-col">
-                  <span className="text-xs font-bold text-ink">{m.userName}</span>
-                  <span className="text-[10px] text-ink/40">{m.userEmail}</span>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-xs font-bold text-ink truncate">{m.userName}</span>
+                  <span className="text-[10px] text-ink/40 truncate">{m.userEmail}</span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-2.5 justify-end w-full sm:w-auto">
                 <Badge variant={getRoleBadgeVariant(m.role)}>
                   {getRoleLabel(m.role)}
                 </Badge>

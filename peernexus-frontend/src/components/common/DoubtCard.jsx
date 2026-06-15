@@ -34,14 +34,14 @@ export function DoubtCard({ doubt }) {
   return (
     <div className="card p-5 hover:shadow-md hover:border-ink/15 transition-all duration-200 flex flex-col gap-4 bg-white">
       {/* Top row: User Info & Meta */}
-      <div className="flex justify-between items-start">
-        <Link to={isAuthor ? "/profile" : `/profile/${author?.id}`} className="flex items-center gap-3 group">
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-3 w-full">
+        <Link to={isAuthor ? "/profile" : `/profile/${author?.id}`} className="flex items-center gap-3 group min-w-0">
           <Avatar name={author?.name} size="sm" className="group-hover:opacity-90 transition-opacity" />
-          <div className="flex flex-col">
+          <div className="flex flex-col min-w-0">
             <div className="flex items-center gap-1.5">
-              <span className="text-xs font-bold text-ink/90 group-hover:text-accent transition-colors">{author?.name}</span>
+              <span className="text-xs font-bold text-ink/90 group-hover:text-accent transition-colors truncate">{author?.name}</span>
               {author?.verified && (
-                <svg className="w-3.5 h-3.5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-3.5 h-3.5 text-accent shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
               )}
@@ -50,7 +50,7 @@ export function DoubtCard({ doubt }) {
           </div>
         </Link>
 
-        <div className="flex gap-2">
+        <div className="flex gap-2 self-start sm:self-auto flex-wrap">
           {category && (
             <Badge variant="primary" className="normal-case font-medium">
               {category.name}

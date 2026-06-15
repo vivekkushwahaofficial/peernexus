@@ -111,13 +111,13 @@ export function Connections() {
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-ink/8">
+      <div className="flex border-b border-ink/8 overflow-x-auto whitespace-nowrap scrollbar-none">
         <button
           onClick={() => {
             setActiveTab("my");
             setPage(0);
           }}
-          className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all ${
+          className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all shrink-0 ${
             activeTab === "my"
               ? "border-accent text-accent"
               : "border-transparent text-ink/50 hover:text-ink"
@@ -130,7 +130,7 @@ export function Connections() {
             setActiveTab("incoming");
             setPage(0);
           }}
-          className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all ${
+          className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all shrink-0 ${
             activeTab === "incoming"
               ? "border-accent text-accent"
               : "border-transparent text-ink/50 hover:text-ink"
@@ -143,7 +143,7 @@ export function Connections() {
             setActiveTab("outgoing");
             setPage(0);
           }}
-          className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all ${
+          className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all shrink-0 ${
             activeTab === "outgoing"
               ? "border-accent text-accent"
               : "border-transparent text-ink/50 hover:text-ink"
@@ -225,12 +225,12 @@ function ConnectionRow({ item, tab, onAccept, onReject, onCancel, onDisconnect, 
   const roleText = role?.replace("ROLE_", "") || "Student";
 
   return (
-    <div className="flex items-center justify-between p-4 rounded-2xl border border-ink/8 bg-white shadow-sm hover:bg-slate-50 transition">
-      <Link to={`/profile/${id}`} className="flex items-center gap-3">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl border border-ink/8 bg-white shadow-sm hover:bg-slate-50 transition">
+      <Link to={`/profile/${id}`} className="flex items-center gap-3 min-w-0">
         <Avatar name={name} size="md" />
-        <div className="flex flex-col">
+        <div className="flex flex-col min-w-0">
           <div className="flex items-center gap-1">
-            <span className="text-xs font-bold text-ink leading-tight">{name}</span>
+            <span className="text-xs font-bold text-ink leading-tight truncate">{name}</span>
             {verified && (
               <svg className="w-3.5 h-3.5 text-accent shrink-0" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -241,7 +241,7 @@ function ConnectionRow({ item, tab, onAccept, onReject, onCancel, onDisconnect, 
         </div>
       </Link>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 w-full sm:w-auto justify-end">
         {isIncoming && (
           <>
             <Button

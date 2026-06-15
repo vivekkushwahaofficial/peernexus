@@ -270,14 +270,18 @@ export function ChatPage() {
         </div>
       ) : (
         <>
-          <ChatSidebar
-            rooms={rooms}
-            activeRoomId={activeRoomId}
-            currentUserId={user?.id}
-            onSelectRoom={handleSelectRoom}
-          />
+          {/* Chat Sidebar: Hidden on mobile when viewing a conversation */}
+          <div className={`${activeRoomId ? "hidden md:flex" : "flex"} w-full md:w-auto`}>
+            <ChatSidebar
+              rooms={rooms}
+              activeRoomId={activeRoomId}
+              currentUserId={user?.id}
+              onSelectRoom={handleSelectRoom}
+            />
+          </div>
 
-          <div className="flex-1 flex flex-col h-[calc(100vh-140px)]">
+          {/* Conversation view: Hidden on mobile when no conversation is active */}
+          <div className={`flex-1 flex flex-col h-[calc(100vh-140px)] ${activeRoomId ? "flex" : "hidden md:flex"}`}>
             {historyLoading ? (
               <div className="flex-1 flex items-center justify-center bg-slate-50 border border-ink/8 rounded-2xl">
                 <Spinner size="md" />
@@ -297,6 +301,7 @@ export function ChatPage() {
                 onDeleteForMe={handleDeleteForMe}
                 onDeleteForEveryone={handleDeleteForEveryone}
                 onPinToggle={handlePinToggle}
+                onBack={() => handleSelectRoom(null)}
               />
             )}
           </div>

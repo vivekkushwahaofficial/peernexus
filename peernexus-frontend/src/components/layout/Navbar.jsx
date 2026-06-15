@@ -4,7 +4,7 @@ import { useAuth } from "../../hooks/useAuth.js";
 import { useNotifications } from "../../hooks/useNotifications.js";
 import Avatar from "../common/Avatar.jsx";
 
-export function Navbar() {
+export function Navbar({ onToggleMenu, isMenuOpen }) {
   const { isAuthenticated, user, logout } = useAuth();
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -23,15 +23,35 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-ink/8 bg-white/80 backdrop-blur-md">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        {/* Brand */}
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-accent flex items-center justify-center text-white font-bold text-lg shadow-md shadow-accent/20">
-            P
-          </div>
-          <span className="text-xl font-bold tracking-tight text-ink font-display">
-            Peer<span className="text-accent">Nexus</span>
-          </span>
-        </Link>
+        {/* Brand Container with mobile menu trigger */}
+        <div className="flex items-center gap-2">
+          {isAuthenticated && (
+            <button
+              onClick={onToggleMenu}
+              className="md:hidden p-1.5 rounded-xl text-ink/75 hover:bg-slate-100 hover:text-ink transition focus:outline-none"
+              aria-label="Toggle Navigation Menu"
+            >
+              {isMenuOpen ? (
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+          )}
+
+          <Link to="/" className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-xl bg-accent flex items-center justify-center text-white font-bold text-lg shadow-md shadow-accent/20">
+              P
+            </div>
+            <span className="text-xl font-bold tracking-tight text-ink font-display">
+              Peer<span className="text-accent">Nexus</span>
+            </span>
+          </Link>
+        </div>
 
         {/* Search Bar */}
         {isAuthenticated && (

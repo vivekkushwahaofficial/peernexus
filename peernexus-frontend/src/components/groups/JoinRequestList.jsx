@@ -23,15 +23,15 @@ export function JoinRequestList({ requests = [], onApprove, onReject, processing
         requests.map((req) => (
           <div key={req.id} className="flex flex-col gap-3.5 p-4 rounded-2xl border border-ink/8 bg-white shadow-sm">
             {/* User row */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div className="flex items-center gap-3 min-w-0">
                 <Avatar name={req.requesterName} size="sm" />
-                <div className="flex flex-col">
-                  <span className="text-xs font-bold text-ink">{req.requesterName}</span>
-                  <span className="text-[10px] text-ink/40">{req.requesterEmail}</span>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-xs font-bold text-ink truncate">{req.requesterName}</span>
+                  <span className="text-[10px] text-ink/40 truncate">{req.requesterEmail}</span>
                 </div>
               </div>
-              <span className="text-[10px] text-ink/40">{formatDate(req.createdAt)}</span>
+              <span className="text-[10px] text-ink/40 self-end sm:self-center">{formatDate(req.createdAt)}</span>
             </div>
 
             {/* Applicant Message */}

@@ -242,11 +242,13 @@ export function GroupDetail() {
   return (
     <div className="flex flex-col gap-6 max-w-5xl mx-auto animate-fade-in">
       {/* Group Header Info */}
-      <div className="card overflow-hidden bg-white shadow-sm border-ink/10">
-        <div className="h-44 w-full relative">
+      <div className="card overflow-hidden bg-white shadow-sm border-ink/10 flex flex-col">
+        <div className="h-40 sm:h-48 w-full relative shrink-0">
           <img src={group.imageUrl || defaultBanner} alt={group.name} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-          <div className="absolute bottom-5 left-6 right-6 flex justify-between items-end text-white">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent hidden sm:block" />
+          
+          {/* Desktop details overlay */}
+          <div className="absolute bottom-5 left-6 right-6 hidden sm:flex justify-between items-end text-white">
             <div className="flex flex-col gap-1.5 min-w-0">
               <div className="flex items-center gap-2">
                 <Badge variant={group.isPrivate ? "warning" : "success"}>
@@ -302,6 +304,67 @@ export function GroupDetail() {
           </div>
         </div>
 
+        {/* Mobile details and action container */}
+        <div className="p-5 flex flex-col gap-4 sm:hidden bg-white">
+          <div className="flex flex-col gap-1.5">
+            <div className="flex items-center gap-2">
+              <Badge variant={group.isPrivate ? "warning" : "success"}>
+                {group.isPrivate ? "Private" : "Public"}
+              </Badge>
+              {group.topic && (
+                <span className="text-xs font-bold text-accent uppercase tracking-wider">
+                  #{group.topic}
+                </span>
+              )}
+            </div>
+            <h1 className="text-xl font-black text-ink leading-tight font-display">{group.name}</h1>
+          </div>
+
+          <div className="flex flex-wrap gap-2 pt-1">
+            {isMember ? (
+              <>
+                {showManageTab && (
+                  <Link to={`/groups/${groupId}/edit`} className="flex-1">
+                    <Button variant="outline" size="sm" className="w-full text-center">
+                      Manage
+                    </Button>
+                  </Link>
+                )}
+                {!isOwner && (
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={() => setLeaveDialogOpen(true)}
+                    className="flex-1"
+                  >
+                    Leave
+                  </Button>
+                )}
+                {isOwner && (
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={() => setDeleteDialogOpen(true)}
+                    className="flex-1"
+                  >
+                    Delete Group
+                  </Button>
+                )}
+              </>
+            ) : (
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={handleJoinGroup}
+                loading={joinGroupMutation.isPending || requestJoinMutation.isPending}
+                className="w-full"
+              >
+                {group.isPrivate ? "Request to Join" : "Join Group"}
+              </Button>
+            )}
+          </div>
+        </div>
+
         <div className="p-5 border-t border-ink/8 text-xs text-ink/75 bg-slate-50/50">
           <p className="leading-relaxed">{group.description || "No description provided for this group."}</p>
         </div>
@@ -333,10 +396,10 @@ export function GroupDetail() {
       ) : (
         <div className="flex flex-col gap-4">
           {/* Tab buttons */}
-          <div className="flex border-b border-ink/8">
+          <div className="flex border-b border-ink/8 overflow-x-auto whitespace-nowrap scrollbar-none">
             <button
               onClick={() => setActiveTab("chat")}
-              className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all ${
+              className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all shrink-0 ${
                 activeTab === "chat"
                   ? "border-accent text-accent"
                   : "border-transparent text-ink/50 hover:text-ink"
@@ -346,7 +409,7 @@ export function GroupDetail() {
             </button>
             <button
               onClick={() => setActiveTab("members")}
-              className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all ${
+              className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all shrink-0 ${
                 activeTab === "members"
                   ? "border-accent text-accent"
                   : "border-transparent text-ink/50 hover:text-ink"
@@ -357,7 +420,7 @@ export function GroupDetail() {
             {showManageTab && group.isPrivate && (
               <button
                 onClick={() => setActiveTab("requests")}
-                className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all ${
+                className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all shrink-0 ${
                   activeTab === "requests"
                     ? "border-accent text-accent"
                     : "border-transparent text-ink/50 hover:text-ink"

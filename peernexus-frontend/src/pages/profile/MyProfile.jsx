@@ -71,9 +71,9 @@ export function MyProfile() {
           </div>
         </div>
 
-        <div className="sm:absolute sm:top-6 sm:right-6 shrink-0 mt-3 sm:mt-0">
-          <Link to="/profile/edit">
-            <Button variant="outline" size="sm">Edit Profile</Button>
+        <div className="sm:absolute sm:top-6 sm:right-6 shrink-0 mt-3 sm:mt-0 w-full sm:w-auto flex justify-center">
+          <Link to="/profile/edit" className="w-full sm:w-auto">
+            <Button variant="outline" size="sm" className="w-full sm:w-auto">Edit Profile</Button>
           </Link>
         </div>
       </div>

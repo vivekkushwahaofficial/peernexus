@@ -81,9 +81,10 @@ export function MessageBubble({
   return (
     <div
       id={`msg-${id}`}
-      className={`group relative flex items-start gap-2.5 max-w-[85%] sm:max-w-[70%] transition-all duration-300 ${
+      className={`group relative flex items-start gap-2.5 max-w-[85%] md:max-w-[70%] cursor-pointer transition-all duration-300 ${
         isMe ? "ml-auto flex-row-reverse" : "mr-auto"
       }`}
+      onClick={() => setShowMenu((prev) => !prev)}
       onMouseEnter={() => setShowMenu(true)}
       onMouseLeave={() => {
         setShowMenu(false);
@@ -206,9 +207,14 @@ export function MessageBubble({
             )}
           </div>
 
-          {/* Context Options Button (visible on hover) */}
+          {/* Context Options Button (visible on hover or tap) */}
           {showMenu && !deleted && (
-            <div className={`absolute top-1/2 -translate-y-1/2 z-10 flex items-center gap-1 ${isMe ? "-left-16" : "-right-16"}`}>
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className={`absolute top-1/2 -translate-y-1/2 z-10 flex flex-col sm:flex-row items-center bg-white/95 sm:bg-transparent border sm:border-0 border-ink/8 p-1 sm:p-0 rounded-2xl shadow-md sm:shadow-none gap-1 ${
+                isMe ? "right-full mr-2" : "left-full ml-2"
+              }`}
+            >
               {/* Quick Reactions bar */}
               <div className="flex items-center bg-white border border-ink/8 shadow-md rounded-full px-1.5 py-0.5 gap-0.5">
                 {reactionEmojis.map((emoji) => (

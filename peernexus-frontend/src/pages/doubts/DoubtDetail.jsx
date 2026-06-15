@@ -175,12 +175,12 @@ export function DoubtDetail() {
       {/* Doubt Card Box */}
       <div className="card p-6 bg-white flex flex-col gap-5 shadow-sm border-ink/10">
         {/* Header row */}
-        <div className="flex justify-between items-start">
-          <Link to={doubt.author?.id === user?.id ? "/profile" : `/profile/${doubt.author?.id}`} className="flex items-center gap-3 group">
+        <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+          <Link to={doubt.author?.id === user?.id ? "/profile" : `/profile/${doubt.author?.id}`} className="flex items-center gap-3 group min-w-0">
             <Avatar name={doubt.author?.name} size="md" className="group-hover:opacity-90 transition-opacity" />
-            <div className="flex flex-col">
+            <div className="flex flex-col min-w-0">
               <div className="flex items-center gap-1.5">
-                <span className="text-sm font-bold text-ink leading-none group-hover:text-accent transition-colors">{doubt.author?.name}</span>
+                <span className="text-sm font-bold text-ink leading-none group-hover:text-accent transition-colors truncate">{doubt.author?.name}</span>
                 {doubt.author?.verified && (
                   <svg className="w-4.5 h-4.5 text-accent shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -191,7 +191,7 @@ export function DoubtDetail() {
             </div>
           </Link>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 self-start sm:self-auto flex-wrap">
             {doubt.category && (
               <Badge variant="primary" className="normal-case font-medium">
                 {doubt.category.name}
@@ -230,26 +230,26 @@ export function DoubtDetail() {
         </div>
 
         {/* Action Row */}
-        <div className="border-t border-ink/8 pt-4 flex items-center justify-between">
+        <div className="border-t border-ink/8 pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           {isOwner ? (
-            <div className="flex gap-2.5">
-              <Link to={`/doubts/${doubtId}/edit`}>
-                <Button variant="outline" size="sm">Edit Doubt</Button>
+            <div className="flex flex-wrap gap-2.5 w-full sm:w-auto">
+              <Link to={`/doubts/${doubtId}/edit`} className="flex-1 sm:flex-initial">
+                <Button variant="outline" size="sm" className="w-full">Edit Doubt</Button>
               </Link>
-              <Button variant="danger" size="sm" onClick={() => setDeleteDialogOpen(true)}>
+              <Button variant="danger" size="sm" onClick={() => setDeleteDialogOpen(true)} className="flex-1 sm:flex-initial">
                 Delete Doubt
               </Button>
             </div>
           ) : (
             <button
               onClick={() => setReportModalOpen(true)}
-              className="text-xs font-bold text-rose-500 hover:text-rose-600 hover:bg-rose-50 px-3 py-2 rounded-lg transition"
+              className="text-xs font-bold text-rose-500 hover:text-rose-600 hover:bg-rose-50 px-3 py-2 rounded-lg transition self-start"
             >
               Report Abuse
             </button>
           )}
 
-          <Link to="/doubts" className="text-xs font-bold text-ink/40 hover:text-ink hover:underline">
+          <Link to="/doubts" className="text-xs font-bold text-ink/40 hover:text-ink hover:underline self-end sm:self-auto">
             Back to forum
           </Link>
         </div>

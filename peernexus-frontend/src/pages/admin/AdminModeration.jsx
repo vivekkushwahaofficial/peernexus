@@ -186,7 +186,7 @@ export function AdminModeration() {
       {/* Apply Action Modal Form */}
       <Modal isOpen={applyModalOpen} onClose={() => setApplyModalOpen(false)} title="Apply Moderation Action" size="md">
         <form onSubmit={handleApplySubmit} className="flex flex-col gap-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input
               label="Target User ID"
               name="targetUserId"
@@ -220,7 +220,7 @@ export function AdminModeration() {
           )}
 
           {actionType === "DELETE_CONTENT" && (
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input
                 label="Content ID"
                 name="targetContentId"
@@ -242,7 +242,7 @@ export function AdminModeration() {
             </div>
           )}
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input
               label="Linked Report ID (Optional)"
               name="linkedReportId"

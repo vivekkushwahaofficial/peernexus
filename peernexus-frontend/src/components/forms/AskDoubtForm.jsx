@@ -127,8 +127,8 @@ export function AskDoubtForm({ initialData, onSubmit, loading }) {
         <span className="text-xs font-semibold text-ink/75 uppercase tracking-wider">
           Attachments / Images
         </span>
-        <div className="flex items-center gap-4">
-          <label className="flex flex-col items-center justify-center border-2 border-dashed border-ink/15 rounded-2xl cursor-pointer p-4 w-32 h-32 hover:border-accent transition hover:bg-slate-50">
+        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center w-full">
+          <label className="flex flex-col items-center justify-center border-2 border-dashed border-ink/15 rounded-2xl cursor-pointer p-4 w-32 h-32 hover:border-accent transition hover:bg-slate-50 shrink-0">
             <svg className="w-8 h-8 text-ink/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -151,7 +151,7 @@ export function AskDoubtForm({ initialData, onSubmit, loading }) {
                 <button
                   type="button"
                   onClick={() => removeImage(idx)}
-                  className="absolute top-1.5 right-1.5 bg-black/50 text-white rounded-lg p-1 hover:bg-black transition opacity-0 group-hover:opacity-100"
+                  className="absolute top-1.5 right-1.5 bg-black/50 text-white rounded-lg p-1 hover:bg-black transition opacity-0 group-hover:opacity-100 animate-fade-in"
                 >
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

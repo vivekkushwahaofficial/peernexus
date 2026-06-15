@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth.js";
 
-export function Sidebar() {
+export function Sidebar({ isOpen, onClose }) {
   const { user, isAdmin, isModerator } = useAuth();
   const showAdminMenu = isAdmin || isModerator;
 
@@ -64,43 +64,72 @@ export function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 border-r border-ink/8 bg-white/70 backdrop-blur shrink-0 hidden md:block min-h-[calc(100vh-73px)] p-6">
-      <div className="flex flex-col gap-6">
-        <div className="flex flex-col gap-2">
-          {links.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              className={({ isActive }) =>
-                `nav-link ${isActive ? "nav-link-active" : ""}`
-              }
-            >
-              {link.icon}
-              <span>{link.label}</span>
-            </NavLink>
-          ))}
-        </div>
+    <>
+      {/* Mobile Drawer Backdrop */}
+      <div
+        className={`fixed inset-0 z-40 bg-ink/40 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
+          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={onClose}
+      />
 
-        {showAdminMenu && (
-          <div className="border-t border-ink/8 pt-6 flex flex-col gap-2">
-            <span className="text-[10px] font-semibold text-ink/40 uppercase tracking-widest px-3">
-              Administration
-            </span>
-            <NavLink
-              to="/admin"
-              className={({ isActive }) =>
-                `nav-link ${isActive ? "nav-link-active" : ""}`
-              }
+      <aside
+        className={`fixed top-0 bottom-0 left-0 z-50 w-64 border-r border-ink/8 bg-white p-6 transition-transform duration-300 ease-in-out md:static md:translate-x-0 md:bg-white/70 md:backdrop-blur md:shrink-0 md:min-h-[calc(100vh-73px)] md:z-auto ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex flex-col gap-6">
+          {/* Mobile Close Button & Header */}
+          <div className="flex items-center justify-between md:hidden pb-3 border-b border-ink/8">
+            <span className="text-[10px] font-bold text-ink/40 uppercase tracking-widest">Navigation</span>
+            <button
+              onClick={onClose}
+              className="p-1 rounded-xl text-ink/40 hover:bg-slate-100 hover:text-ink transition focus:outline-none"
             >
-              <svg className="w-5 h-5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
-              <span className="text-rose-500 font-semibold">Moderation</span>
-            </NavLink>
+            </button>
           </div>
-        )}
-      </div>
-    </aside>
+
+          <div className="flex flex-col gap-2">
+            {links.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                onClick={onClose}
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "nav-link-active" : ""}`
+                }
+              >
+                {link.icon}
+                <span>{link.label}</span>
+              </NavLink>
+            ))}
+          </div>
+
+          {showAdminMenu && (
+            <div className="border-t border-ink/8 pt-6 flex flex-col gap-2">
+              <span className="text-[10px] font-semibold text-ink/40 uppercase tracking-widest px-3">
+                Administration
+              </span>
+              <NavLink
+                to="/admin"
+                onClick={onClose}
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "nav-link-active" : ""}`
+                }
+              >
+                <svg className="w-5 h-5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+                <span className="text-rose-500 font-semibold">Moderation</span>
+              </NavLink>
+            </div>
+          )}
+        </div>
+      </aside>
+    </>
   );
 }
 
