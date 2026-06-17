@@ -13,7 +13,7 @@ Designed with a focus on web security, clean architecture, and database query op
 ---
 
 ## Live Demo & Repositories
-* **Live Client Link**: [Vercel Deployment Preview Placeholder]
+* **Live Client Link**: https://peernexus.vercel.app
 * **API Documentation**: `http://localhost:8080/swagger-ui.html` (Local development)
 * **GitHub Repository**: [https://github.com/vivekkushwahaofficial/peernexus](https://github.com/vivekkushwahaofficial/peernexus)
 
@@ -485,7 +485,9 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Author
 
-* **Vivek Kushwaha** - *Lead Engineer / Architect*
+* **Vivek Kushwaha** - *Full Stack Developer
+B.Tech CSE Student
+Oriental Institute of Science & Technology*
   * **GitHub**: [github.com/vivekkushwahaofficial](https://github.com/vivekkushwahaofficial)
   * **LinkedIn**: [linkedin.com/in/vivekkushwahaofficial](https://www.linkedin.com/in/vivekkushwahaofficial)
   * **Portfolio**: [vivekkushwaha.dev](https://vivekkushwaha.dev)
