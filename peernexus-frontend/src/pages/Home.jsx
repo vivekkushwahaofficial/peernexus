@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth.js";
 import { useDoubts } from "../hooks/useDoubts.js";
@@ -19,6 +19,28 @@ function LandingPage() {
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? null : index);
   };
+
+  // Smooth scroll handler for incoming subpage route hash mappings
+  useEffect(() => {
+    if (window.location.hash) {
+      const id = window.location.hash.substring(1);
+      const element = document.getElementById(id);
+      if (element) {
+        setTimeout(() => {
+          const offset = 80;
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const elementRect = element.getBoundingClientRect().top;
+          const elementPosition = elementRect - bodyRect;
+          const offsetPosition = elementPosition - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }, 150);
+      }
+    }
+  }, []);
 
   const faqData = [
     {
@@ -343,7 +365,7 @@ function LandingPage() {
       </section>
 
       {/* 4. BUILT FOR MODERN COLLABORATION (RECRUITER-FOCUSED FEATURES) */}
-      <section className="py-20 bg-pearl/10 border-b border-ink/5">
+      <section id="features" className="py-20 bg-pearl/10 border-b border-ink/5">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center max-w-2xl mx-auto mb-16 flex flex-col gap-3">
             <span className="text-[10px] font-bold text-accent uppercase tracking-widest">Built for Modern Student Collaboration</span>
@@ -435,7 +457,7 @@ function LandingPage() {
       </section>
 
       {/* 5. HOW IT WORKS SECTION */}
-      <section className="py-20 bg-white border-b border-ink/5">
+      <section id="how-it-works" className="py-20 bg-white border-b border-ink/5">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center max-w-2xl mx-auto mb-16 flex flex-col gap-3">
             <span className="text-[10px] font-bold text-accent uppercase tracking-widest">Process Flow</span>
@@ -473,7 +495,7 @@ function LandingPage() {
       </section>
 
       {/* 6. PLATFORM SHOWCASE SECTION (HIGH PRIORITY) */}
-      <section className="py-20 bg-slate-50 border-b border-ink/5">
+      <section id="showcase" className="py-20 bg-slate-50 border-b border-ink/5">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center max-w-2xl mx-auto mb-12 flex flex-col gap-3">
             <span className="text-[10px] font-bold text-accent uppercase tracking-widest">Platform Tour</span>
@@ -549,7 +571,7 @@ function LandingPage() {
       </section>
 
       {/* 8. SYSTEM ARCHITECTURE & TECH STACK SECTION (RECRUITER-FOCUSED) */}
-      <section className="py-20 bg-pearl/10 border-b border-ink/5">
+      <section id="architecture" className="py-20 bg-pearl/10 border-b border-ink/5">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center max-w-2xl mx-auto mb-16 flex flex-col gap-3">
             <span className="text-[10px] font-bold text-accent uppercase tracking-widest">Engineering Architecture</span>
@@ -557,7 +579,7 @@ function LandingPage() {
             <p className="text-xs text-ink/50 leading-relaxed">PeerNexus is an enterprise-grade platform built on clean code, secure JWTs, and reactive architectures.</p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-5 text-center">
+          <div id="tech-stack" className="grid gap-6 md:grid-cols-3 lg:grid-cols-5 text-center">
             <div className="card p-5 bg-white border border-ink/5 flex flex-col gap-3 items-center">
               <span className="text-[10px] font-bold text-ink/40 uppercase tracking-widest">Frontend</span>
               <p className="text-[9px] text-ink/50 leading-normal">SPA client handling server queries and low-latency state hooks.</p>
@@ -721,7 +743,7 @@ function LandingPage() {
       </section>
 
       {/* 12. FAQ SECTION */}
-      <section className="py-20 bg-slate-50 border-b border-ink/5">
+      <section id="faq" className="py-20 bg-slate-50 border-b border-ink/5">
         <div className="max-w-3xl mx-auto px-4">
           <div className="text-center mb-16 flex flex-col gap-3">
             <span className="text-[10px] font-bold text-accent uppercase tracking-widest">Frequently Asked Questions</span>
