@@ -6,111 +6,67 @@
 [![Docker](https://img.shields.io/badge/Docker-Compatible-blue.svg?logo=docker&logoColor=white)](https://www.docker.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-* **Live Demo**: [Vercel Deployment Preview Placeholder]
+PeerNexus is a production-grade, secure, and highly scalable collaborative student learning platform. It serves as a modern student community network that bridges peer-to-peer knowledge sharing with real-time communication. PeerNexus combines a forum-style **Doubt Solving Engine**, a gamified **Reputation System**, instant **Private Messaging** (featuring real-time statuses, inline editing, group chats, message pinning, and reactions), and structured **Study Groups** into a unified collaborative workspace.
+
+Designed with a focus on web security, clean architecture, and database query optimization, the platform is fully containerized and deployable via Docker.
+
+---
+
+## Live Demo & Repositories
+* **Live Client Link**: [Vercel Deployment Preview Placeholder]
+* **API Documentation**: `http://localhost:8080/swagger-ui.html` (Local development)
 * **GitHub Repository**: [https://github.com/vivekkushwahaofficial/peernexus](https://github.com/vivekkushwahaofficial/peernexus)
 
 ---
 
-## Project Overview
-
-PeerNexus is a secure, collaborative student learning platform designed to bridge academic isolation through structure. Built on a clean full-stack architecture, it integrates a forum-style doubt-solving workspace, study groups boards, gamified reputation points ledger, and low-latency chat networks. 
-
----
-
-## Problem Statement
-
-During intensive coursework, students face severe roadblocks when solving bugs, studying concepts, or working on assignments. Standard tools are either unmoderated and noisy (chat rooms, discord servers), or exhibit slow asynchronous feedback loops (e.g., standard email threads or legacy discussion forums). This leads to:
-* **Academic Isolation:** Lack of prompt verification on bugs.
-* **Inability to Discover Peer Support:** No structure to find classmates who possess domain expertise.
-* **No Motivation to Contribute:** High-quality replies go unrewarded.
-
----
-
-## Why This Project Exists
-
-PeerNexus was built to establish a centralized community platform tailored to academic collaboration. By combining the structured organization of a doubt forum with the real-time speed of WebSocket channels, PeerNexus enables:
-1. **Accelerated Query Resolutions:** Threaded posts with accepted checks.
-2. **Dynamic Sub-Communities:** Targeted study groups for specific subjects.
-3. **Verified Credentialing:** Gamified points systems that track verified student contributions and display rank badges on portfolios.
+## Table of Contents
+1. [Overview](#overview)
+2. [Key Highlights](#key-highlights)
+3. [Architecture Overview](#architecture-overview)
+4. [Features](#features)
+5. [Technology Stack](#technology-stack)
+6. [System Design](#system-design)
+7. [Database Schema](#database-schema)
+8. [API Documentation](#api-documentation)
+9. [Security Features](#security-features)
+10. [Screenshots](#screenshots)
+11. [Local Setup](#local-setup)
+12. [Deployment Guide](#deployment-guide)
+13. [Why I Built This Project](#why-i-built-this-project)
+14. [Resume Value](#resume-value)
+15. [Future Improvements](#future-improvements)
+16. [Contributing](#contributing)
+17. [License](#license)
+18. [Author](#author)
 
 ---
 
-## Features
+## Overview
 
-### 🔐 Authentication & Security
-* **JWT Stateless Session Control:** Short-lived access tokens (15 mins) manage caller credentials.
-* **Dual-Token Handshake:** DB-stored SHA-256 hashed refresh tokens (30 days) rotate sessions securely.
-* **Registration Validation:** Registrations restricted to college sub-domains via email SMTP verification tokens.
-* **Method-Level Restrictions (RBAC):** Strict Spring Security checks (`STUDENT` < `VERIFIED_STUDENT` < `MODERATOR` < `ADMIN`).
+PeerNexus was designed to bridge the gap between academic isolation and structured peer learning. In typical university communities, students face scattered channels, unmoderated chat platforms, and slow responses on traditional discussion forums. 
 
-### 👤 User Profiles
-* **Presence Tracking:** Online / offline statuses tracked via STOMP broker connection listeners.
-* **Portfolios:** Displays skills, interests, bio details, and earned reputation tiers.
-* **Avatar Upload Stream:** Multipart uploads mapped directly to Cloudinary CDN storage.
-
-### ❓ Doubt Solving System
-* **Markdown Discussion Feed:** Ask academic doubts with subject categories, custom tags, and image attachments.
-* **Upvote / Downvote Ledger:** Vote on replies to highlight helpful content.
-* **Accepted Solution Checks:** Authors can mark answers as resolved, locking the thread and rewarding the replier.
-
-### 👥 Study Groups
-* **Study Rooms Discovery:** Discovery panel displaying public search terms, topics, and descriptions.
-* **Access Control Lists:** Join requests for private groups reviewed by group owners/admins.
-* **Moderation & Promotion:** Owner tools to promote members to admin, transfer ownership, or kick users.
-* **Dedicated WebSocket Channels:** Real-time group chats restricted to verified members.
-
-### 💬 Real-Time Messaging
-* **Low-Latency Chat Threads:** Instant private messages with typing indicators and read receipts.
-* **Message Management:** Edit messages (within 15 minutes) or delete them for everyone (within 1 hour).
-* **Pinning & Reactions:** Pinned message banners and emoji reactions.
-* **Local Message Deletion:** Hide chat entries using "Delete for me" database flags.
-
-### 🏆 Reputation System
-* **Transactional Point Ledger:** Points history logs preventing tampering (`ANSWER_POSTED`, `ANSWER_ACCEPTED`, `UPVOTE_RECEIVED`).
-* **Dynamic Ranking Badges:** Automatic upgrades as reputation grows (Beginner -> Contributor -> Mentor -> Expert -> Legend).
-* **Global Leaderboards:** Real-time ranks displaying top contributors.
-
-### 🛡️ Moderation & Audits
-* **Content Reporting:** Users can flag content (doubts, answers, groups, messages) for moderation review.
-* **Penalty Console:** Moderators can warn, temporarily suspend, or permanently ban users.
-* **Security Audit Logs:** Permanent audit trails mapping admin actions for compliance.
-
-### 🔔 Notifications
-* **Live Alerts:** Real-time push notifications for connections, answers, upvotes, and moderator warnings.
+PeerNexus addresses this by introducing:
+* **Structured doubt-solving modules** with category filters and accepted solution credit rewards.
+* **Low-latency real-time workspace chat** channels for study groups and private connections.
+* **A gamified contribution architecture** utilizing a transactional reputation ledger that updates status tiers dynamically.
+* **Granular moderation tools** to maintain community integrity through warn, suspend, and ban workflows.
 
 ---
 
-## Screenshots
-
-The following image structure is recommended for local screenshots of PeerNexus UI flows:
-
-```text
-screenshots/
-├── landing-page.png
-├── login-page.png
-├── dashboard.png
-├── doubts.png
-├── groups.png
-├── chat.png
-├── leaderboard.png
-├── profile.png
-└── admin-panel.png
-```
-
-* **Landing Page Preview**
-  ![Landing Page](screenshots/landing-page.png)
-* **Student Login Gateway**
-  ![Login Page](screenshots/login-page.png)
-* **Workspace Dashboard & Doubt Feed**
-  ![Dashboard](screenshots/dashboard.png)
-* **WebSocket Real-Time Chat**
-  ![Chat Module](screenshots/chat.png)
+## Key Highlights
+* **JWT Double-Token Authentication:** Highly secure session validation using short-lived access tokens (15 minutes) and DB-stored SHA-256 hashed refresh tokens (30 days).
+* **Role-Based Access Control (RBAC):** Hierarchical endpoints restricted to `STUDENT`, `VERIFIED_STUDENT`, `MODERATOR`, and `ADMIN` users.
+* **WebSocket Real-Time layer:** SockJS + STOMP protocol handlers for messaging, typing bubbles, message reactions, and online presence tracking.
+* **Secured Group Subscriptions:** Custom WebSocket channel interceptors validating database study group membership prior to allowing connection mappings.
+* **Relational Database Design:** PostgreSQL schema with strict constraints, indexes on lookup paths, and Flyway migration controls.
+* **Cloudinary Media Pipeline:** Multi-purpose file streaming mapping user avatars, group headers, and doubt attachments directly to CDN cloud storage.
+* **Full-Stack Containerization:** Multi-stage production builds for backend JAR and frontend Nginx configuration deployable via Docker Compose.
 
 ---
 
-## Architecture Diagram
+## Architecture Overview
 
-PeerNexus uses a client-server architecture with secure real-time messaging pathways:
+PeerNexus follows a decoupled client-server architecture. Client applications interact via a secure HTTPS REST gateway and persistent WebSockets channels.
 
 ```text
                                +----------------------------------+
@@ -138,18 +94,65 @@ PeerNexus uses a client-server architecture with secure real-time messaging path
 
 ---
 
+## Features
+
+### 🔐 Authentication & Security
+* **Stateless Session Control:** Ephemeral cryptographically signed JWT access tokens handle authentication, limiting database load.
+* **Dual-Token Handshake:** Refresh token updates generate secure session intervals without logging users out repeatedly.
+* **Registration Validation:** Single-use verification codes sent via email to restrict registrations to authorized college sub-domains.
+* **Password Recoveries:** Secure password resets utilizing short-lived cryptographic hash keys.
+* **Method-Level Restrictions:** Dynamic endpoint checks matching role hierarchies (`STUDENT` < `VERIFIED_STUDENT` < `MODERATOR` < `ADMIN`).
+
+### 👤 User Profiles
+* **Live Presence Indicator:** Active, away, or last-seen metadata updated dynamically via WebSocket session event listeners.
+* **Detailed Portfolios:** Showcases user bios, academic skills, research interests, and earned reputation tiers.
+* **Avatar Cloud Pipeline:** Secure profile image uploads mapped to Cloudinary, ensuring background assets are deleted when profile updates occur.
+
+### ❓ Doubt Solving System
+* **Markdown Discussion Thread:** Supports formatting text, tables, code blocks, and image layouts.
+* **Categorized Discovery:** Browse doubts using custom subject tags and course categories.
+* **Upvote / Downvote Controls:** Encourages community content moderation through voting logs on answers.
+* **Accept Resolution Flag:** Doubt authors can highlight a solution, lock the thread, and transfer reputation points to the replier.
+
+### 👥 Study Groups
+* **Study Rooms Discovery:** Discovery panel displaying public search terms, topics, and descriptions.
+* **Access Control Lists:** Private groups utilize a join request log reviewed by group owners/admins.
+* **Moderation & Promotion:** Group owners can kick members, promote users to admin, or transfer ownership.
+* **Dedicated WebSocket Channels:** Encrypted real-time group conversations restricted to verified members.
+
+### 💬 Real-Time Messaging
+* **Low-Latency Chat Threads:** Instant private messages with typing indicators and read receipts.
+* **Message Management:** Edit messages (within 15 minutes) or delete them for everyone (within 1 hour).
+* **Pinning & Reactions:** Pinned message alerts displayed in channel banners; support for standard message reactions.
+* **Local Message Deletion:** Allows hiding chats using "Delete for me" database flags.
+
+### 🏆 Reputation System
+* **Transactional Point Ledger:** Secure log entries tracking point history (`ANSWER_POSTED`, `ANSWER_ACCEPTED`, `UPVOTE_RECEIVED`).
+* **Dynamic Ranking Badges:** Automatic upgrades as reputation grows (Beginner -> Contributor -> Mentor -> Expert -> Legend).
+* **Global Leaderboards:** Real-time ranks displaying top contributors.
+
+### 🛡️ Moderation & Audits
+* **Content Reporting:** Users can flag content (doubts, answers, groups, messages) for moderation review.
+* **Penalty Console:** Moderators can warn, temporarily suspend, or permanently ban users.
+* **Security Audit Logs:** Permanent audit trails mapping admin actions for compliance.
+
+### 🔔 Notifications
+* **Live Alerts:** Real-time push notifications for connections, answers, upvotes, and moderator warnings.
+
+---
+
 ## Technology Stack
 
 | Layer | Component | Version | Description |
 | :--- | :--- | :--- | :--- |
-| **Frontend** | React | 18.3.1 | UI rendering library |
+| **Frontend** | React | 18.3.1 | UI library for view layers |
 | | Vite | 5.4.0 | Build compiler & hot-reloading dev server |
-| | Tailwind CSS | 3.4.9 | Custom utility styles |
-| | React Router Dom | 6.26.1 | Client page routing |
-| | TanStack Query | 5.51.0 | State caching, automatic query refetching |
-| | Axios | 1.7.3 | HTTP client with security token interceptors |
+| | Tailwind CSS | 3.4.9 | Styling framework with custom configurations |
+| | React Router Dom | 6.26.1 | Client-side page routing & layout mappings |
+| | TanStack Query | 5.51.0 | State caching, automatic queries refetching |
+| | Axios | 1.7.3 | HTTP client with interceptors for auth headers |
 | | STOMP JS / SockJS | 7.3.0 / 1.6.1 | WebSocket orchestration and heartbeat sync |
-| **Backend** | Spring Boot | 3.5.14 | Core REST & WebSocket server layer |
+| **Backend** | Spring Boot | 3.5.14 | Core REST & WebSocket microservices layer |
 | | Spring Security | 6.x | Security Filter Chain & RBAC validation |
 | | JWT (JJWT) | 0.12.5 | Cryptographic user token generator |
 | | MapStruct | 1.5.5.Final | Type-safe mappings between entities and DTOs |
@@ -157,7 +160,7 @@ PeerNexus uses a client-server architecture with secure real-time messaging path
 | | Spring Mail | 3.x | Transactional registration and reset emails |
 | **Database** | PostgreSQL | 16.x (Alpine) | Transactional, indexed data storage |
 | | Flyway | 10.x | Schema migrations and structure versioning |
-| | H2 Database | 2.2.x | In-memory database for unit tests |
+| | H2 Database | 2.2.x | In-memory relational database for unit tests |
 | **DevOps** | Docker | 26.x | Container deployment package compiler |
 | | Docker Compose | 3.9 | Multi-container environment orchestrator |
 
@@ -165,7 +168,69 @@ PeerNexus uses a client-server architecture with secure real-time messaging path
 
 ## System Design
 
-### Database Design
+### 1. Authentication Flow
+```text
+[User Client]           [AuthController]          [DB/PostgreSQL]         [SMTP Server]
+      |                        |                         |                      |
+      |--- POST /register ---->|                         |                      |
+      |                        |--- Save User (unverified)-->|                  |
+      |                        |--- Generate verification ----|                  |
+      |                        |--- Send verification email ------------------->|
+      |                        |                         |                      |
+      |--- GET /verify ------->|                         |                      |
+      |                        |--- Update enabled=true->|                      |
+      |                        |<-- Success HTTP 200 ----|                      |
+      |                        |                         |                      |
+      |--- POST /login ------->|                         |                      |
+      |                        |--- Validate bcrypt hash |                      |
+      |                        |--- Generate JWT Access  |                      |
+      |                        |--- Save Refresh Token ->|                      |
+      |<-- Return Access JWT --|                         |                      |
+```
+
+### 2. Request Lifecycle (Security Filters)
+```text
+[Incoming HTTP Request]
+          |
+          v
+[JwtAuthenticationFilter] 
+          |---> Extracts Token from "Authorization: Bearer <token>"
+          |---> Validates Token Signature & Expiry
+          |---> Valid: Sets Authentication in SecurityContextHolder
+          |---> Invalid: Bypasses Filter (leaves context empty)
+          v
+[Spring Security Filter Chain]
+          |---> Checks URL mapping constraints
+          |---> Allowed: Passes request to RestController
+          |---> Blocked: Returns HTTP 401 Unauthorized
+          v
+[RestController Controller Handler]
+          |---> Checks method level annotations (@PreAuthorize)
+          |---> Passes execution to Transactional Service
+```
+
+### 3. WebSocket Connection & Subscription Security
+```text
+[Client WS Connection]
+          |
+          v--- STOMP CONNECT Frame (nativeHeaders: "Authorization: Bearer <token>")
+[WebSocketSecurityConfig Interceptor]
+          |--- Extract Token & Validate signature via JwtService
+          |--- Valid: Set user principal on connection session
+          |--- Invalid: Reject Connection, Throw IllegalArgumentException
+          |
+          v--- STOMP SUBSCRIBE Frame (destination: "/topic/group.{groupId}")
+[WebSocketSecurityConfig Interceptor]
+          |--- Extract group ID & Authenticated user ID from principal
+          |--- Check membership (existsByGroupIdAndUserId) in DB
+          |--- Is Member: Complete subscription stream mappings
+          |--- Not Member: Send STOMP ERROR Frame, Deny Subscription
+```
+
+---
+
+## Database Schema
+
 ```text
                +-----------------------------+
                |            users            |
@@ -209,52 +274,15 @@ PeerNexus uses a client-server architecture with secure real-time messaging path
                            +------------+
 ```
 
-* **Core Relationships:**
-  * `User` to `Doubt` and `Answer` is **One-to-Many** (cascade delete blocked).
-  * `Doubt` to `Answer` is **One-to-Many** (cascade delete enabled).
-  * `User` to `StudyGroup` is **Many-to-Many** mapped via `group_members` containing custom membership metadata (`OWNER`, `ADMIN`, `MEMBER`).
-  * `ChatRoom` maps user pairs (**One-to-One** unique key user1_id, user2_id), which links to `messages` (**One-to-Many**).
-  * Peer invitations map to `connections` (**One-to-Many**) tracking statuses (`PENDING`, `ACCEPTED`, `REJECTED`, `CANCELED`).
-
-### Authentication Flow
-```text
-[User Client]           [AuthController]          [DB/PostgreSQL]         [SMTP Server]
-      |                        |                         |                      |
-      |--- POST /register ---->|                         |                      |
-      |                        |--- Save User (unverified)-->|                  |
-      |                        |--- Generate verification ----|                  |
-      |                        |--- Send verification email ------------------->|
-      |                        |                         |                      |
-      |--- GET /verify ------->|                         |                      |
-      |                        |--- Update enabled=true->|                      |
-      |                        |<-- Success HTTP 200 ----|                      |
-      |                        |                         |                      |
-      |--- POST /login ------->|                         |                      |
-      |                        |--- Validate bcrypt hash |                      |
-      |                        |--- Generate JWT Access  |                      |
-      |                        |--- Save Refresh Token ->|                      |
-      |<-- Return Access JWT --|                         |                      |
-```
-
-### WebSocket Flow
-WebSocket communication uses custom interceptors to authenticate handshakes and check subscriptions:
-
-```text
-[Client WS Connection]
-          |
-          v--- STOMP CONNECT Frame (nativeHeaders: "Authorization: Bearer <token>")
-[WebSocketSecurityConfig Interceptor]
-          |--- Extract Token & Validate signature via JwtService
-          |--- Valid: Set user principal on connection session
-          |--- Invalid: Reject Connection, Throw IllegalArgumentException
-          |
-          v--- STOMP SUBSCRIBE Frame (destination: "/topic/group.{groupId}")
-[WebSocketSecurityConfig Interceptor]
-          |--- Extract group ID & Authenticated user ID from principal
-          |--- Check membership (existsByGroupIdAndUserId) in DB
-          |--- Is Member: Complete subscription stream mappings
-          |--- Not Member: Send STOMP ERROR Frame, Deny Subscription
-```
+### Core Entity Explanations
+* **`User`**: The central actor. Stores credentials, roles (`STUDENT`, `VERIFIED_STUDENT`, `MODERATOR`, `ADMIN`), reputation point ledger tallies, academic bios, interests, and profile verification status flags.
+* **`Doubt`**: Academic questions. Holds markdown contents, subject categories, resolved status metadata, and binds to its author.
+* **`Answer`**: Doubt replies. Tracks upvotes/downvotes via transactional joins and records if the answer is accepted as the correct solution.
+* **`StudyGroup`**: Group learning modules. Stores group topics, cover avatars, privacy settings (Public vs Private), and member statistics.
+* **`GroupMember`**: Join mapping table tracking roles (`OWNER`, `ADMIN`, `MEMBER`) and join timestamps for users within study groups.
+* **`ChatRoom`**: Relational bridge between two connected users. Restricts room creations unless connection statuses are set to `ACCEPTED`.
+* **`Message`**: Instant message records. Tracks file attachments, sender mappings, read receipts, and soft-delete visibility flags.
+* **`ReputationTransaction`**: Points transaction table storing ledger histories for audit checks, preventing point tampering.
 
 ---
 
@@ -305,30 +333,46 @@ WebSocket communication uses custom interceptors to authenticate handshakes and 
 
 ## Security Features
 
-* **JWT Stateless Session filter:** Intercepts REST request headers, extracting validation tokens prior to execution.
-* **Hibernate Entity Detachment:** Plaintext tokens are detached from database persistence contexts (`entityManager.detach`) to prevent accidental updates via Hibernate dirty-checking.
-* **IDOR Shield:** Core services validate user resource ownership before executing mutations (edit, delete, accepted status changes).
-* **Input Sanitization & Attachment Filters:** Rejects raw executable file patterns (MZ headers) and whitelists attachments (PDF, DOCX, standard images).
-* **WebSocket Channel Interceptors:** Connect handshakes check JWT signatures, and subscriptions check database group membership.
-* **CORS Limits:** Allowed origins restricted to config properties, blocking generic wildcards.
+* **JWT Stateless Token Filter:** Authenticates REST requests intercepting Header keys on every call, maintaining a stateless runtime footprint.
+* **Hibernate Dirty-Check Protection:** Plaintext verification keys are detached from database persistence states (`entityManager.detach`) upon processing, blocking accidental updates during dirty-checks.
+* **IDOR Protection:** Ownership validators verify resource creators at the service layer before allowing resource mutations (edits, deletions, status changes).
+* **Input Sanitization & File Filters:** Upload interceptors block Windows executables (by validating header signatures and rejecting byte-patterns) and whitelist image formats.
+* **WebSocket Heartbeats & Interceptors:** Handshake interceptors validate tokens prior to connection, and check group memberships dynamically during subscription handshakes.
+* **Strict CORS Boundaries:** Whitelists client origins dynamically through production config variables, blocking wildcard (`*`) access credentials.
+
+---
+
+## Screenshots
+
+### 1. Landing Page (Audited & Responsive)
+![Landing Page](screenshots/landing_page.png)
+
+### 2. Student Authentication Gateway
+![Login Page](screenshots/login.png)
+
+### 3. Workspace Dashboard & Doubt Forum
+![Doubt Feed](screenshots/dashboard.png)
+
+### 4. WebSocket Real-Time Chat Interface
+![Private Messaging](screenshots/chat.png)
 
 ---
 
 ## Local Setup
 
 ### Prerequisites
-1. **Java SDK 21**
-2. **Maven 3.9+**
-3. **Node.js 18+ & npm**
-4. **PostgreSQL 16**
-5. **Cloudinary Account**
+1. **Java SDK 21** (JDK runtime environment)
+2. **Maven 3.9+** (Dependency builds compiler)
+3. **Node.js 18+ & npm** (Frontend runtime package managers)
+4. **PostgreSQL 16** (Persistent database layer)
+5. **Cloudinary account** (Media CDN credentials)
 
-### Backend Setup
+### Backend Configuration
 1. Navigate to the backend directory:
    ```bash
    cd peernexus-backend
    ```
-2. Copy the template `.env.example` file to `.env` and fill in your database, email server, and Cloudinary credentials:
+2. Copy the template `.env.example` file to `.env` and populate your database, email server, and Cloudinary credentials:
    ```bash
    cp .env.example .env
    ```
@@ -341,7 +385,7 @@ WebSocket communication uses custom interceptors to authenticate handshakes and 
    ./mvnw spring-boot:run
    ```
 
-### Frontend Setup
+### Frontend Configuration
 1. Navigate to the frontend directory:
    ```bash
    cd ../peernexus-frontend
@@ -360,11 +404,8 @@ WebSocket communication uses custom interceptors to authenticate handshakes and 
    ```
    The client will boot on `http://localhost:5173`.
 
----
-
-## Docker Setup
-
-To spin up the database, Spring Boot microservices, and Nginx frontend server using Docker:
+### Full-Stack Docker Container Compose Setup
+To spin up the database, Spring Boot microservices, and Nginx frontend server:
 1. Ensure your `.env` variables at the project root folder are populated.
 2. Build and launch the containers:
    ```bash
@@ -376,9 +417,9 @@ To spin up the database, Spring Boot microservices, and Nginx frontend server us
 
 ## Deployment Guide
 
-### Backend Deployment (Railway, Render, AWS)
-1. Provision a managed PostgreSQL database instance and configure production environment variables.
-2. Link the repository, setting the root folder to `peernexus-backend`.
+### Backend & Database (Render, AWS)
+1. Provision a managed PostgreSQL DB instance and set up production environment variables.
+2. Link the repository, setting the build root folder to `peernexus-backend`.
 3. Set the build compile command:
    ```bash
    ./mvnw clean package -DskipTests
@@ -388,88 +429,41 @@ To spin up the database, Spring Boot microservices, and Nginx frontend server us
    java -jar target/peernexus-0.0.1-SNAPSHOT.jar
    ```
 
-### Frontend Deployment (Vercel)
+### Frontend Static Build (Vercel)
 1. Add the project directory pointing to `peernexus-frontend`.
-2. Configure build environment settings:
+2. Configure environment settings:
    * **Build Command:** `npm run build`
    * **Output Directory:** `dist`
-3. Add the `VITE_API_BASE_URL` environment variable pointing to the deployed backend address.
+3. Add the `VITE_API_BASE_URL` environment variable pointing to the deployed backend endpoint.
 
 ---
 
-## Project Structure
+## Why I Built This Project
 
-```text
-peernexus/
-├── docker-compose.yml              # Multi-container orchestration config
-├── .env.example                    # Template for required environment variables
-├── README.md                       # Comprehensive project documentation
-├── verify_group_enter_*.webp       # Media asset for visual validation
-├── peernexus-backend/              # Spring Boot Backend Codebase
-│   ├── Dockerfile                  # Multi-stage JVM runtime build instructions
-│   ├── pom.xml                     # Maven dependency mapping
-│   ├── schema.sql                  # Auto-generated SQL schema dump
-│   ├── docs/                       # Modules API documentation
-│   └── src/
-│       ├── main/
-│       │   ├── java/com/peernexus/peernexus/
-│       │   │   ├── admin/           # Moderation, reports, dashboard and audit logging
-│       │   │   ├── answer/          # Doubt replies and vote tracking
-│       │   │   ├── auth/            # JWT validation, signup, reset tokens
-│       │   │   ├── chat/            # Private chat room REST and STOMP handlers
-│       │   │   ├── cloudinary/     # Cloudinary media upload/delete endpoints
-│       │   │   ├── common/          # Global exceptions, standard response wrappers
-│       │   │   ├── config/          # CORS, Spring Security, WebSockets mapping
-│       │   │   ├── connection/      # Peer invitations network layer
-│       │   │   ├── doubt/           # Forum doubt feed, tag aggregation
-│       │   │   ├── group/           # Study group metadata, admin, and catalogs
-│       │   │   ├── groupchat/       # Study group real-time messaging
-│       │   │   ├── notification/   # In-app alert triggers and storage
-│       │   │   ├── reputation/     # Point transaction engine and leaderboard
-│       │   │   └── user/            # User profile services
-│       │   └── resources/
-│       │       ├── db/migration/   # Flyway versioned SQL scripts V1-V14
-│       │       └── application.properties
-│       └── test/                    # In-memory integration tests
-└── peernexus-frontend/             # React Frontend Codebase
-    ├── Dockerfile                  # Multi-stage Vite static Nginx build
-    ├── package.json                # NPM dependency management
-    ├── tailwind.config.js          # Styling configurations
-    ├── vite.config.js              # Vite configurations
-    └── src/
-        ├── components/             # Reusable UI widgets and layout views
-        ├── context/                # React state providers (Auth, WS)
-        ├── hooks/                  # Custom hooks (WS handlers, UI helpers)
-        ├── pages/                  # Views (DoubtFeed, Admin, ChatPage, etc.)
-        ├── router/                 # Secure layout routing mapping
-        ├── services/               # REST client modules (Axios setup)
-        └── websocket/              # WebSocket configuration settings
-```
+PeerNexus was built to solve the challenges of academic isolation. During intensive coursework, students often get stuck on conceptual bugs, coding errors, or design architectures, wasting hours without validation. Communication is typically scattered across unmoderated channels, and public forums have slow response times.
 
----
-
-## Challenges Solved
-
+### Engineering Challenges Solved:
 1. **State & Connection Synchronization:** Integrating low-latency WebSockets with Spring Security's thread-local security context. I implemented custom channel interceptors to extract and validate JWT tokens on `CONNECT` frames.
 2. **Subscription Leak Prevention:** Preventing unauthorized users from listening to private study group channels. I designed runtime subscription checks that validate membership against the database before allowing subscription mapping.
 3. **Database Performance & N+1 Queries:** Optimizing complex feeds (e.g., matching users, doubt replies, reputation scores). I resolved N+1 query bottlenecks by defining custom JPA Join Fetch mappings, reducing database calls on dashboard loads.
 
 ---
 
-## Lessons Learned
+## Resume Value
 
-* **State Persistence in Real-time Channels:** Learned that keeping track of chat status (sent, read) requires syncing memory buffers with database states carefully, which can be optimized using custom WebSocket channels.
-* **Hibernate Entity State Audits:** Discovered the risk of Hibernate "dirty-checking" updating password fields or registration tokens during REST sessions. This was solved by explicitly detaching transient objects using `entityManager.detach`.
-* **Clean Multi-Stage Docker Builds:** Realized the performance benefits of caching dependency downloads in the builder stage to compile Docker images rapidly without repeating package retrieval.
+PeerNexus shows a strong grasp of core full-stack engineering skills, going beyond simple CRUD architectures:
+* **Production Operations:** Hands-on experience with multi-stage Docker builds, Nginx static host maps, and automated Flyway database migrations.
+* **Security Engineering:** Clean implementations of dual-token JWT rotation, CSRF/CORS filters, IDOR protections, and file-upload interceptors.
+* **Event-Driven Services:** Practical knowledge of STOMP heartbeats, WebSocket handshakes, and stateful tracking.
 
 ---
 
 ## Future Improvements
 
-* **Redis Caching Layer:** Offload WebSocket session states to a Redis Pub/Sub cluster to support horizontal scaling of application instances.
-* **Elasticsearch Indexing:** Replace basic database queries with a dedicated search index for doubt posts and attachments.
-* **WebRTC Live Study Rooms:** Add virtual video study options inside group workspaces.
-* **AI Doubt Classification:** Integrate local LLMs to automatically classify doubt posts and flag toxic answers.
+* **Redis Caching Layer:** Offload WebSocket session mappings and user presence tracking to Redis, enabling horizontal backend scaling.
+* **Elasticsearch Integration:** Replace standard JPA SQL searches with a dedicated Elasticsearch indexing service to support fuzzy matches and file parsing.
+* **WebRTC Live Study Rooms:** Add peer-to-peer virtual audio/video connections within group workspaces.
+* **AI Doubt Moderation:** Implement a local LLM API to auto-classify categories, filter spam, and flag toxic replies.
 
 ---
 
