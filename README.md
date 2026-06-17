@@ -345,15 +345,18 @@ PeerNexus follows a decoupled client-server architecture. Client applications in
 ## Screenshots
 
 ### 1. Landing Page (Audited & Responsive)
+![Landing Page](screenshots/header.png)
+
+### 2. Landing Page (Audited & Responsive)
 ![Landing Page](screenshots/landing_page.png)
 
-### 2. Student Authentication Gateway
+### 3. Student Authentication Gateway
 ![Login Page](screenshots/login.png)
 
-### 3. Workspace Dashboard & Doubt Forum
+### 4. Workspace Dashboard & Doubt Forum
 ![Doubt Feed](screenshots/dashboard.png)
 
-### 4. WebSocket Real-Time Chat Interface
+### 5. WebSocket Real-Time Chat Interface
 ![Private Messaging](screenshots/chat.png)
 
 ---
