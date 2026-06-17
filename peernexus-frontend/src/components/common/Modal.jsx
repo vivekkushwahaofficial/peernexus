@@ -44,13 +44,17 @@ export function Modal({
 
       {/* Modal Box */}
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
         className={`relative w-full ${sizes[size]} transform overflow-hidden rounded-3xl bg-white border border-ink/8 p-6 shadow-2xl transition-all duration-300 animate-slide-up`}
       >
         <div className="flex items-center justify-between border-b border-ink/8 pb-4 mb-4">
-          <h3 className="text-lg font-bold text-ink">{title}</h3>
+          <h3 id="modal-title" className="text-lg font-bold text-ink">{title}</h3>
           <button
             onClick={onClose}
-            className="rounded-xl p-1.5 text-ink/40 hover:bg-ink/5 hover:text-ink transition"
+            aria-label="Close modal"
+            className="rounded-xl p-1.5 text-ink/40 hover:bg-ink/5 hover:text-ink transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/80 focus-visible:ring-offset-2"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

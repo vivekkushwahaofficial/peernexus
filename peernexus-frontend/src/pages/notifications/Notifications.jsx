@@ -64,12 +64,12 @@ export function Notifications() {
     <div className="flex flex-col gap-6 max-w-2xl mx-auto animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-ink font-display">Notifications</h1>
-          <p className="text-xs text-ink/50 mt-1">Stay updated with doubt activities and connection requests.</p>
+          <h1 className="text-2xl font-extrabold text-ink font-display">Notifications</h1>
+          <p className="text-xs text-ink/40 mt-1">Stay updated with doubt activities and connection requests.</p>
         </div>
 
         {notifications.length > 0 && (
-          <Button variant="outline" size="sm" onClick={handleMarkAllRead} loading={markAllReadMutation.isPending}>
+          <Button variant="outline" size="sm" onClick={handleMarkAllRead} loading={markAllReadMutation.isPending} className="font-bold text-xs px-4">
             Mark All Read
           </Button>
         )}
@@ -90,23 +90,23 @@ export function Notifications() {
             <div
               key={notif.id}
               onClick={() => handleNotificationClick(notif)}
-              className={`flex items-start justify-between gap-4 p-4 rounded-2xl border cursor-pointer hover:bg-slate-50 transition shadow-sm ${
+              className={`flex items-start justify-between gap-4 p-4 rounded-xl border cursor-pointer hover:bg-slate-50 transition shadow-[0_2px_8px_rgba(16,21,26,0.01)] ${
                 notif.read
-                  ? "bg-white border-ink/8 text-ink/70"
-                  : "bg-accent/5 border-accent/20 text-ink ring-1 ring-accent/10"
+                  ? "bg-white border-ink/5 text-ink/60"
+                  : "bg-accent/8 border-accent/15 text-ink font-semibold"
               }`}
             >
               <div className="flex flex-col gap-1 min-w-0">
-                <p className="text-xs font-semibold leading-relaxed break-words">
+                <p className="text-xs leading-relaxed break-words font-medium">
                   {notif.message}
                 </p>
-                <span className="text-[10px] text-ink/40 font-medium">
+                <span className="text-[10px] text-ink/40 font-bold tracking-wide uppercase mt-1">
                   {formatDate(notif.createdAt)}
                 </span>
               </div>
 
               {!notif.read && (
-                <span className="w-2.5 h-2.5 rounded-full bg-accent shrink-0 mt-1.5" />
+                <span className="w-2.5 h-2.5 rounded-full bg-accent shrink-0 mt-1.5 animate-pulse" />
               )}
             </div>
           ))}

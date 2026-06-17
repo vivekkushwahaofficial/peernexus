@@ -173,27 +173,27 @@ export function DoubtDetail() {
   return (
     <div className="flex flex-col gap-8 max-w-4xl mx-auto animate-fade-in">
       {/* Doubt Card Box */}
-      <div className="card p-6 bg-white flex flex-col gap-5 shadow-sm border-ink/10">
+      <div className="card p-6 bg-white flex flex-col gap-5 border border-ink/5 shadow-[0_4px_25px_-5px_rgba(16,21,26,0.03)]">
         {/* Header row */}
         <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
           <Link to={doubt.author?.id === user?.id ? "/profile" : `/profile/${doubt.author?.id}`} className="flex items-center gap-3 group min-w-0">
-            <Avatar name={doubt.author?.name} size="md" className="group-hover:opacity-90 transition-opacity" />
+            <Avatar name={doubt.author?.name} src={doubt.author?.avatarUrl} size="md" className="group-hover:opacity-90 transition-opacity" />
             <div className="flex flex-col min-w-0">
               <div className="flex items-center gap-1.5">
                 <span className="text-sm font-bold text-ink leading-none group-hover:text-accent transition-colors truncate">{doubt.author?.name}</span>
                 {doubt.author?.verified && (
-                  <svg className="w-4.5 h-4.5 text-accent shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-4.5 h-4.5 text-accent shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                 )}
               </div>
-              <span className="text-[10px] text-ink/40 mt-1">Asked: {formatDate(doubt.createdAt)}</span>
+              <span className="text-[10px] text-ink/40 font-semibold mt-1">Asked: {formatDate(doubt.createdAt)}</span>
             </div>
           </Link>
 
           <div className="flex gap-2 self-start sm:self-auto flex-wrap">
             {doubt.category && (
-              <Badge variant="primary" className="normal-case font-medium">
+              <Badge variant="primary" className="normal-case font-semibold">
                 {doubt.category.name}
               </Badge>
             )}
@@ -204,17 +204,17 @@ export function DoubtDetail() {
         </div>
 
         {/* Content row */}
-        <div className="flex flex-col gap-3 border-t border-ink/5 pt-4">
+        <div className="flex flex-col gap-3 border-t border-ink/5 pt-5">
           <h1 className="text-xl font-bold text-ink leading-snug">{doubt.title}</h1>
-          <p className="text-sm text-ink/85 leading-relaxed whitespace-pre-wrap break-words">{doubt.content}</p>
+          <p className="text-sm text-ink/70 leading-relaxed whitespace-pre-wrap break-words">{doubt.content}</p>
         </div>
 
         {/* Images */}
         {doubt.images && doubt.images.length > 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {doubt.images.map((img) => (
-              <a key={img.id} href={img.url} target="_blank" rel="noopener noreferrer" className="relative h-48 rounded-2xl overflow-hidden border border-ink/8 shadow-sm">
-                <img src={img.url} alt="doubt attachment" className="w-full h-full object-cover cursor-zoom-in" />
+              <a key={img.id} href={img.url} target="_blank" rel="noopener noreferrer" className="relative h-48 rounded-2xl overflow-hidden border border-ink/5 shadow-sm group hover:border-ink/15 transition-all">
+                <img src={img.url} alt="doubt attachment" className="w-full h-full object-cover cursor-zoom-in group-hover:scale-102 transition-transform duration-300" />
               </a>
             ))}
           </div>
@@ -223,27 +223,30 @@ export function DoubtDetail() {
         {/* Tags */}
         <div className="flex flex-wrap gap-2">
           {doubt.tags && doubt.tags.map((t, idx) => (
-            <span key={idx} className="text-xs font-semibold bg-slate-100 text-slate-500 px-3 py-1 rounded-full">
+            <span
+              key={idx}
+              className="text-[10px] font-bold text-ink/40 bg-ink/5 border border-transparent px-2.5 py-1 rounded-lg hover:bg-ink/8 hover:text-ink/60 transition-all cursor-pointer"
+            >
               #{t}
             </span>
           ))}
         </div>
 
         {/* Action Row */}
-        <div className="border-t border-ink/8 pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="border-t border-ink/5 pt-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           {isOwner ? (
             <div className="flex flex-wrap gap-2.5 w-full sm:w-auto">
               <Link to={`/doubts/${doubtId}/edit`} className="flex-1 sm:flex-initial">
-                <Button variant="outline" size="sm" className="w-full">Edit Doubt</Button>
+                <Button variant="outline" size="sm" className="w-full font-bold">Edit Doubt</Button>
               </Link>
-              <Button variant="danger" size="sm" onClick={() => setDeleteDialogOpen(true)} className="flex-1 sm:flex-initial">
+              <Button variant="danger" size="sm" onClick={() => setDeleteDialogOpen(true)} className="flex-1 sm:flex-initial font-bold">
                 Delete Doubt
               </Button>
             </div>
           ) : (
             <button
               onClick={() => setReportModalOpen(true)}
-              className="text-xs font-bold text-rose-500 hover:text-rose-600 hover:bg-rose-50 px-3 py-2 rounded-lg transition self-start"
+              className="text-xs font-bold text-rose-500 hover:text-rose-600 hover:bg-rose-50 px-3 py-2 rounded-xl transition self-start cursor-pointer border border-transparent hover:border-rose-100"
             >
               Report Abuse
             </button>
@@ -257,7 +260,7 @@ export function DoubtDetail() {
 
       {/* Answers Section */}
       <div className="flex flex-col gap-4">
-        <h2 className="text-base font-bold text-ink font-display">
+        <h2 className="text-sm font-bold text-ink font-display tracking-wide uppercase px-1">
           Solutions ({answers.length})
         </h2>
 
@@ -266,7 +269,7 @@ export function DoubtDetail() {
             <Spinner size="md" />
           </div>
         ) : answers.length === 0 ? (
-          <div className="card p-6 text-center text-ink/40 text-xs bg-white">
+          <div className="card p-8 text-center text-ink/40 text-xs bg-white border border-ink/5">
             No solutions have been posted for this doubt yet.
           </div>
         ) : (
@@ -289,7 +292,7 @@ export function DoubtDetail() {
 
       {/* Answer Composition Form */}
       {editingAnswer ? (
-        <div className="card p-5 bg-white border border-amber-300">
+        <div className="card p-6 bg-white border border-warning/30 shadow-sm">
           <AnswerForm
             initialData={editingAnswer}
             onSubmit={handleSaveEditAnswer}
@@ -298,7 +301,7 @@ export function DoubtDetail() {
           />
         </div>
       ) : (
-        <div className="card p-5 bg-white">
+        <div className="card p-6 bg-white border border-ink/5 shadow-sm">
           <AnswerForm
             onSubmit={handlePostAnswer}
             loading={createAnswerMutation.isPending}

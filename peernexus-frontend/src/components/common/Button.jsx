@@ -12,20 +12,20 @@ export function Button({
   className = "",
   ...props
 }) {
-  const baseStyle = "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100";
+  const baseStyle = "inline-flex items-center justify-center gap-2 font-semibold transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent/80";
   
   const variants = {
-    primary: "bg-accent text-white hover:bg-accent/90 focus:ring-2 focus:ring-accent/20",
-    secondary: "bg-ink text-pearl hover:bg-ink/80 focus:ring-2 focus:ring-ink/20",
-    danger: "bg-ember text-white hover:bg-ember/90 focus:ring-2 focus:ring-ember/20",
-    ghost: "text-ink/70 hover:bg-ink/5",
-    outline: "border border-ink/15 text-ink hover:bg-ink/5",
+    primary: "btn-primary",
+    secondary: "btn-secondary",
+    danger: "btn-danger",
+    ghost: "btn-ghost",
+    outline: "border border-ink/10 text-ink/70 hover:bg-ink/5 hover:text-ink focus:ring-4 focus:ring-ink/5",
   };
 
   const sizes = {
-    sm: "px-4 py-1.5 text-xs",
-    md: "px-6 py-2.5 text-sm",
-    lg: "px-8 py-3.5 text-base",
+    sm: "px-4 py-1.5 text-xs rounded-lg",
+    md: "px-5 py-2.5 text-sm rounded-xl",
+    lg: "px-7 py-3 text-base rounded-xl",
   };
 
   return (
@@ -36,7 +36,7 @@ export function Button({
       className={`${baseStyle} ${variants[variant]} ${sizes[size]} ${className}`}
       {...props}
     >
-      {loading && <Spinner size="xs" className="border-white" />}
+      {loading && <Spinner size="xs" className="border-current" />}
       {children}
     </button>
   );

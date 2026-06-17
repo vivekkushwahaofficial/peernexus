@@ -106,21 +106,21 @@ export function Connections() {
   return (
     <div className="flex flex-col gap-6 animate-fade-in max-w-3xl mx-auto">
       <div>
-        <h1 className="text-2xl font-bold text-ink font-display">Student Connections</h1>
-        <p className="text-xs text-ink/50 mt-1">Manage your academic connections and peer requests.</p>
+        <h1 className="text-2xl font-extrabold text-ink font-display">Student Connections</h1>
+        <p className="text-xs text-ink/40 mt-1">Manage your academic connections and peer requests.</p>
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-ink/8 overflow-x-auto whitespace-nowrap scrollbar-none">
+      <div className="flex border-b border-ink/5 overflow-x-auto whitespace-nowrap scrollbar-none">
         <button
           onClick={() => {
             setActiveTab("my");
             setPage(0);
           }}
-          className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all shrink-0 ${
+          className={`px-5 py-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all shrink-0 cursor-pointer ${
             activeTab === "my"
               ? "border-accent text-accent"
-              : "border-transparent text-ink/50 hover:text-ink"
+              : "border-transparent text-ink/40 hover:text-ink hover:border-ink/10"
           }`}
         >
           My Connections ({connectionsPage?.totalElements || 0})
@@ -130,10 +130,10 @@ export function Connections() {
             setActiveTab("incoming");
             setPage(0);
           }}
-          className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all shrink-0 ${
+          className={`px-5 py-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all shrink-0 cursor-pointer ${
             activeTab === "incoming"
               ? "border-accent text-accent"
-              : "border-transparent text-ink/50 hover:text-ink"
+              : "border-transparent text-ink/40 hover:text-ink hover:border-ink/10"
           }`}
         >
           Incoming Requests ({incomingPage?.totalElements || 0})
@@ -143,10 +143,10 @@ export function Connections() {
             setActiveTab("outgoing");
             setPage(0);
           }}
-          className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all shrink-0 ${
+          className={`px-5 py-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all shrink-0 cursor-pointer ${
             activeTab === "outgoing"
               ? "border-accent text-accent"
-              : "border-transparent text-ink/50 hover:text-ink"
+              : "border-transparent text-ink/40 hover:text-ink hover:border-ink/10"
           }`}
         >
           Sent Requests ({outgoingPage?.totalElements || 0})
@@ -225,19 +225,19 @@ function ConnectionRow({ item, tab, onAccept, onReject, onCancel, onDisconnect, 
   const roleText = role?.replace("ROLE_", "") || "Student";
 
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl border border-ink/8 bg-white shadow-sm hover:bg-slate-50 transition">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl border border-ink/5 bg-white shadow-sm hover:bg-slate-50 transition cursor-pointer">
       <Link to={`/profile/${id}`} className="flex items-center gap-3 min-w-0">
         <Avatar name={name} size="md" />
         <div className="flex flex-col min-w-0">
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
             <span className="text-xs font-bold text-ink leading-tight truncate">{name}</span>
             {verified && (
-              <svg className="w-3.5 h-3.5 text-accent shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-3.5 h-3.5 text-accent shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
             )}
           </div>
-          <span className="text-[10px] text-ink/40 mt-1">{roleText}</span>
+          <span className="text-[10px] text-ink/40 font-bold uppercase tracking-wider mt-1">{roleText}</span>
         </div>
       </Link>
 
@@ -249,7 +249,7 @@ function ConnectionRow({ item, tab, onAccept, onReject, onCancel, onDisconnect, 
               size="sm"
               onClick={() => onReject(item.id)}
               loading={processing}
-              className="text-rose-600 hover:bg-rose-50"
+              className="text-error/80 hover:bg-error/5 font-bold text-xs"
             >
               Reject
             </Button>
@@ -258,6 +258,7 @@ function ConnectionRow({ item, tab, onAccept, onReject, onCancel, onDisconnect, 
               size="sm"
               onClick={() => onAccept(item.id)}
               loading={processing}
+              className="font-bold text-xs"
             >
               Accept
             </Button>
@@ -270,6 +271,7 @@ function ConnectionRow({ item, tab, onAccept, onReject, onCancel, onDisconnect, 
             size="sm"
             onClick={() => onCancel(item.id)}
             loading={processing}
+            className="font-bold text-xs px-4"
           >
             Cancel Request
           </Button>
@@ -281,6 +283,7 @@ function ConnectionRow({ item, tab, onAccept, onReject, onCancel, onDisconnect, 
             size="sm"
             onClick={() => onDisconnect(item.id)}
             loading={processing}
+            className="font-bold text-xs"
           >
             Disconnect
           </Button>

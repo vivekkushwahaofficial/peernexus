@@ -74,25 +74,25 @@ export function Sidebar({ isOpen, onClose }) {
       />
 
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 w-64 border-r border-ink/8 bg-white p-6 transition-transform duration-300 ease-in-out md:static md:translate-x-0 md:bg-white/70 md:backdrop-blur md:shrink-0 md:min-h-[calc(100vh-73px)] md:z-auto ${
+        className={`fixed top-0 bottom-0 left-0 z-50 w-64 border-r border-ink/5 bg-white p-6 transition-transform duration-300 ease-in-out md:static md:translate-x-0 md:bg-white/40 md:backdrop-blur-lg md:shrink-0 md:min-h-[calc(100vh-73px)] md:z-auto ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="flex flex-col gap-6">
           {/* Mobile Close Button & Header */}
-          <div className="flex items-center justify-between md:hidden pb-3 border-b border-ink/8">
-            <span className="text-[10px] font-bold text-ink/40 uppercase tracking-widest">Navigation</span>
+          <div className="flex items-center justify-between md:hidden pb-3.5 border-b border-ink/5">
+            <span className="text-[10px] font-bold text-ink/30 uppercase tracking-widest">Navigation</span>
             <button
               onClick={onClose}
-              className="p-1 rounded-xl text-ink/40 hover:bg-slate-100 hover:text-ink transition focus:outline-none"
+              className="p-1 rounded-xl text-ink/40 hover:bg-ink/5 hover:text-ink transition focus:outline-none cursor-pointer"
             >
               <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
 
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1.5">
             {links.map((link) => (
               <NavLink
                 key={link.to}
@@ -109,8 +109,8 @@ export function Sidebar({ isOpen, onClose }) {
           </div>
 
           {showAdminMenu && (
-            <div className="border-t border-ink/8 pt-6 flex flex-col gap-2">
-              <span className="text-[10px] font-semibold text-ink/40 uppercase tracking-widest px-3">
+            <div className="border-t border-ink/5 pt-6 flex flex-col gap-1.5">
+              <span className="text-[10px] font-bold text-ink/30 uppercase tracking-widest px-4 mb-1">
                 Administration
               </span>
               <NavLink
@@ -123,7 +123,7 @@ export function Sidebar({ isOpen, onClose }) {
                 <svg className="w-5 h-5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
-                <span className="text-rose-500 font-semibold">Moderation</span>
+                <span className="text-rose-500 font-bold">Moderation</span>
               </NavLink>
             </div>
           )}

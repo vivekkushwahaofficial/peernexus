@@ -2,22 +2,22 @@ import React from "react";
 
 export function Badge({ children, variant = "neutral", className = "" }) {
   const variants = {
-    neutral: "bg-slate-100 text-slate-700 border-slate-200",
-    primary: "bg-accent/10 text-accent border-accent/20",
-    success: "bg-emerald-50 text-emerald-700 border-emerald-200",
-    warning: "bg-amber-50 text-amber-700 border-amber-200",
-    danger: "bg-ember/10 text-ember border-ember/20",
-    info: "bg-sky-50 text-sky-700 border-sky-200",
+    neutral: "bg-ink/5 text-ink/70 border-ink/5",
+    primary: "bg-accent/8 text-accent border-accent/10",
+    success: "bg-success/8 text-success border-success/10",
+    warning: "bg-warning/8 text-warning border-warning/10",
+    danger: "bg-error/8 text-error border-error/10",
+    info: "bg-info/8 text-info border-info/10",
     // Roles
-    admin: "bg-rose-50 text-rose-700 border-rose-200",
-    moderator: "bg-purple-50 text-purple-700 border-purple-200",
-    verified: "bg-teal-50 text-teal-700 border-teal-200",
-    student: "bg-slate-100 text-slate-700 border-slate-200",
+    admin: "bg-red-500/8 text-red-600 border-red-500/10",
+    moderator: "bg-indigo-500/8 text-indigo-600 border-indigo-500/10",
+    verified: "bg-accent/8 text-accent border-accent/10",
+    student: "bg-ink/5 text-ink/60 border-ink/5",
   };
 
   return (
     <span
-      className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide ${variants[variant]} ${className}`}
+      className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${variants[variant]} ${className}`}
     >
       {children}
     </span>

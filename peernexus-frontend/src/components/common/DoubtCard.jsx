@@ -32,27 +32,27 @@ export function DoubtCard({ doubt }) {
   const previewText = content.length > 140 ? `${content.substring(0, 140)}...` : content;
 
   return (
-    <div className="card p-5 hover:shadow-md hover:border-ink/15 transition-all duration-200 flex flex-col gap-4 bg-white">
+    <div className="card card-hover p-6 flex flex-col gap-4 bg-white">
       {/* Top row: User Info & Meta */}
       <div className="flex flex-col sm:flex-row justify-between items-start gap-3 w-full">
         <Link to={isAuthor ? "/profile" : `/profile/${author?.id}`} className="flex items-center gap-3 group min-w-0">
-          <Avatar name={author?.name} size="sm" className="group-hover:opacity-90 transition-opacity" />
+          <Avatar name={author?.name} src={author?.avatarUrl} size="sm" className="group-hover:opacity-90 transition-opacity" />
           <div className="flex flex-col min-w-0">
             <div className="flex items-center gap-1.5">
-              <span className="text-xs font-bold text-ink/90 group-hover:text-accent transition-colors truncate">{author?.name}</span>
+              <span className="text-xs font-bold text-ink hover:text-accent transition-colors truncate">{author?.name}</span>
               {author?.verified && (
-                <svg className="w-3.5 h-3.5 text-accent shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-3.5 h-3.5 text-accent shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
               )}
             </div>
-            <span className="text-[10px] text-ink/40">{formatDate(createdAt)}</span>
+            <span className="text-[10px] text-ink/40 font-medium">{formatDate(createdAt)}</span>
           </div>
         </Link>
 
         <div className="flex gap-2 self-start sm:self-auto flex-wrap">
           {category && (
-            <Badge variant="primary" className="normal-case font-medium">
+            <Badge variant="primary" className="normal-case font-semibold">
               {category.name}
             </Badge>
           )}
@@ -63,11 +63,11 @@ export function DoubtCard({ doubt }) {
       </div>
 
       {/* Middle row: Content */}
-      <div className="flex flex-col gap-1.5">
-        <Link to={`/doubts/${id}`} className="hover:text-accent transition">
-          <h3 className="text-base font-bold text-ink leading-snug">{title}</h3>
+      <div className="flex flex-col gap-2">
+        <Link to={`/doubts/${id}`} className="group hover:text-accent">
+          <h3 className="text-base font-bold text-ink leading-snug group-hover:text-accent transition-colors">{title}</h3>
         </Link>
-        <p className="text-sm text-ink/70 leading-relaxed break-words">{previewText}</p>
+        <p className="text-sm text-ink/60 leading-relaxed break-words">{previewText}</p>
       </div>
 
       {/* Images preview if any */}
@@ -78,19 +78,19 @@ export function DoubtCard({ doubt }) {
               key={img.id}
               src={img.url}
               alt="doubt attachment"
-              className="h-16 w-24 object-cover rounded-lg border border-ink/8 shrink-0"
+              className="h-16 w-24 object-cover rounded-lg border border-ink/5 shrink-0 hover:scale-105 transition-transform duration-250 cursor-zoom-in"
             />
           ))}
         </div>
       )}
 
       {/* Bottom row: Tags & CTA */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-ink/8 pt-3 mt-1">
-        <div className="flex flex-wrap gap-1.5">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-ink/5 pt-4 mt-1">
+        <div className="flex flex-wrap gap-2">
           {tags && tags.map((t, idx) => (
             <span
               key={idx}
-              className="text-[11px] font-medium bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full"
+              className="text-[10px] font-bold text-ink/40 bg-ink/5 border border-transparent px-2.5 py-0.5 rounded-lg hover:bg-ink/8 hover:text-ink/60 transition-all cursor-pointer"
             >
               #{t}
             </span>

@@ -45,24 +45,24 @@ export function ChatSidebar({ rooms = [], activeRoomId, currentUserId, onSelectR
   });
 
   return (
-    <div className="w-full md:w-80 border-r border-ink/8 bg-white shrink-0 flex flex-col h-[calc(100vh-140px)] shadow-sm">
+    <div className="w-full md:w-80 border-r border-ink/5 bg-white shrink-0 flex flex-col h-[calc(100vh-140px)] shadow-sm">
       {/* Header and Tabs */}
-      <div className="p-4 border-b border-ink/8 flex flex-col gap-3">
+      <div className="p-4 border-b border-ink/5 flex flex-col gap-3">
         <div className="flex justify-between items-center">
-          <h2 className="text-base font-bold text-ink">Messages</h2>
-          <div className="flex bg-slate-100 rounded-lg p-0.5 text-xs">
+          <h2 className="text-base font-extrabold text-ink font-display">Messages</h2>
+          <div className="flex bg-ink/5 rounded-xl p-0.5 text-xs">
             <button
               onClick={() => setSearchTab("chats")}
-              className={`px-3 py-1 rounded-md font-medium transition ${
-                searchTab === "chats" ? "bg-white text-ink shadow-sm" : "text-ink/60 hover:text-ink"
+              className={`px-3 py-1 rounded-lg font-bold transition-all cursor-pointer ${
+                searchTab === "chats" ? "bg-white text-ink shadow-sm" : "text-ink/50 hover:text-ink"
               }`}
             >
               Chats
             </button>
             <button
               onClick={() => setSearchTab("messages")}
-              className={`px-3 py-1 rounded-md font-medium transition ${
-                searchTab === "messages" ? "bg-white text-ink shadow-sm" : "text-ink/60 hover:text-ink"
+              className={`px-3 py-1 rounded-lg font-bold transition-all cursor-pointer ${
+                searchTab === "messages" ? "bg-white text-ink shadow-sm" : "text-ink/50 hover:text-ink"
               }`}
             >
               Search
@@ -78,7 +78,7 @@ export function ChatSidebar({ rooms = [], activeRoomId, currentUserId, onSelectR
               placeholder="Search conversations..."
               value={localSearch}
               onChange={(e) => setLocalSearch(e.target.value)}
-              className="w-full bg-slate-50 border border-ink/10 rounded-xl pl-9 pr-4 py-2 text-xs text-ink placeholder:text-ink/40 outline-none focus:border-accent focus:bg-white transition"
+              className="w-full bg-ink/[0.01] border border-ink/10 rounded-xl pl-9 pr-4 py-2 text-xs text-ink placeholder:text-ink/30 outline-none focus:border-accent focus:bg-white transition-all duration-200"
             />
             <svg
               className="w-4 h-4 text-ink/30 absolute left-3 top-2.5"
@@ -96,7 +96,7 @@ export function ChatSidebar({ rooms = [], activeRoomId, currentUserId, onSelectR
               placeholder="Search in message text..."
               value={msgSearch}
               onChange={(e) => setMsgSearch(e.target.value)}
-              className="w-full bg-slate-50 border border-ink/10 rounded-xl pl-9 pr-4 py-2 text-xs text-ink placeholder:text-ink/40 outline-none focus:border-accent focus:bg-white transition"
+              className="w-full bg-ink/[0.01] border border-ink/10 rounded-xl pl-9 pr-4 py-2 text-xs text-ink placeholder:text-ink/30 outline-none focus:border-accent focus:bg-white transition-all duration-200"
             />
             <svg
               className="w-4 h-4 text-ink/30 absolute left-3 top-2.5"
@@ -111,7 +111,7 @@ export function ChatSidebar({ rooms = [], activeRoomId, currentUserId, onSelectR
       </div>
 
       {/* List Feed */}
-      <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-1">
+      <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-1.5">
         {searchTab === "chats" ? (
           filteredRooms.length === 0 ? (
             <div className="text-center py-12 text-ink/30 text-xs">
@@ -143,10 +143,10 @@ export function ChatSidebar({ rooms = [], activeRoomId, currentUserId, onSelectR
                 <button
                   key={room.roomId}
                   onClick={() => onSelectRoom(room.roomId)}
-                  className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all duration-200 text-left border border-transparent ${
+                  className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-200 text-left border cursor-pointer ${
                     active
-                      ? "bg-accent/10 text-ink border-accent/20"
-                      : "hover:bg-slate-50 text-ink/75 hover:scale-[1.01] active:scale-[0.99]"
+                      ? "bg-accent/8 text-accent border-accent/15"
+                      : "bg-transparent border-transparent hover:bg-ink/[0.02] hover:border-ink/5"
                   }`}
                 >
                   <Avatar
@@ -157,16 +157,16 @@ export function ChatSidebar({ rooms = [], activeRoomId, currentUserId, onSelectR
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-baseline mb-0.5">
-                      <span className="text-xs font-bold text-ink truncate">{partner?.name}</span>
+                      <span className={`text-xs font-bold truncate ${active ? "text-accent" : "text-ink"}`}>{partner?.name}</span>
                       {lastMsg && (
-                        <span className="text-[9px] text-ink/40 shrink-0">
+                        <span className="text-[9px] text-ink/40 shrink-0 font-medium">
                           {formatTime(lastMsg.sentAt)}
                         </span>
                       )}
                     </div>
 
                     <div className="flex justify-between items-center">
-                      <p className="text-xs text-ink/50 truncate pr-2">
+                      <p className="text-xs text-ink/40 truncate pr-2">
                         {lastMsg?.deleted
                           ? "Message was deleted"
                           : lastMsg?.type === "IMAGE"
@@ -177,7 +177,7 @@ export function ChatSidebar({ rooms = [], activeRoomId, currentUserId, onSelectR
                       </p>
 
                       {unread > 0 && (
-                        <span className="flex h-5 min-w-5 px-1.5 items-center justify-center rounded-full bg-accent text-[9px] font-bold text-white shrink-0 animate-pulse">
+                        <span className="flex h-5 min-w-5 px-1.5 items-center justify-center rounded-full bg-accent text-[9px] font-bold text-white shrink-0 animate-pulse shadow-sm shadow-accent/15">
                           {unread}
                         </span>
                       )}
@@ -189,27 +189,27 @@ export function ChatSidebar({ rooms = [], activeRoomId, currentUserId, onSelectR
           )
         ) : (
           /* Message Search Tab Results */
-          <div className="flex flex-col gap-1.5 p-1">
+          <div className="flex flex-col gap-2 p-1">
             {isSearchingMsgs ? (
               <div className="text-center py-8 text-xs text-ink/40">Searching...</div>
             ) : msgSearch.trim() === "" ? (
-              <div className="text-center py-8 text-xs text-ink/30">
+              <div className="text-center py-8 text-xs text-ink/30 font-medium">
                 Type above to search message text across all rooms
               </div>
             ) : msgResults.length === 0 ? (
-              <div className="text-center py-8 text-xs text-ink/30">No messages found</div>
+              <div className="text-center py-8 text-xs text-ink/30 font-medium">No messages found</div>
             ) : (
               msgResults.map((msg) => (
                 <button
                   key={msg.id}
                   onClick={() => onSelectRoom(msg.chatRoomId)}
-                  className="w-full p-2.5 rounded-xl text-left bg-slate-50 hover:bg-slate-100 transition border border-ink/5 flex flex-col gap-1 hover:scale-[1.01]"
+                  className="w-full p-3 rounded-xl text-left bg-ink/[0.01] hover:bg-ink/[0.03] transition-all border border-ink/5 flex flex-col gap-1.5 hover:scale-[1.01] cursor-pointer"
                 >
                   <div className="flex justify-between items-center w-full">
-                    <span className="text-[10px] font-bold text-ink/70">{msg.senderName}</span>
-                    <span className="text-[8px] text-ink/40">{formatTime(msg.sentAt)}</span>
+                    <span className="text-[10px] font-bold text-ink/60">{msg.senderName}</span>
+                    <span className="text-[8px] text-ink/40 font-medium">{formatTime(msg.sentAt)}</span>
                   </div>
-                  <p className="text-[11px] text-ink/60 line-clamp-2 break-all">{msg.content}</p>
+                  <p className="text-[11px] text-ink/50 line-clamp-2 break-all">{msg.content}</p>
                 </button>
               ))
             )}

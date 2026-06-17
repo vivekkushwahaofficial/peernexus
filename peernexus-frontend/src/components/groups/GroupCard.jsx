@@ -17,13 +17,13 @@ export function GroupCard({ group, onJoin, joining }) {
   const defaultBanner = "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=400&auto=format&fit=crop";
 
   return (
-    <div className="card overflow-hidden bg-white hover:shadow-md transition-all duration-200 flex flex-col h-full">
+    <div className="card card-hover overflow-hidden bg-white flex flex-col h-full border border-ink/5">
       {/* Banner/Image */}
-      <div className="h-32 w-full relative">
+      <div className="h-32 w-full relative overflow-hidden">
         <img
           src={imageUrl || defaultBanner}
           alt={name}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute top-3 right-3 flex gap-1.5">
           <Badge variant={isPrivate ? "warning" : "success"} className="shadow-sm">
@@ -37,30 +37,30 @@ export function GroupCard({ group, onJoin, joining }) {
         <div className="flex-1 flex flex-col gap-1.5">
           <div className="flex items-center justify-between">
             {topic && (
-              <span className="text-[10px] font-bold text-accent uppercase tracking-widest">
+              <span className="text-[10px] font-bold text-accent uppercase tracking-wider">
                 #{topic}
               </span>
             )}
-            <span className="text-[10px] text-ink/40 font-medium">{memberCount} Members</span>
+            <span className="text-[10px] text-ink/40 font-bold uppercase tracking-wider">{memberCount} Members</span>
           </div>
 
-          <Link to={`/groups/${id}`} className="hover:text-accent transition">
-            <h3 className="text-sm font-bold text-ink leading-tight truncate">{name}</h3>
+          <Link to={`/groups/${id}`} className="hover:text-accent group transition">
+            <h3 className="text-sm font-bold text-ink leading-tight truncate group-hover:text-accent transition-colors">{name}</h3>
           </Link>
-          <p className="text-xs text-ink/60 leading-relaxed line-clamp-3">
+          <p className="text-xs text-ink/50 leading-relaxed line-clamp-3">
             {description || "No description provided for this study group."}
           </p>
         </div>
 
-        <div className="border-t border-ink/8 pt-3 flex items-center justify-between">
+        <div className="border-t border-ink/5 pt-3.5 flex items-center justify-between">
           <span className="text-[10px] text-ink/40 truncate">
-            Owner: <span className="font-semibold">{ownerName}</span>
+            Owner: <span className="font-semibold text-ink/75">{ownerName}</span>
           </span>
 
           {myRole ? (
             <Link
               to={`/groups/${id}`}
-              className="inline-flex items-center justify-center rounded-full bg-slate-900 px-4 py-1.5 text-xs font-semibold text-pearl transition hover:bg-slate-800 active:scale-95"
+              className="inline-flex items-center justify-center rounded-xl bg-ink px-4 py-1.5 text-xs font-bold text-pearl transition hover:bg-ink/90 active:scale-95 shadow-sm"
             >
               Enter Group
             </Link>
@@ -70,6 +70,7 @@ export function GroupCard({ group, onJoin, joining }) {
               size="sm"
               onClick={handleJoinClick}
               loading={joining}
+              className="font-bold text-xs px-4"
             >
               {isPrivate ? "Request" : "Join"}
             </Button>

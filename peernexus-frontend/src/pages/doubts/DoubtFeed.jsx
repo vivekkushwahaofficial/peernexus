@@ -92,8 +92,8 @@ export function DoubtFeed() {
       {/* Top Banner Row */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-ink font-display">Doubt Forum</h1>
-          <p className="text-xs text-ink/50 mt-1">Get verified solutions and search peer questions.</p>
+          <h1 className="text-2xl font-extrabold text-ink font-display">Doubt Forum</h1>
+          <p className="text-xs text-ink/40 mt-1">Get verified solutions and search peer questions.</p>
         </div>
 
         <Link to="/doubts/new">
@@ -109,9 +109,9 @@ export function DoubtFeed() {
             placeholder="Search questions, keywords, or error codes..."
             value={searchVal}
             onChange={(e) => setSearchVal(e.target.value)}
-            className="w-full rounded-2xl border border-ink/10 bg-white px-4 py-3 pl-11 text-sm text-ink placeholder:text-ink/40 outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/15 shadow-sm"
+            className="w-full rounded-xl border border-ink/10 bg-white px-4 py-3 pl-11 text-sm text-ink placeholder:text-ink/30 outline-none transition-all duration-200 focus:border-accent/80 focus:ring-4 focus:ring-accent/10 shadow-[0_2px_8px_rgba(16,21,26,0.02)]"
           />
-          <svg className="w-5 h-5 text-ink/40 absolute left-4 top-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="w-5 h-5 text-ink/30 absolute left-4 top-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </div>
@@ -121,17 +121,17 @@ export function DoubtFeed() {
       </form>
 
       {/* Category Pills Slider */}
-      <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
+      <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none">
         {CATEGORIES.map((cat) => {
           const isActive = activeCategoryId === cat.id && !isSearching;
           return (
             <button
               key={cat.id}
               onClick={() => handleCategorySelect(cat.id)}
-              className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all border shrink-0 ${
+              className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border shrink-0 cursor-pointer ${
                 isActive
                   ? "bg-accent text-white border-accent shadow-sm"
-                  : "bg-white text-ink/75 border-ink/8 hover:bg-slate-50 hover:text-ink"
+                  : "bg-white text-ink/60 border-ink/5 hover:bg-slate-50 hover:text-ink hover:border-ink/10"
               }`}
             >
               {cat.name}

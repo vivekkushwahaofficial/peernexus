@@ -99,9 +99,9 @@ export function GroupList() {
             placeholder="Search study groups by topic or name..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-2xl border border-ink/10 bg-white px-4 py-3 pl-11 text-sm text-ink placeholder:text-ink/40 outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/15 shadow-sm"
+            className="w-full rounded-xl border border-ink/10 bg-white px-4 py-3 pl-11 text-sm text-ink placeholder:text-ink/30 outline-none transition-all duration-200 focus:border-accent/80 focus:ring-4 focus:ring-accent/10 shadow-[0_2px_8px_rgba(16,21,26,0.02)]"
           />
-          <svg className="w-5 h-5 text-ink/40 absolute left-4 top-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="w-5 h-5 text-ink/30 absolute left-4 top-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </div>
@@ -112,16 +112,16 @@ export function GroupList() {
 
       {/* Tabs */}
       {!isSearching && (
-        <div className="flex border-b border-ink/8">
+        <div className="flex border-b border-ink/5">
           <button
             onClick={() => {
               setActiveTab("all");
               setPage(0);
             }}
-            className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all ${
+            className={`px-5 py-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
               activeTab === "all"
                 ? "border-accent text-accent"
-                : "border-transparent text-ink/50 hover:text-ink"
+                : "border-transparent text-ink/40 hover:text-ink hover:border-ink/10"
             }`}
           >
             All Groups
@@ -131,10 +131,10 @@ export function GroupList() {
               setActiveTab("my");
               setPage(0);
             }}
-            className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all ${
+            className={`px-5 py-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
               activeTab === "my"
                 ? "border-accent text-accent"
-                : "border-transparent text-ink/50 hover:text-ink"
+                : "border-transparent text-ink/40 hover:text-ink hover:border-ink/10"
             }`}
           >
             My Groups

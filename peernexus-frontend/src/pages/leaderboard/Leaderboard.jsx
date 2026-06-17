@@ -16,8 +16,8 @@ export function Leaderboard() {
   return (
     <div className="flex flex-col gap-6 max-w-2xl mx-auto animate-fade-in">
       <div>
-        <h1 className="text-2xl font-bold text-ink font-display">Student Leaderboard</h1>
-        <p className="text-xs text-ink/50 mt-1">
+        <h1 className="text-2xl font-extrabold text-ink font-display">Student Leaderboard</h1>
+        <p className="text-xs text-ink/40 mt-1">
           Explore top active students ranked by reputation points.
         </p>
       </div>
@@ -32,24 +32,24 @@ export function Leaderboard() {
           description="Leaderboard data is currently empty. Ask or answer doubts to start earning points!"
         />
       ) : (
-        <div className="card overflow-hidden bg-white shadow-sm border-ink/8 flex flex-col">
+        <div className="card overflow-hidden bg-white shadow-sm border border-ink/5 flex flex-col">
           <div className="flex flex-col">
             {entries.map((entry, index) => {
               const rank = page * 20 + index + 1;
               return (
                 <div
                   key={entry.userId}
-                  className="flex items-center justify-between p-4 border-b border-ink/5 last:border-0 hover:bg-slate-50 transition"
+                  className="flex items-center justify-between p-4 border-b border-ink/5 last:border-0 hover:bg-slate-50 transition cursor-pointer"
                 >
                   <div className="flex items-center gap-4 min-w-0">
                     {/* Rank indicator */}
-                    <div className="w-6 text-center font-bold text-sm text-ink/30 shrink-0">
+                    <div className="w-8 text-center font-bold text-sm text-ink/30 shrink-0">
                       {rank === 1 ? (
-                        <span className="text-amber-500 text-lg">🥇</span>
+                        <span className="text-lg">🥇</span>
                       ) : rank === 2 ? (
-                        <span className="text-slate-400 text-lg">🥈</span>
+                        <span className="text-lg">🥈</span>
                       ) : rank === 3 ? (
-                        <span className="text-amber-700 text-lg">🥉</span>
+                        <span className="text-lg">🥉</span>
                       ) : (
                         `#${rank}`
                       )}
@@ -61,14 +61,14 @@ export function Leaderboard() {
                         <span className="text-xs font-bold text-ink truncate leading-tight">
                           {entry.userName}
                         </span>
-                        <span className="text-[10px] text-ink/40 mt-1 uppercase tracking-wider">
+                        <span className="text-[9px] text-ink/40 font-bold uppercase tracking-wider mt-1">
                           Level: {entry.reputationLevel || "Beginner"}
                         </span>
                       </div>
                     </Link>
                   </div>
 
-                  <span className="font-bold text-accent bg-accent/5 border border-accent/10 px-3 py-1 rounded-full text-xs shrink-0">
+                  <span className="font-bold text-accent bg-accent/8 border border-transparent px-3 py-1 rounded-xl text-xs shrink-0 select-none">
                     {entry.reputationPoints} pts
                   </span>
                 </div>

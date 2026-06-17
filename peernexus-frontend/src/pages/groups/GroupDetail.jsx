@@ -242,7 +242,7 @@ export function GroupDetail() {
   return (
     <div className="flex flex-col gap-6 max-w-5xl mx-auto animate-fade-in">
       {/* Group Header Info */}
-      <div className="card overflow-hidden bg-white shadow-sm border-ink/10 flex flex-col">
+      <div className="card overflow-hidden bg-white border border-ink/5 shadow-sm flex flex-col">
         <div className="h-40 sm:h-48 w-full relative shrink-0">
           <img src={group.imageUrl || defaultBanner} alt={group.name} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent hidden sm:block" />
@@ -255,7 +255,7 @@ export function GroupDetail() {
                   {group.isPrivate ? "Private" : "Public"}
                 </Badge>
                 {group.topic && (
-                  <span className="text-xs font-bold text-emerald-300 uppercase tracking-wider">
+                  <span className="text-xs font-bold text-accent uppercase tracking-wider">
                     #{group.topic}
                   </span>
                 )}
@@ -267,7 +267,7 @@ export function GroupDetail() {
               <div className="flex gap-2">
                 {showManageTab && (
                   <Link to={`/groups/${groupId}/edit`}>
-                    <Button variant="outline" size="sm" className="bg-white/10 text-white border-white/20 hover:bg-white/20">
+                    <Button variant="outline" size="sm" className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold text-xs">
                       Manage Metadata
                     </Button>
                   </Link>
@@ -277,6 +277,7 @@ export function GroupDetail() {
                     variant="danger"
                     size="sm"
                     onClick={() => setLeaveDialogOpen(true)}
+                    className="font-bold text-xs"
                   >
                     Leave Group
                   </Button>
@@ -286,6 +287,7 @@ export function GroupDetail() {
                     variant="danger"
                     size="sm"
                     onClick={() => setDeleteDialogOpen(true)}
+                    className="font-bold text-xs"
                   >
                     Delete Group
                   </Button>
@@ -297,6 +299,7 @@ export function GroupDetail() {
                 size="sm"
                 onClick={handleJoinGroup}
                 loading={joinGroupMutation.isPending || requestJoinMutation.isPending}
+                className="font-bold text-xs"
               >
                 {group.isPrivate ? "Request to Join" : "Join Study Group"}
               </Button>
@@ -325,7 +328,7 @@ export function GroupDetail() {
               <>
                 {showManageTab && (
                   <Link to={`/groups/${groupId}/edit`} className="flex-1">
-                    <Button variant="outline" size="sm" className="w-full text-center">
+                    <Button variant="outline" size="sm" className="w-full text-center font-bold text-xs">
                       Manage
                     </Button>
                   </Link>
@@ -335,7 +338,7 @@ export function GroupDetail() {
                     variant="danger"
                     size="sm"
                     onClick={() => setLeaveDialogOpen(true)}
-                    className="flex-1"
+                    className="flex-1 font-bold text-xs"
                   >
                     Leave
                   </Button>
@@ -345,7 +348,7 @@ export function GroupDetail() {
                     variant="danger"
                     size="sm"
                     onClick={() => setDeleteDialogOpen(true)}
-                    className="flex-1"
+                    className="flex-1 font-bold text-xs"
                   >
                     Delete Group
                   </Button>
@@ -357,7 +360,7 @@ export function GroupDetail() {
                 size="sm"
                 onClick={handleJoinGroup}
                 loading={joinGroupMutation.isPending || requestJoinMutation.isPending}
-                className="w-full"
+                className="w-full font-bold text-xs"
               >
                 {group.isPrivate ? "Request to Join" : "Join Group"}
               </Button>
@@ -365,22 +368,22 @@ export function GroupDetail() {
           </div>
         </div>
 
-        <div className="p-5 border-t border-ink/8 text-xs text-ink/75 bg-slate-50/50">
+        <div className="p-5 border-t border-ink/5 text-xs text-ink/60 bg-ink/[0.01]">
           <p className="leading-relaxed">{group.description || "No description provided for this group."}</p>
         </div>
       </div>
 
       {/* Main Tabs Layout */}
       {!isMember ? (
-        <div className="card p-8 text-center bg-white flex flex-col items-center justify-center gap-4 border-ink/10 shadow-sm min-h-[200px]">
-          <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-ink/30">
+        <div className="card p-8 text-center bg-white flex flex-col items-center justify-center gap-4 border border-ink/5 shadow-sm min-h-[220px]">
+          <div className="w-12 h-12 rounded-2xl bg-ink/5 flex items-center justify-center text-ink/30">
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
           </div>
-          <div className="max-w-xs">
+          <div className="max-w-xs flex flex-col items-center">
             <h3 className="text-sm font-bold text-ink mb-1">Access Restricted</h3>
-            <p className="text-xs text-ink/40 leading-relaxed mb-3">
+            <p className="text-xs text-ink/40 leading-relaxed mb-4">
               You must be a member of this study group to explore the conversations and resources.
             </p>
             <Button
@@ -388,6 +391,7 @@ export function GroupDetail() {
               size="sm"
               onClick={handleJoinGroup}
               loading={joinGroupMutation.isPending || requestJoinMutation.isPending}
+              className="font-bold text-xs"
             >
               {group.isPrivate ? "Submit Join Request" : "Join Group Now"}
             </Button>
@@ -396,23 +400,23 @@ export function GroupDetail() {
       ) : (
         <div className="flex flex-col gap-4">
           {/* Tab buttons */}
-          <div className="flex border-b border-ink/8 overflow-x-auto whitespace-nowrap scrollbar-none">
+          <div className="flex border-b border-ink/5 overflow-x-auto whitespace-nowrap scrollbar-none">
             <button
               onClick={() => setActiveTab("chat")}
-              className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all shrink-0 ${
+              className={`px-5 py-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all shrink-0 cursor-pointer ${
                 activeTab === "chat"
                   ? "border-accent text-accent"
-                  : "border-transparent text-ink/50 hover:text-ink"
+                  : "border-transparent text-ink/40 hover:text-ink hover:border-ink/10"
               }`}
             >
               Chat Feed
             </button>
             <button
               onClick={() => setActiveTab("members")}
-              className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all shrink-0 ${
+              className={`px-5 py-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all shrink-0 cursor-pointer ${
                 activeTab === "members"
                   ? "border-accent text-accent"
-                  : "border-transparent text-ink/50 hover:text-ink"
+                  : "border-transparent text-ink/40 hover:text-ink hover:border-ink/10"
               }`}
             >
               Members ({members.length})
@@ -420,10 +424,10 @@ export function GroupDetail() {
             {showManageTab && group.isPrivate && (
               <button
                 onClick={() => setActiveTab("requests")}
-                className={`px-5 py-3 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all shrink-0 ${
+                className={`px-5 py-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all shrink-0 cursor-pointer ${
                   activeTab === "requests"
                     ? "border-accent text-accent"
-                    : "border-transparent text-ink/50 hover:text-ink"
+                    : "border-transparent text-ink/40 hover:text-ink hover:border-ink/10"
                 }`}
               >
                 Join Requests ({requests.length})
@@ -433,7 +437,7 @@ export function GroupDetail() {
 
           {/* Active Tab Panel */}
           {activeTab === "chat" && (
-            <div className="flex flex-col h-[calc(100vh-280px)] rounded-3xl border border-ink/8 bg-slate-50 overflow-hidden">
+            <div className="flex flex-col h-[calc(100vh-280px)] rounded-2xl border border-ink/5 bg-slate-50/50 overflow-hidden">
               <div
                 ref={chatScrollRef}
                 className="flex-1 overflow-y-auto p-4 flex flex-col gap-4"
@@ -476,7 +480,7 @@ export function GroupDetail() {
           )}
 
           {activeTab === "members" && (
-            <div className="card p-5 bg-white shadow-sm">
+            <div className="card p-5 bg-white border border-ink/5 shadow-sm">
               {membersLoading ? (
                 <div className="flex justify-center py-6">
                   <Spinner size="md" />
@@ -495,7 +499,7 @@ export function GroupDetail() {
           )}
 
           {activeTab === "requests" && showManageTab && (
-            <div className="card p-5 bg-white shadow-sm">
+            <div className="card p-5 bg-white border border-ink/5 shadow-sm">
               <JoinRequestList
                 requests={requests}
                 onApprove={(rid) => approveReqMutation.mutate(rid)}
