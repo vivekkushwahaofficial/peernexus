@@ -493,4 +493,4 @@ B.Tech CSE Student
 Oriental Institute of Science & Technology*
   * **GitHub**: [github.com/vivekkushwahaofficial](https://github.com/vivekkushwahaofficial)
   * **LinkedIn**: [linkedin.com/in/vivekkushwahaofficial](https://www.linkedin.com/in/vivekkushwahaofficial)
-  * **Portfolio**: [vivekkushwaha.dev](https://vivekkushwahaofficial.tech)
+  * **Portfolio**: [vivekkushwahaofficial.tech](https://vivekkushwahaofficial.tech)
