@@ -86,11 +86,12 @@ export function DoubtCard({ doubt }) {
 
       {/* Bottom row: Tags & CTA */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-ink/5 pt-4 mt-1">
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 overflow-hidden">
           {tags && tags.map((t, idx) => (
             <span
               key={idx}
-              className="text-[10px] font-bold text-ink/40 bg-ink/5 border border-transparent px-2.5 py-0.5 rounded-lg hover:bg-ink/8 hover:text-ink/60 transition-all cursor-pointer"
+              className="text-[10px] font-bold text-ink/40 bg-ink/5 border border-transparent px-2.5 py-0.5 rounded-lg hover:bg-ink/8 hover:text-ink/60 transition-all cursor-pointer max-w-[120px] truncate"
+              title={`#${t}`}
             >
               #{t}
             </span>

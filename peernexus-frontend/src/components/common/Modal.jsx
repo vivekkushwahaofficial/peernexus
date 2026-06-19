@@ -35,11 +35,12 @@ export function Modal({
   };
 
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[1000] flex items-end sm:items-center justify-center p-0 sm:p-4">
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-ink/40 backdrop-blur-sm transition-opacity"
         onClick={() => closeOnOverlayClick && onClose()}
+        aria-hidden="true"
       />
 
       {/* Modal Box */}
@@ -47,14 +48,15 @@ export function Modal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
-        className={`relative w-full ${sizes[size]} transform overflow-hidden rounded-3xl bg-white border border-ink/8 p-6 shadow-2xl transition-all duration-300 animate-slide-up`}
+        tabIndex={-1}
+        className={`relative w-full ${sizes[size]} transform overflow-hidden rounded-t-3xl sm:rounded-3xl bg-white border border-ink/8 p-5 sm:p-6 shadow-2xl transition-all duration-300 animate-slide-up`}
       >
         <div className="flex items-center justify-between border-b border-ink/8 pb-4 mb-4">
-          <h3 id="modal-title" className="text-lg font-bold text-ink">{title}</h3>
+          <h3 id="modal-title" className="text-base sm:text-lg font-bold text-ink">{title}</h3>
           <button
             onClick={onClose}
             aria-label="Close modal"
-            className="rounded-xl p-1.5 text-ink/40 hover:bg-ink/5 hover:text-ink transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/80 focus-visible:ring-offset-2"
+            className="rounded-xl p-1.5 text-ink/40 hover:bg-ink/5 hover:text-ink transition focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/80 focus-visible:ring-offset-2 touch-manipulation"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -62,7 +64,7 @@ export function Modal({
           </button>
         </div>
 
-        <div className="max-h-[70vh] overflow-y-auto pr-1">{children}</div>
+        <div className="max-h-[70vh] sm:max-h-[75vh] overflow-y-auto pr-1">{children}</div>
       </div>
     </div>,
     document.body

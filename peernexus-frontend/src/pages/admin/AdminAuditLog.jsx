@@ -100,31 +100,31 @@ export function AdminAuditLog() {
             <table className="w-full text-left border-collapse text-xs">
               <thead>
                 <tr className="bg-slate-50 border-b border-ink/8 text-ink/50 font-bold uppercase tracking-wider">
-                  <th className="p-4">Log ID</th>
-                  <th className="p-4">Actor</th>
-                  <th className="p-4">Action</th>
-                  <th className="p-4">Target Type</th>
-                  <th className="p-4">Target ID</th>
-                  <th className="p-4">Verdicts & Notes</th>
-                  <th className="p-4">Performed At</th>
+                  <th className="p-3 min-w-[60px]">ID</th>
+                  <th className="p-3 min-w-[120px]">Actor</th>
+                  <th className="p-3 min-w-[100px]">Action</th>
+                  <th className="p-3 min-w-[80px] hidden sm:table-cell">Target Type</th>
+                  <th className="p-3 min-w-[60px] hidden sm:table-cell">Target ID</th>
+                  <th className="p-3 min-w-[150px] hidden md:table-cell">Notes</th>
+                  <th className="p-3 min-w-[120px] hidden sm:table-cell">Performed At</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-ink/5">
                 {logs.map((log) => (
                   <tr key={log.id} className="hover:bg-slate-50/50 transition">
-                    <td className="p-4 font-bold text-ink/40">#{log.id}</td>
-                    <td className="p-4 font-semibold text-rose-700">
-                      {log.actorName} (ID: {log.actorId})
+                    <td className="p-3 font-bold text-ink/40">#{log.id}</td>
+                    <td className="p-3 font-semibold text-rose-700">
+                      {log.actorName} <span className="hidden sm:inline">(ID: {log.actorId})</span>
                     </td>
-                    <td className="p-4">
-                      <span className="font-semibold text-ink bg-slate-100 border border-ink/5 px-2 py-0.5 rounded-full text-[10px]">
+                    <td className="p-3">
+                      <span className="font-semibold text-ink bg-slate-100 border border-ink/5 px-2 py-0.5 rounded-full text-[10px] whitespace-nowrap">
                         {log.action}
                       </span>
                     </td>
-                    <td className="p-4 font-medium text-ink/60">{log.targetType || "-"}</td>
-                    <td className="p-4 font-bold text-ink/80">{log.targetId || "-"}</td>
-                    <td className="p-4 text-ink/65 break-words max-w-xs">{log.details}</td>
-                    <td className="p-4 text-ink/40 whitespace-nowrap">{formatDate(log.performedAt)}</td>
+                    <td className="p-3 font-medium text-ink/60 hidden sm:table-cell">{log.targetType || "-"}</td>
+                    <td className="p-3 font-bold text-ink/80 hidden sm:table-cell">{log.targetId || "-"}</td>
+                    <td className="p-3 text-ink/65 break-words max-w-xs hidden md:table-cell">{log.details}</td>
+                    <td className="p-3 text-ink/40 whitespace-nowrap hidden sm:table-cell">{formatDate(log.performedAt)}</td>
                   </tr>
                 ))}
               </tbody>

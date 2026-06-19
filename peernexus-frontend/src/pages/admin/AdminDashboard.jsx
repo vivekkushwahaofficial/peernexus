@@ -14,14 +14,14 @@ export function AdminNavbar() {
   ];
 
   return (
-    <div className="flex flex-wrap gap-2 border-b border-ink/8 pb-4 mb-6">
+    <div className="flex overflow-x-auto scrollbar-none gap-2 pb-1 mb-6 border-b border-ink/8">
       {links.map((link) => (
         <NavLink
           key={link.to}
           to={link.to}
           end={link.end}
           className={({ isActive }) =>
-            `px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all border ${
+            `shrink-0 px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all border ${
               isActive
                 ? "bg-rose-50 text-rose-700 border-rose-200 shadow-sm"
                 : "bg-white text-ink/60 border-ink/8 hover:bg-slate-50 hover:text-ink"

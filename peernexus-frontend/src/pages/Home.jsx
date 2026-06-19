@@ -272,8 +272,8 @@ function LandingPage() {
               </Link>
             </div>
           </div>
-          {/* Mockup visualization card */}
-          <div className="relative group">
+          {/* Mockup visualization card — only show on desktop */}
+          <div className="relative group hidden lg:block">
             <div className="absolute -inset-1.5 rounded-3xl bg-gradient-to-r from-accent to-emerald-400 opacity-20 blur-xl group-hover:opacity-30 transition duration-500" />
             <div className="relative card p-6 bg-white shadow-2xl border border-ink/8 flex flex-col gap-5 rounded-3xl overflow-hidden backdrop-blur-md bg-white/95">
               <div className="flex items-center justify-between border-b border-ink/5 pb-3">
@@ -533,7 +533,7 @@ function LandingPage() {
                   </Link>
                 </div>
               </div>
-              <div className="w-full md:w-[350px] shrink-0">
+              <div className="w-full lg:w-[350px] lg:shrink-0">
                 {showcaseScreens[activeShowcase].ui}
               </div>
             </div>
@@ -863,7 +863,7 @@ export default function Home() {
 
   // Dashboard Page for Logged In Users
   return (
-    <div className="grid gap-8 lg:grid-cols-[1fr_320px] animate-fade-in">
+    <div className="grid gap-8 lg:grid-cols-[1fr_300px] xl:grid-cols-[1fr_340px] animate-fade-in">
       {/* Left side: Doubt feed */}
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">

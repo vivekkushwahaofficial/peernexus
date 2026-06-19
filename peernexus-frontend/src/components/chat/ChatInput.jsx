@@ -67,20 +67,21 @@ export function ChatInput({ onSend, onSendAttachment, onTyping }) {
   }, []);
 
   return (
-    <div className="border-t border-ink/8 bg-white flex flex-col shrink-0">
+    <div className="border-t border-ink/8 bg-white flex flex-col shrink-0 pb-safe">
       {uploading && (
         <div className="flex items-center gap-2 px-4 py-2 bg-accent/5 border-b border-accent/10 text-xs text-accent animate-pulse font-medium">
           <Spinner size="xs" />
           <span>Uploading attachment to secure cloud...</span>
         </div>
       )}
-      <form onSubmit={handleSend} className="p-4 flex items-center gap-3">
+      <form onSubmit={handleSend} className="p-3 sm:p-4 flex items-center gap-2 sm:gap-3">
         {/* File Attachment Trigger */}
         <button
           type="button"
           onClick={() => fileInputRef.current?.click()}
           disabled={uploading}
-          className="flex items-center justify-center p-2 rounded-xl text-ink/40 hover:bg-slate-100 hover:text-ink transition shrink-0 disabled:opacity-50"
+          aria-label="Attach file or image"
+          className="flex items-center justify-center p-2 rounded-xl text-ink/40 hover:bg-slate-100 hover:text-ink transition shrink-0 disabled:opacity-50 touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/80"
         >
           {uploading ? (
             <Spinner size="xs" />
@@ -100,6 +101,7 @@ export function ChatInput({ onSend, onSendAttachment, onTyping }) {
         {/* Input Text Box */}
         <input
           type="text"
+          inputMode="text"
           placeholder="Type a message..."
           value={text}
           onChange={handleTextChange}
@@ -111,7 +113,8 @@ export function ChatInput({ onSend, onSendAttachment, onTyping }) {
         <button
           type="submit"
           disabled={!text.trim() || uploading}
-          className="flex items-center justify-center p-2.5 rounded-2xl bg-accent hover:bg-accent/90 text-white shadow-md shadow-accent/20 transition disabled:opacity-40 disabled:shadow-none"
+          aria-label="Send message"
+          className="flex items-center justify-center p-2.5 rounded-2xl bg-accent hover:bg-accent/90 text-white shadow-md shadow-accent/20 transition disabled:opacity-40 disabled:shadow-none touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/80"
         >
           <svg className="w-5 h-5 transform rotate-90" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />

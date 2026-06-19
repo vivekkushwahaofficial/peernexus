@@ -41,42 +41,52 @@
     @apply border-error focus:border-error focus:ring-error/10;
   }
 
-  /* Professional CTA buttons */
+  /* Professional CTA buttons — all include accessible focus-visible ring */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-6 py-2.5
            text-sm font-semibold text-white shadow-sm shadow-accent/10 transition-all duration-200 
            hover:bg-accent/90 hover:shadow-md hover:shadow-accent/15 active:scale-[0.98]
-           disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100;
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/80 focus-visible:ring-offset-2
+           touch-manipulation;
   }
   
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2 rounded-xl bg-ink px-6 py-2.5
            text-sm font-semibold text-pearl shadow-sm transition-all duration-200 
            hover:bg-ink/90 hover:shadow-md active:scale-[0.98]
-           disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100;
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/60 focus-visible:ring-offset-2
+           touch-manipulation;
   }
   
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2
            text-sm font-medium text-ink/60 transition-all duration-150 
-           hover:bg-ink/5 hover:text-ink active:scale-[0.98];
+           hover:bg-ink/5 hover:text-ink active:scale-[0.98]
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/40 focus-visible:ring-offset-2
+           touch-manipulation;
   }
   
   .btn-danger {
     @apply inline-flex items-center justify-center gap-2 rounded-xl bg-ember px-6 py-2.5
            text-sm font-semibold text-white shadow-sm shadow-ember/10 transition-all duration-200 
            hover:bg-ember/90 hover:shadow-md active:scale-[0.98]
-           disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100;
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-ember/80 focus-visible:ring-offset-2
+           touch-manipulation;
   }
 
   .badge-role {
     @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider;
   }
 
-  /* Elegant Navigation Links */
+  /* Elegant Navigation Links — with focus-visible ring */
   .nav-link {
     @apply flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-ink/60
-           transition-all duration-200 hover:bg-accent/5 hover:text-accent;
+           transition-all duration-200 hover:bg-accent/5 hover:text-accent
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/80 focus-visible:ring-offset-1
+           touch-manipulation;
   }
   
   .nav-link-active {
@@ -100,5 +110,19 @@
   .shimmer-bg::after {
     content: '';
     @apply absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer;
+  }
+
+  /* Hides scrollbar but keeps scroll functionality */
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* iOS safe area bottom padding for chat inputs */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 }

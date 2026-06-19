@@ -263,15 +263,15 @@ export function ChatPage() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-6 animate-fade-in">
+    <div className="flex flex-col md:flex-row gap-0 md:gap-6 animate-fade-in flex-1 min-h-0 h-full">
       {roomsLoading ? (
-        <div className="flex h-[300px] w-full items-center justify-center">
+        <div className="flex h-64 w-full items-center justify-center">
           <Spinner size="lg" />
         </div>
       ) : (
         <>
           {/* Chat Sidebar: Hidden on mobile when viewing a conversation */}
-          <div className={`${activeRoomId ? "hidden md:flex" : "flex"} w-full md:w-auto`}>
+          <div className={`${activeRoomId ? "hidden md:flex" : "flex"} w-full md:w-auto md:shrink-0`}>
             <ChatSidebar
               rooms={rooms}
               activeRoomId={activeRoomId}
@@ -281,9 +281,9 @@ export function ChatPage() {
           </div>
 
           {/* Conversation view: Hidden on mobile when no conversation is active */}
-          <div className={`flex-1 flex flex-col h-[calc(100vh-140px)] ${activeRoomId ? "flex" : "hidden md:flex"}`}>
+          <div className={`flex-1 flex flex-col min-h-0 ${activeRoomId ? "flex" : "hidden md:flex"}`}>
             {historyLoading ? (
-              <div className="flex-1 flex items-center justify-center bg-slate-50 border border-ink/8 rounded-2xl">
+              <div className="flex-1 flex items-center justify-center bg-slate-50 border border-ink/8 rounded-2xl min-h-[300px]">
                 <Spinner size="md" />
               </div>
             ) : (

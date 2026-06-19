@@ -437,10 +437,10 @@ export function GroupDetail() {
 
           {/* Active Tab Panel */}
           {activeTab === "chat" && (
-            <div className="flex flex-col h-[calc(100vh-280px)] rounded-2xl border border-ink/5 bg-slate-50/50 overflow-hidden">
+            <div className="flex flex-col min-h-[400px] rounded-2xl border border-ink/5 bg-slate-50/50 overflow-hidden">
               <div
                 ref={chatScrollRef}
-                className="flex-1 overflow-y-auto p-4 flex flex-col gap-4"
+                className="flex-1 overflow-y-auto p-4 flex flex-col gap-4 max-h-[60vh] min-h-[300px]"
               >
                 {messages.length === 0 ? (
                   <div className="text-center py-12 text-ink/30 text-xs my-auto">

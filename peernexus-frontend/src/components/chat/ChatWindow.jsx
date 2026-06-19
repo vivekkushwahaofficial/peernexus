@@ -66,7 +66,7 @@ export function ChatWindow({
 
   if (!room) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center bg-slate-50/50 text-center p-6 h-[calc(100vh-140px)] rounded-2xl border border-ink/5 shadow-sm">
+      <div className="flex-1 flex flex-col items-center justify-center bg-slate-50/50 text-center p-6 min-h-[300px] rounded-2xl border border-ink/5 shadow-sm">
         <div className="w-14 h-14 rounded-2xl bg-ink/5 flex items-center justify-center text-ink/30 mb-4">
           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -81,7 +81,7 @@ export function ChatWindow({
   }
 
   return (
-    <div className="flex-1 flex flex-col h-[calc(100vh-140px)] rounded-2xl border border-ink/5 bg-slate-50/50 overflow-hidden relative">
+    <div className="flex-1 flex flex-col min-h-0 rounded-2xl border border-ink/5 bg-slate-50/50 overflow-hidden relative">
       {/* Header */}
       <div className="bg-white border-b border-ink/5 p-4 flex items-center gap-3 shrink-0 shadow-sm z-10">
         {onBack && (
@@ -159,7 +159,7 @@ export function ChatWindow({
       {/* Message Feed Area */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto p-4 flex flex-col gap-4"
+        className="flex-1 min-h-0 overflow-y-auto p-4 flex flex-col gap-4"
       >
         {messages.length === 0 ? (
           <div className="text-center py-12 text-ink/30 text-xs my-auto font-medium">

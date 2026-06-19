@@ -107,11 +107,11 @@ export function EditProfile() {
           error={errors.interests}
         />
 
-        <div className="flex justify-end gap-2.5 border-t border-ink/8 pt-4 mt-2">
-          <Button variant="ghost" onClick={() => navigate("/profile")} disabled={loading}>
+        <div className="flex flex-col-reverse sm:flex-row justify-end gap-2.5 border-t border-ink/8 pt-4 mt-2">
+          <Button variant="ghost" onClick={() => navigate("/profile")} disabled={loading} className="w-full sm:w-auto">
             Cancel
           </Button>
-          <Button type="submit" variant="primary" loading={loading}>
+          <Button type="submit" variant="primary" loading={loading} className="w-full sm:w-auto">
             Save Changes
           </Button>
         </div>

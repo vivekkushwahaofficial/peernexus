@@ -225,7 +225,7 @@ function ConnectionRow({ item, tab, onAccept, onReject, onCancel, onDisconnect, 
   const roleText = role?.replace("ROLE_", "") || "Student";
 
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl border border-ink/5 bg-white shadow-sm hover:bg-slate-50 transition cursor-pointer">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 p-4 rounded-xl border border-ink/5 bg-white shadow-sm hover:bg-slate-50 transition">
       <Link to={`/profile/${id}`} className="flex items-center gap-3 min-w-0">
         <Avatar name={name} size="md" />
         <div className="flex flex-col min-w-0">
@@ -241,7 +241,7 @@ function ConnectionRow({ item, tab, onAccept, onReject, onCancel, onDisconnect, 
         </div>
       </Link>
 
-      <div className="flex gap-2 w-full sm:w-auto justify-end">
+      <div className="flex flex-wrap gap-2 w-full sm:w-auto justify-start sm:justify-end">
         {isIncoming && (
           <>
             <Button
@@ -249,7 +249,7 @@ function ConnectionRow({ item, tab, onAccept, onReject, onCancel, onDisconnect, 
               size="sm"
               onClick={() => onReject(item.id)}
               loading={processing}
-              className="text-error/80 hover:bg-error/5 font-bold text-xs"
+              className="text-error/80 hover:bg-error/5 font-bold text-xs min-w-[80px] touch-manipulation"
             >
               Reject
             </Button>
@@ -258,7 +258,7 @@ function ConnectionRow({ item, tab, onAccept, onReject, onCancel, onDisconnect, 
               size="sm"
               onClick={() => onAccept(item.id)}
               loading={processing}
-              className="font-bold text-xs"
+              className="font-bold text-xs min-w-[80px] touch-manipulation"
             >
               Accept
             </Button>
@@ -271,7 +271,7 @@ function ConnectionRow({ item, tab, onAccept, onReject, onCancel, onDisconnect, 
             size="sm"
             onClick={() => onCancel(item.id)}
             loading={processing}
-            className="font-bold text-xs px-4"
+            className="font-bold text-xs px-4 touch-manipulation"
           >
             Cancel Request
           </Button>
@@ -283,7 +283,7 @@ function ConnectionRow({ item, tab, onAccept, onReject, onCancel, onDisconnect, 
             size="sm"
             onClick={() => onDisconnect(item.id)}
             loading={processing}
-            className="font-bold text-xs"
+            className="font-bold text-xs touch-manipulation"
           >
             Disconnect
           </Button>

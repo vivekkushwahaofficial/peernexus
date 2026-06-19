@@ -150,29 +150,29 @@ export function AdminModeration() {
             <table className="w-full text-left border-collapse text-xs">
               <thead>
                 <tr className="bg-slate-50 border-b border-ink/8 text-ink/50 font-bold uppercase tracking-wider">
-                  <th className="p-4">Action ID</th>
-                  <th className="p-4">Target User</th>
-                  <th className="p-4">Action Type</th>
-                  <th className="p-4">Enforcer</th>
-                  <th className="p-4">Reason</th>
-                  <th className="p-4">Date</th>
+                  <th className="p-3 min-w-[60px]">ID</th>
+                  <th className="p-3 min-w-[90px]">Target</th>
+                  <th className="p-3 min-w-[100px]">Action</th>
+                  <th className="p-3 min-w-[80px] hidden sm:table-cell">Enforcer</th>
+                  <th className="p-3 min-w-[120px] hidden md:table-cell">Reason</th>
+                  <th className="p-3 min-w-[100px] hidden sm:table-cell">Date</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-ink/5">
                 {actions.map((act) => (
                   <tr key={act.id} className="hover:bg-slate-50/50 transition">
-                    <td className="p-4 font-bold text-ink/60">#{act.id}</td>
-                    <td className="p-4 font-semibold text-ink">User #{act.targetUserId}</td>
-                    <td className="p-4">
+                    <td className="p-3 font-bold text-ink/60">#{act.id}</td>
+                    <td className="p-3 font-semibold text-ink">User #{act.targetUserId}</td>
+                    <td className="p-3">
                       <Badge variant={getActionBadgeVariant(act.actionType)}>
                         {act.actionType?.replace("_", " ")}
                       </Badge>
                     </td>
-                    <td className="p-4 text-ink/70">Admin #{act.actorId || "System"}</td>
-                    <td className="p-4 text-ink/65 italic truncate max-w-[200px]" title={act.reason}>
+                    <td className="p-3 text-ink/70 hidden sm:table-cell">Admin #{act.actorId || "System"}</td>
+                    <td className="p-3 text-ink/65 italic truncate max-w-[100px] sm:max-w-[200px] hidden md:table-cell" title={act.reason}>
                       "{act.reason}"
                     </td>
-                    <td className="p-4 text-ink/40">{formatDate(act.createdAt)}</td>
+                    <td className="p-3 text-ink/40 whitespace-nowrap hidden sm:table-cell">{formatDate(act.createdAt)}</td>
                   </tr>
                 ))}
               </tbody>

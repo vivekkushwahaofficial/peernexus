@@ -84,7 +84,7 @@ export function Navbar({ onToggleMenu, isMenuOpen }) {
   return (
     <header className={`sticky top-0 z-50 transition-all duration-300 ${headerBgClass}`}>
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        
+
         {/* BRAND LOGO SECTION */}
         <div className="flex items-center gap-3">
           {isAuthenticated && (
@@ -138,7 +138,6 @@ export function Navbar({ onToggleMenu, isMenuOpen }) {
           </div>
         )}
 
-        {/* SEARCH BAR (AUTHENTICATED) */}
         {isAuthenticated && (
           <form onSubmit={handleSearch} className="hidden sm:flex items-center relative max-w-xs w-full">
             <input
@@ -152,7 +151,7 @@ export function Navbar({ onToggleMenu, isMenuOpen }) {
             <svg className="w-4 h-4 text-ink/30 absolute left-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-            <div className="absolute right-2 px-1.5 py-0.5 rounded border border-ink/10 bg-white text-[9px] font-semibold text-ink/30 shadow-sm pointer-events-none select-none">
+            <div className="hidden sm:block absolute right-2 px-1.5 py-0.5 rounded border border-ink/10 bg-white text-[9px] font-semibold text-ink/30 shadow-sm pointer-events-none select-none">
               ⌘K
             </div>
           </form>
@@ -178,7 +177,10 @@ export function Navbar({ onToggleMenu, isMenuOpen }) {
               <div className="relative">
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex items-center gap-2 rounded-xl p-1 hover:bg-ink/5 transition-all outline-none cursor-pointer"
+                  aria-label="User account menu"
+                  aria-haspopup="true"
+                  aria-expanded={dropdownOpen}
+                  className="flex items-center gap-2 rounded-xl p-1 hover:bg-ink/5 transition-all outline-none focus-visible:ring-2 focus-visible:ring-accent/80 focus-visible:ring-offset-1 cursor-pointer touch-manipulation"
                 >
                   <Avatar src={user?.avatarUrl} name={user?.name} size="sm" />
                   <span className="hidden md:inline text-xs font-bold text-ink/80">{user?.name}</span>
