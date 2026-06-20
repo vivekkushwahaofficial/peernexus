@@ -9,6 +9,9 @@ import { AuthProvider } from "./context/AuthContext.jsx";
 import { ToastProvider } from "./context/ToastContext.jsx";
 import { WebSocketProvider } from "./context/WebSocketContext.jsx";
 import { ErrorBoundary } from "./components/common/ErrorBoundary.jsx";
+import { inject } from "@vercel/analytics";
+
+inject();
 
 const queryClient = new QueryClient({
   defaultOptions: {
