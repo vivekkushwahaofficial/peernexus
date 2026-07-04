@@ -15,9 +15,12 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Low-level local file system implementation of the {@link StorageService} interface.
+ * Low-level local file system implementation of the {@link StorageService}
+ * interface.
  *
- * <p>Stores uploaded files under the "uploads" directory inside the project's working directory.
+ * <p>
+ * Stores uploaded files under the "uploads" directory inside the project's
+ * working directory.
  */
 @Slf4j
 @Service
@@ -26,6 +29,11 @@ public class LocalStorageService implements StorageService {
 
     @Value("${app.backend.base-url:http://localhost:8080}")
     private String baseUrl;
+
+    @jakarta.annotation.PostConstruct
+    public void init() {
+        log.info("******** USING LOCAL STORAGE PROVIDER ********");
+    }
 
     private static final String UPLOADS_DIR = "uploads";
 
