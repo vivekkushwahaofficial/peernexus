@@ -19,3 +19,7 @@ peernexus-frontend/dist/
 
 # Logs
 *.log
+
+# Local Uploads fallback
+uploads/
+**/uploads/

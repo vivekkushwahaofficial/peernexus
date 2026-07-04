@@ -58,7 +58,25 @@ public class UserServiceImpl implements UserService {
     @org.springframework.transaction.annotation.Transactional
     public UserResponse updateProfilePicture(org.springframework.web.multipart.MultipartFile file) {
         User user = resolveCurrentUser();
+        if (file.isEmpty()) {
+            throw new com.peernexus.peernexus.exception.BadRequestException("File cannot be empty");
+        }
+        String mimeType = file.getContentType();
+        if (mimeType == null || !mimeType.startsWith("image/")) {
+            throw new com.peernexus.peernexus.exception.BadRequestException("Invalid file type. Only image files are allowed.");
+        }
+        boolean isAllowedImage = mimeType.equals("image/jpeg")
+                || mimeType.equals("image/png")
+                || mimeType.equals("image/webp");
+        if (!isAllowedImage) {
+            throw new com.peernexus.peernexus.exception.BadRequestException("Image format not supported. Allowed formats: JPG, PNG, WEBP");
+        }
         try {
+            // Rejects MZ executable header
+            byte[] bytes = file.getBytes();
+            if (bytes.length >= 2 && bytes[0] == 0x4D && bytes[1] == 0x5A) {
+                throw new com.peernexus.peernexus.exception.BadRequestException("File signature verification failed: executables are blocked");
+            }
             com.peernexus.peernexus.cloudinary.service.CloudinaryService.UploadResult result =
                     cloudinaryService.uploadProfilePicture(file, user.getId());
             user.setProfilePicture(result.secureUrl());
