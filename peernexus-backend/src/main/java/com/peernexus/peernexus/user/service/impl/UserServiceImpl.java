@@ -62,6 +62,7 @@ public class UserServiceImpl implements UserService {
             com.peernexus.peernexus.cloudinary.service.CloudinaryService.UploadResult result =
                     cloudinaryService.uploadProfilePicture(file, user.getId());
             user.setProfilePicture(result.secureUrl());
+            user.setProfilePicturePublicId(result.publicId());
             return userMapper.toResponse(userRepository.save(user));
         } catch (java.io.IOException e) {
             throw new com.peernexus.peernexus.exception.BadRequestException("Failed to upload profile picture: " + e.getMessage());
