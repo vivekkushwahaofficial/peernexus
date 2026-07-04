@@ -32,6 +32,9 @@ public class DoubtImage {
     @Column(nullable = false, length = 500)
     private String url;
 
+    @Column(length = 500)
+    private String publicId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doubt_id", nullable = false)
     private Doubt doubt;

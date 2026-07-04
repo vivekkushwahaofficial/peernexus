@@ -58,6 +58,9 @@ public class User {
     private String profilePicture;
 
     @Column(length = 500)
+    private String profilePicturePublicId;
+
+    @Column(length = 500)
     private String bio;
 
     @Column(length = 500)
