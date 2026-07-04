@@ -48,6 +48,8 @@ public interface DoubtMapper {
                 .name(user.getName())
                 .role(user.getRole())
                 .verified(user.isVerified())
+                .profilePicture(user.getProfilePicture())
+                .avatarUrl(user.getProfilePicture())
                 .build();
     }
 

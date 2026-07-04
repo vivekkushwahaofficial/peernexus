@@ -12,7 +12,9 @@ public record ConnectionUserSummary(
         Role role,
         boolean verified,
         int reputationPoints,
-        ReputationLevel reputationLevel
+        ReputationLevel reputationLevel,
+        String profilePicture,
+        String avatarUrl
         ) {
 
 }
