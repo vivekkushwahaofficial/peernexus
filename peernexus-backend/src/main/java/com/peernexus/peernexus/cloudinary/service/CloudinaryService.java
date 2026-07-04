@@ -53,7 +53,8 @@ public class CloudinaryService {
      * @throws IOException if the upload fails
      */
     public UploadResult uploadDoubtImage(MultipartFile file, Long doubtId) throws IOException {
-        StorageService.UploadResult result = storageService.upload(file, folder("doubts"), "doubt-" + doubtId);
+        String uniqueId = "doubt-" + doubtId + "-" + java.util.UUID.randomUUID().toString();
+        StorageService.UploadResult result = storageService.upload(file, folder("doubts"), uniqueId);
         return new UploadResult(result.secureUrl(), result.publicId());
     }
 
@@ -81,6 +82,19 @@ public class CloudinaryService {
      */
     public UploadResult uploadGroupImage(MultipartFile file, Long groupId) throws IOException {
         StorageService.UploadResult result = storageService.upload(file, folder("groups"), "group-" + groupId);
+        return new UploadResult(result.secureUrl(), result.publicId());
+    }
+
+    /**
+     * Uploads a general attachment or media file.
+     *
+     * @param file the file to upload
+     * @return a {@link UploadResult} containing the secure URL and public_id
+     * @throws IOException if the upload fails
+     */
+    public UploadResult uploadGeneralFile(MultipartFile file) throws IOException {
+        String uniqueId = java.util.UUID.randomUUID().toString();
+        StorageService.UploadResult result = storageService.upload(file, folder("general"), uniqueId);
         return new UploadResult(result.secureUrl(), result.publicId());
     }
 
