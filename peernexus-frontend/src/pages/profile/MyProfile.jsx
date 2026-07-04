@@ -34,7 +34,7 @@ export function MyProfile() {
     <div className="flex flex-col gap-6 max-w-3xl mx-auto animate-fade-in">
       {/* Upper Info Box */}
       <div className="card p-6 sm:p-8 bg-white flex flex-col sm:flex-row gap-6 items-center sm:items-start relative border border-ink/5 shadow-sm">
-        <Avatar name={user?.name} size="xl" className="shadow-md border-2 border-white ring-4 ring-ink/[0.03]" />
+        <Avatar src={user?.profilePicture || user?.avatarUrl} name={user?.name} size="xl" className="shadow-md border-2 border-white ring-4 ring-ink/[0.03]" />
 
         <div className="flex-1 flex flex-col gap-3 text-center sm:text-left min-w-0">
           <div className="flex flex-col sm:flex-row sm:items-center gap-2">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 export function Avatar({
   src,
@@ -7,6 +7,8 @@ export function Avatar({
   status = null, // "online" | "offline"
   className = "",
 }) {
+  const [hasError, setHasError] = useState(false);
+
   const sizes = {
     xs: "h-6 w-6 text-[10px]",
     sm: "h-8 w-8 text-xs",
@@ -32,17 +34,19 @@ export function Avatar({
     return fullName.substring(0, 2).toUpperCase();
   };
 
+  // Reset error state if src changes
+  React.useEffect(() => {
+    setHasError(false);
+  }, [src]);
+
   return (
     <div className={`relative inline-block shrink-0 ${className}`}>
-      {src ? (
+      {src && !hasError ? (
         <img
           src={src}
           alt={name}
           className={`rounded-full object-cover border border-ink/10 ${sizes[size]}`}
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = ""; // Force fallback to initials
-          }}
+          onError={() => setHasError(true)}
         />
       ) : (
         <div
