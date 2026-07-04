@@ -61,6 +61,7 @@ public class SecurityConfig {
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**", "/error").permitAll()
+                        .requestMatchers("/uploads/**").permitAll()          // Allow public access to local storage fallback uploads
                         .requestMatchers("/ws/**", "/topic/**").permitAll()  // WebSocket / SockJS handshake
                         .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/users/**").authenticated()
