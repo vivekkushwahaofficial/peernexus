@@ -63,6 +63,8 @@ public class UploadController {
             @PathVariable Long userId,
             @RequestParam("file") MultipartFile file
     ) throws IOException {
+        validateImageFile(file);
+        verifyFileSignature(file);
         UploadResult result = cloudinaryService.uploadProfilePicture(file, userId);
         return ResponseEntity.ok(ApiResponse.<UploadResult>builder()
                 .success(true)
@@ -90,6 +92,8 @@ public class UploadController {
             @PathVariable Long doubtId,
             @RequestParam("file") MultipartFile file
     ) throws IOException {
+        validateImageFile(file);
+        verifyFileSignature(file);
         UploadResult result = cloudinaryService.uploadDoubtImage(file, doubtId);
         return ResponseEntity.ok(ApiResponse.<UploadResult>builder()
                 .success(true)
@@ -156,6 +160,22 @@ public class UploadController {
         }
     }
 
+    private void validateImageFile(MultipartFile file) {
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("File cannot be empty");
+        }
+        String mimeType = file.getContentType();
+        if (mimeType == null || !mimeType.startsWith("image/")) {
+            throw new IllegalArgumentException("Invalid file type. Only image files are allowed.");
+        }
+        boolean isAllowedImage = mimeType.equals("image/jpeg")
+                || mimeType.equals("image/png")
+                || mimeType.equals("image/webp");
+        if (!isAllowedImage) {
+            throw new IllegalArgumentException("Image format not supported. Allowed formats: JPG, PNG, WEBP");
+        }
+    }
+
     // -------------------------------------------------------------------------
     // Group Images
     // -------------------------------------------------------------------------
@@ -175,6 +195,8 @@ public class UploadController {
             @PathVariable Long groupId,
             @RequestParam("file") MultipartFile file
     ) throws IOException {
+        validateImageFile(file);
+        verifyFileSignature(file);
         UploadResult result = cloudinaryService.uploadGroupImage(file, groupId);
         return ResponseEntity.ok(ApiResponse.<UploadResult>builder()
                 .success(true)
