@@ -5,6 +5,13 @@ import com.peernexus.peernexus.user.entity.Role;
 import lombok.Builder;
 
 @Builder
-public record UserSummary(Long id, String name, Role role, boolean verified) {
+public record UserSummary(
+        Long id,
+        String name,
+        Role role,
+        boolean verified,
+        String profilePicture,
+        String avatarUrl
+) {
 
 }

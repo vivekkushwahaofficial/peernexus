@@ -19,5 +19,8 @@ public record UserResponse(
         String skills,
         String interests
         ) {
-
+    @com.fasterxml.jackson.annotation.JsonProperty("avatarUrl")
+    public String avatarUrl() {
+        return profilePicture;
+    }
 }

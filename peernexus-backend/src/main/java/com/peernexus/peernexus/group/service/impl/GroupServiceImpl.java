@@ -606,6 +606,7 @@ public class GroupServiceImpl implements GroupService {
                 .userId(m.getUser().getId())
                 .userName(m.getUser().getName())
                 .userEmail(m.getUser().getEmail())
+                .userProfilePicture(m.getUser().getProfilePicture())
                 .role(m.getRole())
                 .joinedAt(m.getJoinedAt())
                 .build();

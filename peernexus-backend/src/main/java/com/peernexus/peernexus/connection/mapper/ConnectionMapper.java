@@ -34,6 +34,8 @@ public interface ConnectionMapper {
                 .verified(user.isVerified())
                 .reputationPoints(user.getReputationPoints())
                 .reputationLevel(user.getReputationLevel())
+                .profilePicture(user.getProfilePicture())
+                .avatarUrl(user.getProfilePicture())
                 .build();
     }
 }
