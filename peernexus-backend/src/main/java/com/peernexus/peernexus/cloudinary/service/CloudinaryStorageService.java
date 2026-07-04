@@ -19,10 +19,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@ConditionalOnProperty(name = "storage.provider", havingValue = "cloudinary", matchIfMissing = true)
+@ConditionalOnProperty(name = "storage.provider", havingValue = "cloudinary")
 public class CloudinaryStorageService implements StorageService {
 
     private final Cloudinary cloudinary;
+
+    @jakarta.annotation.PostConstruct
+    public void init() {
+        log.info("******** USING CLOUDINARY STORAGE PROVIDER ********");
+    }
 
     @Override
     public UploadResult upload(MultipartFile file, String folder, String publicId) throws IOException {
