@@ -85,19 +85,43 @@ public class UploadController {
      * @return {@link ApiResponse} containing the secure URL and public_id
      */
     @PostMapping(
-            value    = "/doubt-image/{doubtId}",
+            value    = {"/doubt-image", "/doubt-image/{doubtId}"},
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     public ResponseEntity<ApiResponse<UploadResult>> uploadDoubtImage(
-            @PathVariable Long doubtId,
+            @PathVariable(required = false) Long doubtId,
             @RequestParam("file") MultipartFile file
     ) throws IOException {
         validateImageFile(file);
         verifyFileSignature(file);
-        UploadResult result = cloudinaryService.uploadDoubtImage(file, doubtId);
+        Long idToUse = (doubtId != null) ? doubtId : 0L;
+        UploadResult result = cloudinaryService.uploadDoubtImage(file, idToUse);
         return ResponseEntity.ok(ApiResponse.<UploadResult>builder()
                 .success(true)
                 .message("Doubt image uploaded successfully")
+                .data(result)
+                .build());
+    }
+
+    /**
+     * Uploads a general media or document file.
+     *
+     * @param file the file to upload
+     * @return {@link ApiResponse} containing the secure URL and public_id
+     */
+    @PostMapping(
+            value    = "/file",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
+    public ResponseEntity<ApiResponse<UploadResult>> uploadFile(
+            @RequestParam("file") MultipartFile file
+    ) throws IOException {
+        validateChatFile(file); // Allows images, PDFs, DOCX, PPTX
+        verifyFileSignature(file);
+        UploadResult result = cloudinaryService.uploadGeneralFile(file);
+        return ResponseEntity.ok(ApiResponse.<UploadResult>builder()
+                .success(true)
+                .message("File uploaded successfully")
                 .data(result)
                 .build());
     }
