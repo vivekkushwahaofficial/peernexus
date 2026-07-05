@@ -17,13 +17,72 @@ const apiClient = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-// ── Request interceptor: attach Bearer token ──────────────────────────────────
-apiClient.interceptors.request.use((config) => {
+function isTokenExpired(token) {
+  if (!token) return true;
+  try {
+    const parts = token.split(".");
+    if (parts.length !== 3) return true;
+    const payload = JSON.parse(atob(parts[1]));
+    const exp = payload.exp;
+    // Check if token expires in the next 10 seconds (skew safety)
+    return (Date.now() / 1000) >= (exp - 10);
+  } catch (e) {
+    return true;
+  }
+}
+
+let activeRefreshPromise = null;
+
+async function refreshAccessToken(refreshToken, authData) {
+  if (activeRefreshPromise) {
+    return activeRefreshPromise;
+  }
+  activeRefreshPromise = (async () => {
+    try {
+      const response = await axios.post(`${BASE_URL}/api/auth/refresh`, {
+        refreshToken,
+      });
+      const newAccessToken = response.data.data.accessToken;
+      const newRefreshToken = response.data.data.refreshToken;
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ ...authData, accessToken: newAccessToken, refreshToken: newRefreshToken })
+      );
+      return newAccessToken;
+    } finally {
+      activeRefreshPromise = null;
+    }
+  })();
+  return activeRefreshPromise;
+}
+
+// ── Request interceptor: attach Bearer token (with proactive refresh) ─────────────
+apiClient.interceptors.request.use(async (config) => {
   const raw = localStorage.getItem(STORAGE_KEY);
   if (raw) {
     try {
-      const { accessToken } = JSON.parse(raw);
-      if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
+      const authData = JSON.parse(raw);
+      let accessToken = authData.accessToken;
+      const refreshToken = authData.refreshToken;
+
+      if (accessToken && isTokenExpired(accessToken)) {
+        console.log("[REST] Access token expired. Performing proactive background refresh...");
+        if (refreshToken) {
+          try {
+            accessToken = await refreshAccessToken(refreshToken, authData);
+            console.log("[REST] Proactive token refresh completed successfully.");
+          } catch (refreshErr) {
+            console.error("[REST] Proactive token refresh failed, clearing session:", refreshErr);
+            localStorage.removeItem(STORAGE_KEY);
+            window.location.href = "/login";
+            return Promise.reject(refreshErr);
+          }
+        }
+      }
+
+      if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+      }
     } catch {
       // malformed storage — ignore
     }
