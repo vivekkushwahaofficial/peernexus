@@ -58,6 +58,16 @@ public class GlobalExceptionHandler {
         return buildError(HttpStatus.BAD_REQUEST, message, request.getRequestURI());
     }
 
+    @ExceptionHandler(RateLimitExceededException.class)
+    public ResponseEntity<ErrorResponse> handleRateLimit(RateLimitExceededException ex, HttpServletRequest request) {
+        return buildError(HttpStatus.TOO_MANY_REQUESTS, ex.getMessage(), request.getRequestURI());
+    }
+
+    @ExceptionHandler(GatewayTimeoutException.class)
+    public ResponseEntity<ErrorResponse> handleGatewayTimeout(GatewayTimeoutException ex, HttpServletRequest request) {
+        return buildError(HttpStatus.GATEWAY_TIMEOUT, ex.getMessage(), request.getRequestURI());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneric(Exception ex, HttpServletRequest request) {
         return buildError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error", request.getRequestURI());
@@ -74,3 +84,4 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(status).body(response);
     }
 }
+
