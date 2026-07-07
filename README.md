@@ -1,4 +1,4 @@
-# PeerNexus
+# PeerNexus – AI-Assisted Student Collaboration Platform
 
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.14-brightgreen.svg?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![React](https://img.shields.io/badge/React-18.3.1-blue.svg?logo=react&logoColor=white)](https://react.dev/)
@@ -6,7 +6,7 @@
 [![Docker](https://img.shields.io/badge/Docker-Compatible-blue.svg?logo=docker&logoColor=white)](https://www.docker.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-PeerNexus is a production-grade, secure, and highly scalable collaborative student learning platform. It serves as a modern student community network that bridges peer-to-peer knowledge sharing with real-time communication. PeerNexus combines a forum-style **Doubt Solving Engine**, a gamified **Reputation System**, instant **Private Messaging** (featuring real-time statuses, inline editing, group chats, message pinning, and reactions), and structured **Study Groups** into a unified collaborative workspace.
+PeerNexus is a production-grade, secure, and highly scalable AI-assisted collaborative student learning platform. It serves as a modern student community network that bridges peer-to-peer knowledge sharing with Google Gemini-powered educational guidance and real-time communication. PeerNexus combines a forum-style **Doubt Solving Engine**, a gamified **Reputation System**, instant **Private Messaging** (featuring real-time statuses, inline editing, group chats, message pinning, and reactions), and structured **Study Groups** into a unified collaborative workspace.
 
 Designed with a focus on web security, clean architecture, and database query optimization, the platform is fully containerized and deployable via Docker.
 
@@ -61,6 +61,7 @@ PeerNexus addresses this by introducing:
 * **Secured Group Subscriptions:** Custom WebSocket channel interceptors validating database study group membership prior to allowing connection mappings.
 * **Relational Database Design:** PostgreSQL schema with strict constraints, indexes on lookup paths, and Flyway migration controls.
 * **Cloudinary Media Pipeline:** Multi-purpose file streaming mapping user avatars, group headers, and doubt attachments directly to CDN cloud storage.
+* **AI-Assisted Educational Guidance:** Non-cheating, stateless student guidance utilizing Google Gemini (via custom `GeminiClient` abstraction) to return educational hints, concept explanations, verification checks, and related topics on demand.
 * **Full-Stack Containerization:** Multi-stage production builds for backend JAR and frontend Nginx configuration deployable via Docker Compose.
 
 ---
@@ -84,13 +85,13 @@ PeerNexus follows a decoupled client-server architecture. Client applications in
                                +----------------------------------+
                                |  Spring Boot 3 Backend Service   |
                                +----------------------------------+
-                                 /           |           \
-                    JPA / SQL   /            |            \   Multipart Stream
-                               v             v             v
-                          +----------+  +------------+  +---------------+
-                          | Postgres |  | H2 Memory  |  |  Cloudinary   |
-                          | Database |  | (Testing)  |  |  Media Cloud  |
-                          +----------+  +------------+  +---------------+
+                                 /       |       \              \
+                    JPA / SQL   /        |        \              \  Gemini API REST
+                               v         v         v              v
+                          +----------+  +------------+  +---------------+  +---------------+
+                          | Postgres |  | H2 Memory  |  |  Cloudinary   |  | Google Gemini |
+                          | Database |  | (Testing)  |  |  Media Cloud  |  |  AI Service   |
+                          +----------+  +------------+  +---------------+  +---------------+
 ```
 
 ---
@@ -140,6 +141,12 @@ PeerNexus follows a decoupled client-server architecture. Client applications in
 ### 🔔 Notifications
 * **Live Alerts:** Real-time push notifications for connections, answers, upvotes, and moderator warnings.
 
+### 🤖 AI Learning Assistant
+* **On-Demand Concept Guidance:** Ask AI directly on any doubt to receive helpful hints, theory explanations, debugging checklists, and related subject tags.
+* **Stateless Platform Philosophy:** AI responses are generated dynamically and are never stored in the database, preserving the focus on peer collaboration.
+* **Strict Non-Cheating Directives:** The system prompt prohibits providing outright homework/assignment solutions, keeping the helper focused on learning.
+
+
 ---
 
 ## Technology Stack
@@ -159,6 +166,7 @@ PeerNexus follows a decoupled client-server architecture. Client applications in
 | | MapStruct | 1.5.5.Final | Type-safe mappings between entities and DTOs |
 | | Hibernate / JPA | 6.x / 3.x | ORM mapping database tables |
 | | Spring Mail | 3.x | Transactional registration and reset emails |
+| | Google Gemini API | latest | Stateless AI-assisted educational module |
 | **Database** | PostgreSQL | 16.x (Alpine) | Transactional, indexed data storage |
 | | Flyway | 10.x | Schema migrations and structure versioning |
 | | H2 Database | 2.2.x | In-memory relational database for unit tests |
@@ -376,7 +384,7 @@ PeerNexus follows a decoupled client-server architecture. Client applications in
    ```bash
    cd peernexus-backend
    ```
-2. Copy the template `.env.example` file to `.env` and populate your database, email server, and Cloudinary credentials:
+2. Copy the template `.env.example` file to `.env` and populate your database, email server, Cloudinary, and Google Gemini API credentials:
    ```bash
    cp .env.example .env
    ```
@@ -468,6 +476,11 @@ PeerNexus shows a strong grasp of core full-stack engineering skills, going beyo
 * **Elasticsearch Integration:** Replace standard JPA SQL searches with a dedicated Elasticsearch indexing service to support fuzzy matches and file parsing.
 * **WebRTC Live Study Rooms:** Add peer-to-peer virtual audio/video connections within group workspaces.
 * **AI Doubt Moderation:** Implement a local LLM API to auto-classify categories, filter spam, and flag toxic replies.
+* **Future AI Features:**
+  - **AI Peer Recommendation:** Recommend the best student to answer based on expertise and reputation.
+  - **AI Duplicate Question Detection:** Suggest similar existing doubts before posting a new one.
+  - **AI Discussion Summaries:** Summarize long discussion threads into key takeaways.
+
 
 ---
 
