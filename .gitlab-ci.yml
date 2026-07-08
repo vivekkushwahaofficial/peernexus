@@ -1,0 +1,37 @@
+stages:
+  - build-test-backend
+  - build-frontend
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+# Cache Maven dependencies and Node modules globally or per job
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - peernexus-backend/.m2/repository
+    - peernexus-frontend/node_modules/
+
+backend-ci:
+  stage: build-test-backend
+  image: maven:3.9.6-eclipse-temurin-21-alpine
+  script:
+    - cd peernexus-backend
+    - chmod +x mvnw
+    - ./mvnw clean test -Dmaven.repo.local=$CI_PROJECT_DIR/peernexus-backend/.m2/repository
+  only:
+    - main
+    - cloudinary
+    - merge_requests
+
+frontend-ci:
+  stage: build-frontend
+  image: node:20-alpine
+  script:
+    - cd peernexus-frontend
+    - npm ci --cache .npm --prefer-offline
+    - npm run build
+  only:
+    - main
+    - cloudinary
+    - merge_requests
