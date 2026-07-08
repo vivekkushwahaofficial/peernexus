@@ -13,6 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 		"spring.flyway.enabled=false",
 		"JWT_SECRET=TEST_JWT_SECRET_FOR_UNIT_TESTS_THAT_IS_LONG_ENOUGH_32_BYTES",
 		"DB_PASSWORD=TEST_DB_PASSWORD",
+		"CLOUDINARY_CLOUD_NAME=dummy-cloud-name",
+		"CLOUDINARY_API_KEY=dummy-api-key",
 		"CLOUDINARY_API_SECRET=development-secret"
 })
 class PeernexusApplicationTests {
