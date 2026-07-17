@@ -6,7 +6,7 @@
 [![Docker](https://img.shields.io/badge/Docker-Compatible-blue.svg?logo=docker&logoColor=white)](https://www.docker.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-PeerNexus is a production-grade, secure, and highly scalable AI-assisted collaborative student learning platform. It serves as a modern student community network that bridges peer-to-peer knowledge sharing with Google Gemini-powered educational guidance and real-time communication. PeerNexus combines a forum-style **Doubt Solving Engine**, a gamified **Reputation System**, instant **Private Messaging** (featuring real-time statuses, inline editing, group chats, message pinning, and reactions), and structured **Study Groups** into a unified collaborative workspace.
+PeerNexus is a production-grade, secure, and highly scalable AI-assisted collaborative student learning platform. It serves as a modern student community network that bridges peer-to-peer knowledge sharing with an AI Learning Assistant powered by Google Gemini and real-time communication. PeerNexus combines a forum-style **Doubt Solving Engine**, a gamified **Reputation System**, instant **Private Messaging** (featuring real-time statuses, inline editing, group chats, message pinning, and reactions), and structured **Study Groups** into a unified collaborative workspace.
 
 Designed with a focus on web security, clean architecture, and database query optimization, the platform is fully containerized and deployable via Docker.
 
@@ -142,9 +142,14 @@ PeerNexus follows a decoupled client-server architecture. Client applications in
 * **Live Alerts:** Real-time push notifications for connections, answers, upvotes, and moderator warnings.
 
 ### 🤖 AI Learning Assistant
+PeerNexus integrates Google Gemini to provide educational guidance while preserving collaborative learning.
+
+* **AI Learning Assistant:** Provides hints, concise explanations, learning checkpoints, and related topics using Google Gemini while encouraging students to review peer discussions.
 * **On-Demand Concept Guidance:** Ask AI directly on any doubt to receive helpful hints, theory explanations, debugging checklists, and related subject tags.
 * **Stateless Platform Philosophy:** AI responses are generated dynamically and are never stored in the database, preserving the focus on peer collaboration.
 * **Strict Non-Cheating Directives:** The system prompt prohibits providing outright homework/assignment solutions, keeping the helper focused on learning.
+
+![AI Learning Assistant Card](screenshots/ai-learning-assistant.png)
 
 
 ---
@@ -368,6 +373,9 @@ PeerNexus follows a decoupled client-server architecture. Client applications in
 ### 5. WebSocket Real-Time Chat Interface
 ![Private Messaging](screenshots/chat.png)
 
+### 6. AI Learning Assistant (Doubt & Guidance View)
+![AI Learning Assistant](screenshots/doubt-ai-guidance.png)
+
 ---
 
 ## Local Setup
@@ -387,6 +395,11 @@ PeerNexus follows a decoupled client-server architecture. Client applications in
 2. Copy the template `.env.example` file to `.env` and populate your database, email server, Cloudinary, and Google Gemini API credentials:
    ```bash
    cp .env.example .env
+   ```
+   Ensure the following Google Gemini configuration keys are set in your `.env` file:
+   ```env
+   GEMINI_API_KEY=your_gemini_api_key_here
+   GEMINI_MODEL=gemini-2.5-flash
    ```
 3. Compile the application:
    ```bash

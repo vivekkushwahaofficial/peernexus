@@ -289,7 +289,7 @@ export function DoubtDetail() {
               onClick={handleAskAI}
               loading={aiExplainMutation.isPending}
               disabled={cooldown > 0}
-              className="font-bold text-xs"
+              className="flex-1 sm:flex-initial font-bold text-xs"
             >
               {cooldown > 0 ? `🤖 Ask AI (${cooldown}s)` : "🤖 Ask AI"}
             </Button>
