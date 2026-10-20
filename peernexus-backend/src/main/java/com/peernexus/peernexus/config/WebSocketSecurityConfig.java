@@ -27,23 +27,27 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Integrates JWT authentication into the STOMP handshake / CONNECT lifecycle.
  *
- * <p>The client passes its JWT via the STOMP {@code Authorization} header
- * (value: {@code Bearer <token>}) or via the {@code token} STOMP header
- * during the {@code CONNECT} frame.  Either approach works because this
- * interceptor checks both.
+ * <p>
+ * The client passes its JWT via the STOMP {@code Authorization} header (value:
+ * {@code Bearer <token>}) or via the {@code token} STOMP header during the
+ * {@code CONNECT} frame. Either approach works because this interceptor checks
+ * both.
  *
- * <p>On a valid token the interceptor sets a fully-authenticated
+ * <p>
+ * On a valid token the interceptor sets a fully-authenticated
  * {@link UsernamePasswordAuthenticationToken} as the STOMP session's
  * {@code nativeHeaders} principal, which Spring then propagates to every
  * subsequent message in the session.
  *
- * <p>On {@code SUBSCRIBE} frames targeting {@code /topic/group.*} destinations,
+ * <p>
+ * On {@code SUBSCRIBE} frames targeting {@code /topic/group.*} destinations,
  * membership is validated against the database before the subscription is
- * allowed.  Unauthorized subscriptions are rejected with a STOMP ERROR frame
- * and the violation is logged at WARN level.
+ * allowed. Unauthorized subscriptions are rejected with a STOMP ERROR frame and
+ * the violation is logged at WARN level.
  *
- * <p>The {@code @Order(Ordered.HIGHEST_PRECEDENCE + 99)} annotation ensures
- * this interceptor runs before Spring Security's own channel interceptors.
+ * <p>
+ * The {@code @Order(Ordered.HIGHEST_PRECEDENCE + 99)} annotation ensures this
+ * interceptor runs before Spring Security's own channel interceptors.
  */
 @Slf4j
 @Configuration
@@ -61,8 +65,8 @@ public class WebSocketSecurityConfig implements WebSocketMessageBrokerConfigurer
         registration.interceptors(new ChannelInterceptor() {
             @Override
             public Message<?> preSend(Message<?> message, MessageChannel channel) {
-                StompHeaderAccessor accessor =
-                        MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
+                StompHeaderAccessor accessor
+                        = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 
                 if (accessor == null) {
                     return message;
@@ -84,8 +88,8 @@ public class WebSocketSecurityConfig implements WebSocketMessageBrokerConfigurer
                         String username = jwtService.extractUsername(token);
                         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                         if (jwtService.isTokenValid(token, userDetails)) {
-                            UsernamePasswordAuthenticationToken auth =
-                                    new UsernamePasswordAuthenticationToken(
+                            UsernamePasswordAuthenticationToken auth
+                                    = new UsernamePasswordAuthenticationToken(
                                             userDetails,
                                             null,
                                             userDetails.getAuthorities()
@@ -162,12 +166,17 @@ public class WebSocketSecurityConfig implements WebSocketMessageBrokerConfigurer
      */
     private Long resolveUserId(StompHeaderAccessor accessor) {
         java.security.Principal principal = accessor.getUser();
-        if (principal instanceof UsernamePasswordAuthenticationToken authToken) {
-            Object details = authToken.getPrincipal();
-            if (details instanceof UserDetailsImpl userDetails) {
-                return userDetails.getId();
-            }
+
+        if (!(principal instanceof UsernamePasswordAuthenticationToken authToken)) {
+            return null;
         }
+
+        Object authenticatedPrincipal = authToken.getPrincipal();
+
+        if (authenticatedPrincipal instanceof UserDetailsImpl userDetails) {
+            return userDetails.getId();
+        }
+
         return null;
     }
 }
